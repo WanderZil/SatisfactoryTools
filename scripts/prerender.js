@@ -16,9 +16,13 @@ const fs = require('fs');
 const path = require('path');
 
 async function main() {
-  const shouldRun = process.env.VERCEL || process.env.SSG === '1';
+  // IMPORTANT:
+  // - Vercel build env often lacks shared libs required by Chromium (e.g. libnss3.so),
+  //   causing "Failed to launch the browser process" at build time.
+  // - Therefore, we do NOT auto-run prerender on Vercel. Instead, generate SSG pages locally/CI and commit them.
+  const shouldRun = process.env.SSG === '1';
   if (!shouldRun) {
-    console.log('[prerender] skip (set SSG=1 to run locally, or runs automatically on Vercel)');
+    console.log('[prerender] skip (set SSG=1 to run locally/CI and commit generated HTML)');
     return;
   }
 
@@ -36,7 +40,6 @@ async function main() {
   const fallbackIndexHtml = fs.readFileSync(indexPath);
 
   const routes = [
-    '/',
     '/about',
     '/items',
     '/buildings',
@@ -45,6 +48,10 @@ async function main() {
     '/privacy-policy',
     '/terms-of-service'
   ];
+  // Homepage "/" is the calculator and can be huge/fragile to snapshot; keep it opt-in.
+  if (process.env.PRERENDER_HOME === '1') {
+    routes.unshift('/');
+  }
 
   const { server, port } = await startStaticServer(outDir, fallbackIndexHtml);
   const baseUrl = `http://127.0.0.1:${port}`;
