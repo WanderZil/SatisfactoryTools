@@ -156,10 +156,10 @@ export class ProductionResult
 						amount: amount
 					});
 					buildings.buildings[className].recipes[recipeClassName] = {
-						amount: amount,
-						resources: ProductionResult.calculateBuildingCost(className, amount, schema),
+					amount: amount,
+					resources: ProductionResult.calculateBuildingCost(className, amount, schema),
 					};
-				}
+			}
 			}
 		}
 
@@ -507,9 +507,9 @@ export class ProductionResult
 							schematic: schematic
 						});
 						break;
-					}
 				}
 			}
+		}
 		}
 
 		// 2. 收集 Buildings 的解锁需求

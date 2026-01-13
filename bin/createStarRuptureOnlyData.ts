@@ -1,6 +1,57 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
+import sharp from 'sharp';
 import {IJsonSchema} from '@src/Schema/IJsonSchema';
+
+/**
+ * 给图片添加水印
+ * @param imageBuffer 图片 Buffer 或路径
+ * @param watermarkText 水印文字
+ */
+async function addWatermarkToImage(imageBuffer: Buffer | string, watermarkText: string = 'SRCC'): Promise<Buffer> {
+	const metadata = await sharp(imageBuffer).metadata();
+	const width = metadata.width || 64;
+	const height = metadata.height || 64;
+	
+	// 根据图片尺寸计算水印大小
+	const fontSize = Math.max(10, Math.floor(width * 0.2)); // 水印文字大小约为图片宽度的20%
+	
+	// 创建 SVG 水印（45度倾斜，浅灰色）
+	const centerX = width / 2;
+	const centerY = height / 2;
+	
+	const svgWatermark = `
+		<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+			<text
+				x="${centerX}"
+				y="${centerY}"
+				font-family="Arial, Helvetica, sans-serif"
+				font-size="${fontSize}"
+				font-weight="500"
+				fill="#C0C0C0"
+				fill-opacity="0.6"
+				transform="rotate(-45 ${centerX} ${centerY})"
+				text-anchor="middle"
+				dominant-baseline="middle"
+				style="user-select: none;"
+			>${watermarkText}</text>
+		</svg>
+	`;
+	
+	const watermarkBuffer = Buffer.from(svgWatermark);
+	
+	// 使用 sharp 合成图片和水印
+	return await sharp(imageBuffer)
+		.composite([
+			{
+				input: watermarkBuffer,
+				blend: 'over'
+			}
+		])
+		.webp({ quality: 85 })
+		.toBuffer();
+}
 import {IItemSchema} from '@src/Schema/IItemSchema';
 import {IAnyRecipeSchema} from '@src/Schema/IRecipeSchema';
 import {IBuildingSchema} from '@src/Schema/IBuildingSchema';
@@ -674,14 +725,46 @@ function convertBuilding(bdData: any, daData: any, bpData: any): IBuildingSchema
 		return null;
 	}
 	
+	// 过滤掉建筑变体（NonDeconstructible, StartingHUB, Starting, FE_, _Lander, Stability 等），只保留主要建筑
+	// 这些变体通常只是游戏内部使用的特殊版本，不应该在网站上显示
+	if (className.includes('_NonDeconstructible') || 
+	    className.includes('_StartingHUB') ||
+	    className.includes('_Starting') ||
+	    className.includes('_FE_') ||
+	    className.includes('_Lander') ||
+	    className.includes('Stability') ||
+	    className.includes('_Left') ||
+	    className.includes('_Right') ||
+	    className.includes('_Middle') ||
+	    className.includes('_Single') ||
+	    className.includes('_Flat')) {
+		return null;
+	}
+	
 	// 提取图标名称
 	let icon: string | undefined = undefined;
+	let iconPath: string | undefined = undefined;
 	if (props.Icon?.ResourceObject?.ObjectName) {
 		const iconName = props.Icon.ResourceObject.ObjectName;
 		// 提取类似 "Texture2D'T_Crafter_Icon'" 中的 "T_Crafter_Icon"
 		const iconMatch = iconName.match(/Texture2D'([^']+)'/);
 		if (iconMatch) {
 			icon = iconMatch[1];
+		}
+	}
+	
+	// 如果 ObjectPath 存在，尝试从中提取路径信息
+	if (props.Icon?.ResourceObject?.ObjectPath) {
+		const objectPath = props.Icon.ResourceObject.ObjectPath;
+		// 提取路径，如 "/Game/Chimera/Buildings/DroneConnections/DroneRail/Icons/T_DroneRailT1_Icon.0"
+		// 转换为相对路径：Buildings/DroneConnections/DroneRail/Icons/T_DroneRailT1_Icon
+		const pathMatch = objectPath.match(/\/Game\/Chimera\/Buildings\/(.+?)\/([^\/]+)\.\d+$/);
+		if (pathMatch) {
+			const dirPath = pathMatch[1];
+			const fileName = pathMatch[2];
+			// 构建可能的文件路径
+			const possibleIconPath = path.join(buildingsDir, dirPath, fileName);
+			iconPath = possibleIconPath;
 		}
 	}
 	
@@ -786,7 +869,7 @@ function convertBuilding(bdData: any, daData: any, bpData: any): IBuildingSchema
 		})) || [],
 	};
 	
-	return {
+	const result: any = {
 		slug: webalize(buildingName),
 		icon: icon,
 		name: buildingName,
@@ -799,6 +882,13 @@ function convertBuilding(bdData: any, daData: any, bpData: any): IBuildingSchema
 		buildingType: buildingTypeName, // 保存建筑类型名称（如 "Crafting", "Transport" 等）
 		_bdData: bdData_extended, // 保存 BD 文件的扩展数据
 	};
+	
+	// 如果从 ObjectPath 提取了图标路径，保存它（用于后续查找）
+	if (iconPath) {
+		result._iconPath = iconPath;
+	}
+	
+	return result;
 }
 
 // 处理每个建筑文件
@@ -841,6 +931,124 @@ for (const buildingFile of buildingFiles) {
 
 console.log(`成功处理 ${processedBuildings} 个建筑`);
 
+// 确保所有建筑的 slug 唯一性
+console.log(`\n检查并修复重复的 slug...`);
+const slugMap: {[slug: string]: string[]} = {};
+for (const className in newData.buildings) {
+	const building = newData.buildings[className];
+	const slug = building.slug;
+	if (!slugMap[slug]) {
+		slugMap[slug] = [];
+	}
+	slugMap[slug].push(className);
+}
+
+// 修复重复的 slug
+let fixedSlugs = 0;
+for (const slug in slugMap) {
+	if (slugMap[slug].length > 1) {
+		// 有重复的 slug，为除第一个外的其他建筑生成唯一 slug
+		const classes = slugMap[slug];
+		for (let i = 1; i < classes.length; i++) {
+			const className = classes[i];
+			const building = newData.buildings[className];
+			// 使用 className 生成唯一的 slug
+			const uniqueSlug = webalize(building.name + '-' + className.replace('BD_', ''));
+			building.slug = uniqueSlug;
+			fixedSlugs++;
+			console.log(`  修复重复 slug: ${className} (${building.name}) -> ${uniqueSlug}`);
+		}
+	}
+}
+if (fixedSlugs > 0) {
+	console.log(`修复了 ${fixedSlugs} 个重复的 slug`);
+}
+
+// 后处理：过滤重复名称的建筑，保留属性更完整的版本
+console.log(`\n后处理：过滤重复名称的建筑...`);
+const buildingNames: {[name: string]: Array<{className: string, building: IBuildingSchema}>} = {};
+for (const className in newData.buildings) {
+	const building = newData.buildings[className];
+	const name = building.name;
+	if (!buildingNames[name]) {
+		buildingNames[name] = [];
+	}
+	buildingNames[name].push({className, building});
+}
+
+let removedDuplicates = 0;
+for (const name in buildingNames) {
+	if (buildingNames[name].length > 1) {
+		// 有重复名称，选择属性最完整的版本
+		const buildings = buildingNames[name];
+		
+		// 计算每个建筑的"完整度"分数
+		const scores = buildings.map(({className, building}) => {
+			let score = 0;
+			// 有 availableRecipes 的 +10 分
+			if (building.metadata?._daData?.availableRecipes?.length > 0) {
+				score += 10 + building.metadata._daData.availableRecipes.length;
+			}
+			// 有 categories 的 +5 分
+			if (building.categories && building.categories.length > 0) {
+				score += 5;
+			}
+			// 有描述且长度 > 50 的 +3 分
+			if (building.description && building.description.length > 50) {
+				score += 3;
+			}
+			// 有 buildingType 的 +2 分
+			if (building.buildingType) {
+				score += 2;
+			}
+			// 有 metadata 的 +1 分
+			if (building.metadata) {
+				score += 1;
+			}
+			return {className, building, score};
+		});
+		
+		// 按分数排序，保留分数最高的
+		scores.sort((a, b) => b.score - a.score);
+		const keep = scores[0];
+		
+		// 删除其他版本
+		for (let i = 1; i < scores.length; i++) {
+			delete newData.buildings[scores[i].className];
+			removedDuplicates++;
+			console.log(`  删除重复建筑: ${scores[i].className} (${name}), 保留: ${keep.className} (分数: ${keep.score} vs ${scores[i].score})`);
+		}
+	}
+}
+if (removedDuplicates > 0) {
+	console.log(`删除了 ${removedDuplicates} 个重复建筑`);
+}
+
+// 后处理：为 producedIn 为空的配方从建筑的 availableRecipes 反向填充
+console.log(`\n后处理：为 producedIn 为空的配方填充生产建筑...`);
+let fixedProducedIn = 0;
+for (const recipeKey in newData.recipes) {
+	const recipe = newData.recipes[recipeKey];
+	if (!recipe.producedIn || recipe.producedIn.length === 0) {
+		// 遍历所有建筑，查找哪个建筑的 availableRecipes 包含该配方
+		for (const buildingKey in newData.buildings) {
+			const building = newData.buildings[buildingKey];
+			if (building.metadata && building.metadata._daData && building.metadata._daData.availableRecipes) {
+				const availableRecipes = building.metadata._daData.availableRecipes;
+				if (availableRecipes.includes(recipe.className)) {
+					recipe.producedIn = [building.className];
+					fixedProducedIn++;
+					console.log(`  修复配方 ${recipe.className} (${recipe.name}) -> ${building.className} (${building.name})`);
+					break;
+				}
+			}
+		}
+	}
+}
+if (fixedProducedIn > 0) {
+	console.log(`修复了 ${fixedProducedIn} 个配方的 producedIn`);
+}
+
 // 复制物品图标
 console.log(`\n复制物品图标...`);
 const itemIconsDir = path.join(__dirname, '..', 'data', 'StarRupture', 'Content', 'Chimera', 'UI', 'ItemIcons');
@@ -850,69 +1058,292 @@ if (!fs.existsSync(wwwItemIconsDir)) {
 }
 
 let copiedItemIcons = 0;
-for (const className in newData.items) {
-	const item = newData.items[className];
-	if (item.icon) {
-		const iconName = item.icon;
-		// 尝试多个可能的路径
-		const possiblePaths = [
-			path.join(itemIconsDir, iconName + '.png'),
-			path.join(itemIconsDir, iconName.replace('T_', '') + '.png'),
-			path.join(itemIconsDir, 'RecipeItemBlueprints', iconName + '.png'),
-			path.join(itemIconsDir, 'RecipeItemBlueprints', iconName.replace('T_', '') + '.png'),
-		];
-		
-		for (const iconPath of possiblePaths) {
-			if (fs.existsSync(iconPath)) {
-				// 复制 64 尺寸
-				const destPath64 = path.join(wwwItemIconsDir, iconName + '_64.png');
-				fs.copyFileSync(iconPath, destPath64);
-				// 复制 256 尺寸（详情页使用）
-				const destPath256 = path.join(wwwItemIconsDir, iconName + '_256.png');
-				fs.copyFileSync(iconPath, destPath256);
-				copiedItemIcons++;
-				break;
+
+// 使用异步函数处理物品图标复制（支持 PNG 转 WebP）
+(async () => {
+	for (const className in newData.items) {
+		const item = newData.items[className];
+		if (item.icon) {
+			const iconName = item.icon;
+			// 尝试多个可能的路径
+			const possiblePaths = [
+				path.join(itemIconsDir, iconName + '.png'),
+				path.join(itemIconsDir, iconName.replace('T_', '') + '.png'),
+				path.join(itemIconsDir, 'RecipeItemBlueprints', iconName + '.png'),
+				path.join(itemIconsDir, 'RecipeItemBlueprints', iconName.replace('T_', '') + '.png'),
+			];
+			
+			for (const iconPath of possiblePaths) {
+				if (fs.existsSync(iconPath)) {
+					// 转换为 WebP 并添加水印（SEO 友好）
+					try {
+						const destPath64 = path.join(wwwItemIconsDir, iconName + '_64.webp');
+						const destPath256 = path.join(wwwItemIconsDir, iconName + '_256.webp');
+						
+						// 使用 sharp 转换为 WebP（64 尺寸）并添加水印
+						const resized64 = await sharp(iconPath)
+							.resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked64 = await addWatermarkToImage(resized64, 'SRCC');
+						fs.writeFileSync(destPath64, watermarked64);
+						
+						// 使用 sharp 转换为 WebP（256 尺寸）并添加水印
+						const resized256 = await sharp(iconPath)
+							.resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked256 = await addWatermarkToImage(resized256, 'SRCC');
+						fs.writeFileSync(destPath256, watermarked256);
+						
+						copiedItemIcons++;
+						break;
+					} catch (error) {
+						console.error(`  转换物品图标失败: ${iconName} (${className}):`, error);
+						break;
+					}
+				}
 			}
 		}
 	}
-}
-console.log(`复制了 ${copiedItemIcons} 个物品图标`);
+	
+	console.log(`复制了 ${copiedItemIcons} 个物品图标`);
+})();
 
 // 复制建筑图标
 console.log(`\n复制建筑图标...`);
 const buildingIconsDir = path.join(__dirname, '..', 'data', 'StarRupture', 'Content', 'Chimera', 'UI', 'Buildings', 'Icons');
 const wwwBuildingIconsDir = path.join(__dirname, '..', 'www', 'assets', 'images', 'items');
+// itemIconsDir 已在上面声明，直接使用
 if (!fs.existsSync(wwwBuildingIconsDir)) {
 	fs.mkdirSync(wwwBuildingIconsDir, { recursive: true });
 }
 
 let copiedBuildingIcons = 0;
-for (const className in newData.buildings) {
+let missingBuildingIcons: string[] = [];
+
+// 使用异步函数处理图标复制（支持 HDR 转换）
+(async () => {
+	for (const className in newData.buildings) {
 	const building = newData.buildings[className];
 	if (building.icon) {
 		// 查找图标文件
 		const iconName = building.icon;
-		const possiblePaths = [
+		
+		// 构建可能的路径列表
+		const possiblePaths: string[] = [];
+		
+		// 如果建筑有 _iconPath（从 ObjectPath 提取），优先使用
+		if ((building as any)._iconPath) {
+			const iconPath = (building as any)._iconPath;
+			possiblePaths.push(
+				iconPath + '.png',
+				iconPath + '.hdr',
+			);
+		}
+		
+		// 标准图标目录
+		possiblePaths.push(
 			path.join(buildingIconsDir, iconName + '.png'),
 			path.join(buildingIconsDir, iconName.replace('T_', '') + '.png'),
-			path.join(buildingsDir, className.replace('BD_', ''), iconName + '.png'),
+			path.join(itemIconsDir, iconName + '.png'),
+			path.join(itemIconsDir, iconName.replace('T_', '') + '.png'),
+		);
+		
+		// 在建筑目录中查找图标（根据 className 推断目录名）
+		const buildingDirName = className.replace('BD_', '');
+		const buildingDir = path.join(buildingsDir, buildingDirName);
+		if (fs.existsSync(buildingDir)) {
+			possiblePaths.push(
+				path.join(buildingDir, iconName + '.png'),
+				path.join(buildingDir, iconName + '.hdr'),
+				path.join(buildingDir, iconName.replace('T_', '') + '.png'),
+				path.join(buildingDir, iconName.replace('T_', '') + '.hdr'),
+			);
+		}
+		
+		// 也在可能的子目录中查找（如 DroneConnections/DroneJunction/Icons）
+		// 处理复杂的目录结构，如 BD_DroneJunction_4 -> DroneConnections/DroneJunction/Icons
+		const possibleSubDirs: string[] = [
+			path.join(buildingsDir, buildingDirName, 'Icons'),
+			path.join(buildingsDir, buildingDirName.replace('_', '/'), 'Icons'),
 		];
 		
+		// 对于 Drone 相关建筑，尝试在 DroneConnections 目录中查找
+		if (buildingDirName.includes('Drone')) {
+			// BD_DroneJunction_4 -> DroneConnections/DroneJunction/Icons
+			// BD_DroneRailT1 -> DroneConnections/DroneRail/Icons
+			const baseName = buildingDirName.replace(/_\d+$/, '').replace(/_\d+x\d+$/, '').replace(/T\d+$/, '');
+			possibleSubDirs.push(
+				path.join(buildingsDir, 'DroneConnections', baseName, 'Icons'),
+				path.join(buildingsDir, 'DroneConnections', baseName.replace('Drone', ''), 'Icons'),
+			);
+			// 对于 Rail，尝试 DroneRail/Icons
+			if (buildingDirName.includes('Rail')) {
+				possibleSubDirs.push(
+					path.join(buildingsDir, 'DroneConnections', 'DroneRail', 'Icons'),
+				);
+			}
+		}
+		
+		for (const subDir of possibleSubDirs) {
+			if (fs.existsSync(subDir)) {
+				possiblePaths.push(
+					path.join(subDir, iconName + '.png'),
+					path.join(subDir, iconName.replace('T_', '') + '.png'),
+				);
+			}
+		}
+		
+		// 递归搜索整个 Buildings 目录
+		const findIconInDir = (dir: string, iconName: string, depth: number = 0): string | null => {
+			if (depth > 3) return null; // 限制搜索深度
+			if (!fs.existsSync(dir)) return null;
+			
+			const files = fs.readdirSync(dir);
+			for (const file of files) {
+				const fullPath = path.join(dir, file);
+				const stat = fs.statSync(fullPath);
+				
+				if (stat.isFile()) {
+					const baseName = path.basename(file, path.extname(file));
+					if (baseName === iconName || baseName === iconName.replace('T_', '')) {
+						const ext = path.extname(file).toLowerCase();
+						if (ext === '.png' || ext === '.hdr') {
+							return fullPath;
+						}
+					}
+				} else if (stat.isDirectory() && depth < 2) {
+					const found = findIconInDir(fullPath, iconName, depth + 1);
+					if (found) return found;
+				}
+			}
+			return null;
+		};
+		
+		// 如果标准路径都没找到，尝试递归搜索
+		let foundPath: string | null = null;
 		for (const iconPath of possiblePaths) {
 			if (fs.existsSync(iconPath)) {
-				// 复制 64 尺寸
-				const destPath64 = path.join(wwwBuildingIconsDir, iconName + '_64.png');
-				fs.copyFileSync(iconPath, destPath64);
-				// 复制 256 尺寸（详情页使用）
-				const destPath256 = path.join(wwwBuildingIconsDir, iconName + '_256.png');
-				fs.copyFileSync(iconPath, destPath256);
-				copiedBuildingIcons++;
+				foundPath = iconPath;
 				break;
 			}
 		}
+		
+		// 如果还没找到，尝试递归搜索（优先搜索 Icons 子目录）
+		if (!foundPath) {
+			// 先搜索所有 Icons 子目录
+			const iconsDirs: string[] = [];
+			const findIconsDirs = (dir: string, depth: number = 0): void => {
+				if (depth > 4) return;
+				if (!fs.existsSync(dir)) return;
+				const entries = fs.readdirSync(dir, { withFileTypes: true });
+				for (const entry of entries) {
+					const fullPath = path.join(dir, entry.name);
+					if (entry.isDirectory()) {
+						if (entry.name.toLowerCase() === 'icons') {
+							iconsDirs.push(fullPath);
+						} else {
+							findIconsDirs(fullPath, depth + 1);
+						}
+					}
+				}
+			};
+			findIconsDirs(buildingsDir);
+			
+			// 在所有 Icons 目录中查找
+			for (const iconsDir of iconsDirs) {
+				const iconPath = path.join(iconsDir, iconName + '.png');
+				if (fs.existsSync(iconPath)) {
+					foundPath = iconPath;
+					break;
+				}
+			}
+			
+			// 如果还没找到，进行完整递归搜索
+			if (!foundPath) {
+				foundPath = findIconInDir(buildingsDir, iconName);
+			}
+		}
+		
+		if (foundPath) {
+			const isHdr = foundPath.toLowerCase().endsWith('.hdr');
+			const isPng = foundPath.toLowerCase().endsWith('.png');
+			
+			if (isPng) {
+				// PNG 文件：转换为 WebP（SEO 友好）
+				try {
+					const destPath64 = path.join(wwwBuildingIconsDir, iconName + '_64.webp');
+					const destPath256 = path.join(wwwBuildingIconsDir, iconName + '_256.webp');
+					
+					// 使用 sharp 转换为 WebP（64 尺寸）
+					await sharp(foundPath)
+						.resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+						.webp({ quality: 85 })
+						.toFile(destPath64);
+					
+					// 使用 sharp 转换为 WebP（256 尺寸）
+					await sharp(foundPath)
+						.resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+						.webp({ quality: 85 })
+						.toFile(destPath256);
+					
+					copiedBuildingIcons++;
+				} catch (error) {
+					console.error(`  转换 PNG 失败: ${iconName} (${className}):`, error);
+					missingBuildingIcons.push(`${className} (${building.name}): ${iconName} (PNG 转换失败)`);
+				}
+			} else if (isHdr) {
+				// HDR 文件：使用 ImageMagick 转换为 WebP 并添加水印
+				try {
+					const destPath64 = path.join(wwwBuildingIconsDir, iconName + '_64.webp');
+					const destPath256 = path.join(wwwBuildingIconsDir, iconName + '_256.webp');
+					
+					// 使用 ImageMagick 的 convert 命令转换 HDR 到 PNG
+					// 先转换为临时 PNG，然后使用 sharp 转换为 WebP 并添加水印
+					const tempPng64 = path.join(wwwBuildingIconsDir, iconName + '_64_temp.png');
+					const tempPng256 = path.join(wwwBuildingIconsDir, iconName + '_256_temp.png');
+					
+					// 使用 ImageMagick 转换 HDR 到 PNG（64 尺寸）
+					execSync(`convert "${foundPath}" -resize 64x64 -quality 95 "${tempPng64}"`, { stdio: 'pipe' });
+					// 使用 sharp 转换为 WebP 并添加水印
+					const resized64 = await sharp(tempPng64).toBuffer();
+					const watermarked64 = await addWatermarkToImage(resized64, 'SRCC');
+					fs.writeFileSync(destPath64, watermarked64);
+					fs.unlinkSync(tempPng64); // 删除临时文件
+					
+					// 使用 ImageMagick 转换 HDR 到 PNG（256 尺寸）
+					execSync(`convert "${foundPath}" -resize 256x256 -quality 95 "${tempPng256}"`, { stdio: 'pipe' });
+					// 使用 sharp 转换为 WebP 并添加水印
+					const resized256 = await sharp(tempPng256).toBuffer();
+					const watermarked256 = await addWatermarkToImage(resized256, 'SRCC');
+					fs.writeFileSync(destPath256, watermarked256);
+					fs.unlinkSync(tempPng256); // 删除临时文件
+					
+					copiedBuildingIcons++;
+					console.log(`  转换 HDR 图标: ${iconName} (${className})`);
+				} catch (error) {
+					console.error(`  转换 HDR 失败: ${iconName} (${className}):`, error);
+					missingBuildingIcons.push(`${className} (${building.name}): ${iconName} (HDR 转换失败)`);
+				}
+			} else {
+				missingBuildingIcons.push(`${className} (${building.name}): ${iconName} (不支持的文件格式)`);
+			}
+		} else {
+			missingBuildingIcons.push(`${className} (${building.name}): ${iconName}`);
+		}
+	} else {
+		missingBuildingIcons.push(`${className} (${building.name}): 无图标`);
+		}
 	}
-}
-console.log(`复制了 ${copiedBuildingIcons} 个建筑图标`);
+	
+	console.log(`复制了 ${copiedBuildingIcons} 个建筑图标`);
+	if (missingBuildingIcons.length > 0) {
+		console.log(`\n警告: ${missingBuildingIcons.length} 个建筑缺少图标:`);
+		missingBuildingIcons.slice(0, 10).forEach(msg => console.log(`  - ${msg}`));
+		if (missingBuildingIcons.length > 10) {
+			console.log(`  ... 还有 ${missingBuildingIcons.length - 10} 个`);
+		}
+	}
+})();
 
 // 解析 Corporations
 console.log(`\n解析 Corporations...`);
@@ -1112,33 +1543,126 @@ if (!fs.existsSync(wwwCorporationIconsDir)) {
 }
 
 let copiedCorporationIcons = 0;
-for (const className in newData.corporations!) {
-	const corporation = newData.corporations![className];
-	if (corporation.icon) {
-		const iconName = corporation.icon;
-		// 尝试多个可能的路径
-		const possiblePaths = [
-			path.join(corporationIconsDir, iconName + '.png'),
-			path.join(corporationIconsDir, iconName.replace('SR_', '') + '.png'),
-			path.join(corporationSidebarIconsDir, iconName + '.png'),
-			path.join(corporationSidebarIconsDir, iconName.replace('SR_', '') + '.png'),
-		];
-		
-		for (const iconPath of possiblePaths) {
-			if (fs.existsSync(iconPath)) {
-				// 复制 64 尺寸
-				const destPath64 = path.join(wwwCorporationIconsDir, iconName + '_64.png');
-				fs.copyFileSync(iconPath, destPath64);
-				// 复制 256 尺寸（详情页使用）
-				const destPath256 = path.join(wwwCorporationIconsDir, iconName + '_256.png');
-				fs.copyFileSync(iconPath, destPath256);
-				copiedCorporationIcons++;
-				break;
+
+// 使用异步函数处理公司图标复制（支持 PNG 转 WebP）
+(async () => {
+	for (const className in newData.corporations!) {
+		const corporation = newData.corporations![className];
+		if (corporation.icon) {
+			const iconName = corporation.icon;
+			// 尝试多个可能的路径
+			const possiblePaths = [
+				path.join(corporationIconsDir, iconName + '.png'),
+				path.join(corporationIconsDir, iconName.replace('SR_', '') + '.png'),
+				path.join(corporationSidebarIconsDir, iconName + '.png'),
+				path.join(corporationSidebarIconsDir, iconName.replace('SR_', '') + '.png'),
+			];
+			
+			for (const iconPath of possiblePaths) {
+				if (fs.existsSync(iconPath)) {
+					// 转换为 WebP 并添加水印（SEO 友好）
+					try {
+						const destPath64 = path.join(wwwCorporationIconsDir, iconName + '_64.webp');
+						const destPath256 = path.join(wwwCorporationIconsDir, iconName + '_256.webp');
+						
+						// 使用 sharp 转换为 WebP（64 尺寸）并添加水印
+						const resized64 = await sharp(iconPath)
+							.resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked64 = await addWatermarkToImage(resized64, 'SRCC');
+						fs.writeFileSync(destPath64, watermarked64);
+						
+						// 使用 sharp 转换为 WebP（256 尺寸）并添加水印
+						const resized256 = await sharp(iconPath)
+							.resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked256 = await addWatermarkToImage(resized256, 'SRCC');
+						fs.writeFileSync(destPath256, watermarked256);
+						
+						copiedCorporationIcons++;
+						break;
+					} catch (error) {
+						console.error(`  转换公司图标失败: ${iconName} (${className}):`, error);
+						break;
+					}
+				}
 			}
 		}
 	}
+	
+	console.log(`复制了 ${copiedCorporationIcons} 个公司图标`);
+})();
+
+// 复制 Schematic (Recipe/Blueprint) 图标
+console.log(`\n复制 Schematic 图标...`);
+const wwwSchematicIconsDir = path.join(__dirname, '..', 'www', 'assets', 'images', 'items');
+if (!fs.existsSync(wwwSchematicIconsDir)) {
+	fs.mkdirSync(wwwSchematicIconsDir, { recursive: true });
 }
-console.log(`复制了 ${copiedCorporationIcons} 个公司图标`);
+
+let copiedSchematicIcons = 0;
+
+// 使用异步函数处理 Schematic 图标复制（支持 PNG 转 WebP 并添加水印）
+(async () => {
+	for (const className in newData.schematics!) {
+		const schematic = newData.schematics![className];
+		if (schematic.icon) {
+			const iconName = schematic.icon;
+			// 尝试多个可能的路径（包括 RecipeItemBlueprints 目录）
+			const possiblePaths = [
+				path.join(itemIconsDir, iconName + '.png'),
+				path.join(itemIconsDir, iconName.replace('T_', '') + '.png'),
+				path.join(itemIconsDir, 'RecipeItemBlueprints', iconName + '.png'),
+				path.join(itemIconsDir, 'RecipeItemBlueprints', iconName.replace('T_', '') + '.png'),
+			];
+			
+			for (const iconPath of possiblePaths) {
+				if (fs.existsSync(iconPath)) {
+					// 转换为 WebP 并添加水印（SEO 友好）
+					try {
+						const destPath64 = path.join(wwwSchematicIconsDir, iconName + '_64.webp');
+						const destPath256 = path.join(wwwSchematicIconsDir, iconName + '_256.webp');
+						
+						// 检查是否已存在（避免重复处理）
+						if (fs.existsSync(destPath64) && fs.existsSync(destPath256)) {
+							// 如果文件已存在且是今天生成的，跳过
+							const stat64 = fs.statSync(destPath64);
+							const stat256 = fs.statSync(destPath256);
+							const today = new Date();
+							today.setHours(0, 0, 0, 0);
+							if (stat64.mtime >= today && stat256.mtime >= today) {
+								copiedSchematicIcons++;
+								break;
+							}
+						}
+						
+						// 使用 sharp 转换为 WebP（64 尺寸）并添加水印
+						const resized64 = await sharp(iconPath)
+							.resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked64 = await addWatermarkToImage(resized64, 'SRCC');
+						fs.writeFileSync(destPath64, watermarked64);
+						
+						// 使用 sharp 转换为 WebP（256 尺寸）并添加水印
+						const resized256 = await sharp(iconPath)
+							.resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+							.toBuffer();
+						const watermarked256 = await addWatermarkToImage(resized256, 'SRCC');
+						fs.writeFileSync(destPath256, watermarked256);
+						
+						copiedSchematicIcons++;
+						break;
+					} catch (error) {
+						console.error(`  转换 Schematic 图标失败: ${iconName} (${className}):`, error);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	console.log(`复制了 ${copiedSchematicIcons} 个 Schematic 图标`);
+})();
 
 // 解析导出物品数据表
 console.log(`\n解析导出物品数据表...`);

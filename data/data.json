@@ -5372,7 +5372,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_Aerogel": {
@@ -5444,7 +5446,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Anti-RadiationCovers": {
@@ -5482,7 +5486,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_AntimatterGenerator": {
@@ -5656,7 +5662,9 @@
           "amount": 10
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_BasicBuildingMaterial_ItemPrinter": {
@@ -5814,7 +5822,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_Biofilament": {
@@ -5890,7 +5900,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_CalciteSheets": {
@@ -5916,7 +5928,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_CalciumBlock": {
@@ -5942,7 +5956,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Smelter"
+      ],
       "isVariablePower": false
     },
     "CR_CalciumPowder": {
@@ -5968,7 +5984,9 @@
           "amount": 3
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_CarbonSonar": {
@@ -6036,7 +6054,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_Coil": {
@@ -6070,7 +6090,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_Condenser": {
@@ -6108,7 +6130,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_ContainmentVessel": {
@@ -6188,7 +6212,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Converter": {
@@ -6226,7 +6252,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Cyclotrone": {
@@ -6264,7 +6292,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Dome": {
@@ -6302,7 +6332,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Electromagnet": {
@@ -6336,7 +6368,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_ElectromagneticCoil": {
@@ -6374,7 +6408,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_Electronics": {
@@ -6408,7 +6444,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_Epoxy": {
@@ -6476,7 +6514,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_FEAccessItem_ItemPrinter": {
@@ -6540,7 +6580,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_GenomeAlternator": {
@@ -6608,7 +6650,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_GoethiteIngot": {
@@ -6774,7 +6818,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_HardeningAgent": {
@@ -6808,7 +6854,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_HeatResistantSheet": {
@@ -6842,7 +6890,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_HeatShield": {
@@ -6880,7 +6930,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_HeavyAmmo": {
@@ -6910,7 +6962,9 @@
           "amount": 15
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_HeavyAmmo_ItemPrinter": {
@@ -6978,7 +7032,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_IntermediateBuildingMaterial": {
@@ -7016,7 +7072,9 @@
           "amount": 25
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_IntermediateBuildingMaterial_ItemPrinter": {
@@ -7130,7 +7188,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_IonStabilizer": {
@@ -7240,7 +7300,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_Lens": {
@@ -7274,7 +7336,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_LiquidHelium": {
@@ -7304,7 +7368,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_MECSPart": {
@@ -7524,7 +7590,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_MolecularScalpel": {
@@ -7596,7 +7664,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_Nanosyringe": {
@@ -7634,7 +7704,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_NeutrinoBomb": {
@@ -7794,7 +7866,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_OnboardInstruments": {
@@ -8006,7 +8080,9 @@
           "amount": 25
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_PistolAmmo_ItemPrinter": {
@@ -8096,7 +8172,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_PlasmaOxygenConverter": {
@@ -8214,7 +8292,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_PressurizedHelium": {
@@ -8244,7 +8324,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Refinery"
+      ],
       "isVariablePower": false
     },
     "CR_PropulsionStage": {
@@ -8362,7 +8444,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_QuantumTranqualizer": {
@@ -8430,7 +8514,9 @@
           "amount": 20
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_ItemPrinter"
+      ],
       "isVariablePower": false
     },
     "CR_RNAStabilizer": {
@@ -8544,7 +8630,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_RefinedOil": {
@@ -8684,7 +8772,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_RocketEngine": {
@@ -8722,7 +8812,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_RocketFuel": {
@@ -8790,7 +8882,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_SatelliteAssembly": {
@@ -8870,7 +8964,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Scafolding": {
@@ -8908,7 +9004,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Scanner": {
@@ -8942,7 +9040,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Assembler"
+      ],
       "isVariablePower": false
     },
     "CR_Self-sustainedHabitat": {
@@ -9044,7 +9144,9 @@
           "amount": 15
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_ShotgunAmmo_ItemPrinter": {
@@ -9108,7 +9210,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_StandardAmmo": {
@@ -9138,7 +9242,9 @@
           "amount": 20
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_StandardAmmo_ItemPrinter": {
@@ -9198,7 +9304,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_SubstanceFHS-135-493": {
@@ -9266,7 +9374,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Refinery"
+      ],
       "isVariablePower": false
     },
     "CR_Superconductor": {
@@ -9300,7 +9410,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_Supermagnet": {
@@ -9334,7 +9446,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_SyntheticDNA": {
@@ -9474,7 +9588,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Synthetizer"
+      ],
       "isVariablePower": false
     },
     "CR_Syringe": {
@@ -9504,7 +9620,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_TitaniumBar": {
@@ -9530,7 +9648,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Smelter"
+      ],
       "isVariablePower": false
     },
     "CR_TitaniumBeam": {
@@ -9556,7 +9676,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_TitaniumHousing": {
@@ -9586,7 +9708,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_TitaniumRod": {
@@ -9612,7 +9736,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_TitaniumSheet": {
@@ -9638,7 +9764,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_TrackingDevice": {
@@ -9676,7 +9804,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Factory"
+      ],
       "isVariablePower": false
     },
     "CR_Tube": {
@@ -9706,7 +9836,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_Turbine": {
@@ -9744,7 +9876,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_UberOil": {
@@ -9940,7 +10074,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Hammer"
+      ],
       "isVariablePower": false
     },
     "CR_WolframBar": {
@@ -9966,7 +10102,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Smelter"
+      ],
       "isVariablePower": false
     },
     "CR_WolframPlate": {
@@ -9992,7 +10130,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_WolframPowder": {
@@ -10018,7 +10158,9 @@
           "amount": 3
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Furnace"
+      ],
       "isVariablePower": false
     },
     "CR_WolframWire": {
@@ -10044,7 +10186,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_Crafter"
+      ],
       "isVariablePower": false
     },
     "CR_AntidoteFluid": {
@@ -10074,7 +10218,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AntidoteGel": {
@@ -10104,7 +10250,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AntidoteShards": {
@@ -10134,7 +10282,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaBar": {
@@ -10164,7 +10314,9 @@
           "amount": 3
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaBlockCapsules": {
@@ -10194,7 +10346,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaChew": {
@@ -10224,7 +10378,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaFluid": {
@@ -10254,7 +10410,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaGel": {
@@ -10284,7 +10442,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_AquaStimShards": {
@@ -10314,7 +10474,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieBar": {
@@ -10344,7 +10506,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieBlockCapsules": {
@@ -10374,7 +10538,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieChew": {
@@ -10404,7 +10570,9 @@
           "amount": 3
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieFluid": {
@@ -10434,7 +10602,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieGel": {
@@ -10464,7 +10634,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CalorieStimShards": {
@@ -10494,7 +10666,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_ClearCapsules": {
@@ -10524,7 +10698,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_CorrosionResPlasm": {
@@ -10554,7 +10730,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_DrainResPlasm": {
@@ -10584,7 +10762,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_EnergyBoostCapsules": {
@@ -10614,7 +10794,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_EnergyBoostChew": {
@@ -10644,7 +10826,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_EnergyStimShards": {
@@ -10674,7 +10858,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_Figler": {
@@ -10700,7 +10886,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_HealthShards": {
@@ -10730,7 +10918,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_Hydrolite": {
@@ -10756,7 +10946,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_InfectionResPlasm": {
@@ -10786,7 +10978,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriBar": {
@@ -10816,7 +11010,9 @@
           "amount": 3
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriBlockCapsules": {
@@ -10846,7 +11042,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriChew": {
@@ -10876,7 +11074,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriFluid": {
@@ -10906,7 +11106,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriGel": {
@@ -10936,7 +11138,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_NutriStimShards": {
@@ -10966,7 +11170,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_Polisnack": {
@@ -10992,7 +11198,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_Purfins": {
@@ -11022,7 +11230,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_RegenCapsules": {
@@ -11052,7 +11262,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_SerpentSticks": {
@@ -11078,7 +11290,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_StarBites": {
@@ -11104,7 +11318,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_Sulbon": {
@@ -11130,7 +11346,9 @@
           "amount": 1
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     },
     "CR_TermoResPlasm": {
@@ -11160,7 +11378,9 @@
           "amount": 2
         }
       ],
-      "producedIn": [],
+      "producedIn": [
+        "BD_FoodProcessor"
+      ],
       "isVariablePower": false
     }
   },
@@ -11517,7 +11737,8 @@
             "quantity": 100
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Decoy/T_Decoy_Icon"
     },
     "BD_DroneJunction_2x2": {
       "slug": "rail-junction-2x2",
@@ -11551,41 +11772,8 @@
             "quantity": 10
           }
         ]
-      }
-    },
-    "BD_DroneJunction_4_2x2": {
-      "slug": "rail-junction-2x2",
-      "icon": "T_DroneJunction_4_Icon",
-      "name": "Rail Junction 2x2",
-      "description": "Connection for Drone Rails. Allows spliting and expanding their paths.",
-      "className": "BD_DroneJunction_4_2x2",
-      "categories": [],
-      "buildMenuPriority": 20,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
       },
-      "size": {
-        "width": 200,
-        "length": 200,
-        "height": 0
-      },
-      "buildingType": "Transport",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Transport",
-        "minPlacementDistance": 200,
-        "maxPlacementDistance": 600,
-        "droneMaxPlacementDistance": 10000,
-        "stabilityCost": 60,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 10
-          }
-        ]
-      }
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneJunction_4_Icon"
     },
     "BD_DroneLane_3_2x2": {
       "slug": "rail-support-3-lanes-2x2",
@@ -11619,7 +11807,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneLane_3_Icon"
     },
     "BD_DroneLane_5_2x2": {
       "slug": "rail-support-5-lanes-2x2",
@@ -11653,7 +11842,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneLane_5_Icon"
     },
     "BD_DroneMerger3To1_2x2": {
       "slug": "rail-node-2x2",
@@ -11687,7 +11877,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneMerger3To1_Icon"
     },
     "BD_DroneMerger5To1_2x2": {
       "slug": "big-rail-node-2x2",
@@ -11721,7 +11912,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneMerger5To1_Icon"
     },
     "BD_DroneJunction": {
       "slug": "drone-junction",
@@ -11790,7 +11982,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneJunction_4_Icon"
     },
     "BD_DroneLane_3": {
       "slug": "multirail-3",
@@ -11825,7 +12018,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneLane_3_Icon"
     },
     "BD_DroneLane_5": {
       "slug": "multirail-5",
@@ -11860,7 +12054,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneLane_5_Icon"
     },
     "BD_DroneMerger_3To1": {
       "slug": "rail-modulator-3",
@@ -11895,7 +12090,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneMerger3To1_Icon"
     },
     "BD_DroneMerger_5To1": {
       "slug": "rail-modulator-5",
@@ -11930,7 +12126,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneJunction/Icons/T_DroneMerger5To1_Icon"
     },
     "BD_DronePole": {
       "slug": "rail-support",
@@ -11965,7 +12162,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DronePole/T_DroneRailSupport_Icon"
     },
     "BD_DronePole_2x2": {
       "slug": "rail-pole-2x2",
@@ -11999,7 +12197,8 @@
             "quantity": 5
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DronePole/T_DroneRailSupport_Icon"
     },
     "BD_DroneRailT1": {
       "slug": "rail-v-1",
@@ -12031,7 +12230,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneRail/Icons/T_DroneRailT1_Icon"
     },
     "BD_DroneRailT2": {
       "slug": "rail-v-2",
@@ -12063,7 +12263,8 @@
             "quantity": 3
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneRail/Icons/T_DroneRailT2_Icon"
     },
     "BD_DroneRailT3": {
       "slug": "rail-v-3",
@@ -12096,7 +12297,8 @@
             "quantity": 3
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/DroneConnections/DroneRail/Icons/T_DroneRailT3_Icon"
     },
     "BD_DroneInvisiblePole": {
       "slug": "bd-droneinvisiblepole",
@@ -12167,7 +12369,8 @@
             "quantity": 120
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Exporter/T_Exporter_Icon"
     },
     "BD_Factory": {
       "slug": "constructorizer",
@@ -12301,70 +12504,6 @@
           {
             "item": "I_BasicBuildingMaterial",
             "quantity": 100
-          }
-        ]
-      }
-    },
-    "BD_FE_Armory": {
-      "slug": "equipment-upgrade-station",
-      "icon": "T_Armory_Icon",
-      "name": "Equipment Upgrade Station",
-      "description": "Used for weapon management. Unlocks new weapons, and mods in exchange for War Bonds. Has to be placed inside a Habitat.",
-      "className": "BD_FE_Armory",
-      "categories": [],
-      "buildMenuPriority": 4,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Player",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Player",
-        "corporation": "ECrCorporation::GriffithsBlueCorporation",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 120
-          }
-        ]
-      }
-    },
-    "BD_FE_SuitWorkshop": {
-      "slug": "l-e-m-station",
-      "icon": "T_SuitWorkshop_Icon",
-      "name": "L.E.M. Station",
-      "description": "Allows instalation of Limbistic Enchancement Membranes (LEMs). Has to be placed inside a Habitat.",
-      "className": "BD_FE_SuitWorkshop",
-      "categories": [],
-      "buildMenuPriority": 5,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Player",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Player",
-        "corporation": "ECrCorporation::FutureHealthSolution",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 150
           }
         ]
       }
@@ -12590,38 +12729,6 @@
         ]
       }
     },
-    "BD_StartingItemPrinter": {
-      "slug": "basic-item-printer",
-      "icon": "T_ItemPrinter_Icon",
-      "name": "Basic Item Printer",
-      "description": "Can create some basic stuff",
-      "className": "BD_StartingItemPrinter",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Survival",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Survival",
-        "minPlacementDistance": 300,
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 100
-          }
-        ]
-      }
-    },
     "BD_Analyzer": {
       "slug": "analyzing-station",
       "icon": "T_Analyzer_Icon",
@@ -12724,38 +12831,6 @@
       "_bdData": {
         "buildingType": "ECrBuildingType::Player",
         "corporation": "ECrCorporation::FutureHealthSolution",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 100
-          }
-        ]
-      }
-    },
-    "BD_CloningBed_Lander": {
-      "slug": "regeneration-chamber",
-      "icon": "T_CloningBed_Icon",
-      "name": "Regeneration Chamber",
-      "description": "Respawn point. One player can claim one Regeneration Chamber at a time. Can be used to change Characters. Has to be placed inside a Habitat.",
-      "className": "BD_CloningBed_Lander",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Player",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Player",
-        "minPlacementDistance": 600,
         "droneMaxPlacementDistance": 10000,
         "resourceRequirements": [
           {
@@ -12921,39 +12996,6 @@
       "_bdData": {
         "buildingType": "ECrBuildingType::Habitat",
         "corporation": "ECrCorporation::CleverRobotics",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 60
-          }
-        ]
-      }
-    },
-    "BD_PersonalStorage_NonDeconstructible": {
-      "slug": "personal-storage",
-      "icon": "T_PersonalStorage",
-      "name": "Personal Storage",
-      "description": "For storing items",
-      "className": "BD_PersonalStorage_NonDeconstructible",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "corporation": "ECrCorporation::CleverRobotics",
-        "minPlacementDistance": 600,
         "droneMaxPlacementDistance": 10000,
         "resourceRequirements": [
           {
@@ -13141,132 +13183,6 @@
         ]
       }
     },
-    "BD_Modular_BasePlatformStability": {
-      "slug": "supported-platform",
-      "icon": "T_BasePlatform_Icon",
-      "name": "Supported Platform",
-      "description": "Platform that can be placed on terrain.",
-      "className": "BD_Modular_BasePlatformStability",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "CustomBuilding",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::CustomBuilding",
-        "droneMaxPlacementDistance": 10000,
-        "stabilityCost": 15,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 1
-          }
-        ]
-      }
-    },
-    "BD_Modular_ConnectingPlatformStability": {
-      "slug": "platform",
-      "icon": "T_ConnectingPlatform_Icon",
-      "name": "Platform",
-      "description": "Can be connected to other Platforms or placed on Pillar Supports.",
-      "className": "BD_Modular_ConnectingPlatformStability",
-      "categories": [],
-      "buildMenuPriority": 2,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "CustomBuilding",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::CustomBuilding",
-        "droneMaxPlacementDistance": 10000,
-        "stabilityCost": 15,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 1
-          }
-        ]
-      }
-    },
-    "BD_Airlock_NonDeconstructible": {
-      "slug": "airlock",
-      "icon": "T_Airlock_Icon",
-      "name": "Airlock",
-      "description": "Allows player to go inside the room",
-      "className": "BD_Airlock_NonDeconstructible",
-      "categories": [],
-      "buildMenuPriority": 3,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 100
-          }
-        ]
-      }
-    },
-    "BD_Airlock_StartingHUB": {
-      "slug": "airlock",
-      "icon": "T_Airlock_Icon",
-      "name": "Airlock",
-      "description": "Allows player to go inside the room",
-      "className": "BD_Airlock_StartingHUB",
-      "categories": [],
-      "buildMenuPriority": 3,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 100
-          }
-        ]
-      }
-    },
     "BD_Airlock": {
       "slug": "airlock",
       "icon": "T_Airlock_Icon",
@@ -13297,7 +13213,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/Airlock/T_Airlock_Icon"
     },
     "BD_HorizontalBridgeConnector": {
       "slug": "horizontal-bridge-connector",
@@ -13328,7 +13245,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/RoomBridges/HorizonalBridgeConnector/T_HorizontalBridgeConnector_Icon"
     },
     "BD_HorizontalBridge": {
       "slug": "horizontal-connector",
@@ -13361,7 +13279,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/RoomBridges/HorizontalBridge/T_HorizontalBridge_Icon"
     },
     "BD_HorizontalBridgeSegment": {
       "slug": "horizontal-bridge-segment",
@@ -13392,7 +13311,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/RoomBridges/HorizontalBridgeSegment/T_HorizontalBridgeSegment_Icon"
     },
     "BD_VerticalBridge": {
       "slug": "vertical-connector",
@@ -13425,103 +13345,11 @@
             "quantity": 10
           }
         ]
-      }
-    },
-    "BD_ViewportLeft": {
-      "slug": "viewport",
-      "icon": "T_Viewport_Icon",
-      "name": "Viewport",
-      "description": "Replaces the wall",
-      "className": "BD_ViewportLeft",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
       },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 10
-          }
-        ]
-      }
-    },
-    "BD_ViewportMiddle": {
-      "slug": "viewport",
-      "icon": "T_Viewport_Icon",
-      "name": "Viewport",
-      "description": "Replaces the wall",
-      "className": "BD_ViewportMiddle",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 10
-          }
-        ]
-      }
-    },
-    "BD_ViewportRight": {
-      "slug": "viewport",
-      "icon": "T_Viewport_Icon",
-      "name": "Viewport",
-      "description": "Replaces the wall",
-      "className": "BD_ViewportRight",
-      "categories": [],
-      "buildMenuPriority": 0,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
-      },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "Habitat",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::Habitat",
-        "droneMaxPlacementDistance": 10000,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 10
-          }
-        ]
-      }
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/RoomBridges/VerticalBridge/T_VerticalBridge_Icon"
     },
     "BD_ViewportSingle": {
-      "slug": "viewport",
+      "slug": "viewport-viewportsingle",
       "icon": "T_Viewport_Icon",
       "name": "Viewport",
       "description": "Transparent barrier that resembles a window. Has to be placed on a Habitat wall.",
@@ -13550,7 +13378,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/HabitatModules/Viewport/T_Viewport_Icon"
     },
     "BD_HabitatBig": {
       "slug": "large-habitat",
@@ -13652,7 +13481,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Ladder/T_Modular_Ladder"
     },
     "BD_Modular_PillarSupport": {
       "slug": "pillar-support",
@@ -13686,7 +13516,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/PillarSupport/T_PillarSupport_Icon"
     },
     "BD_Modular_Railing": {
       "slug": "safety-barrier",
@@ -13719,7 +13550,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Railing/RailingRegular/T_Railing_Icon"
     },
     "BD_Modular_StairsBarrierFlatL": {
       "slug": "stairs-railing",
@@ -13751,39 +13583,8 @@
             "quantity": 1
           }
         ]
-      }
-    },
-    "BD_Modular_StairsBarrierL": {
-      "slug": "stairs-railing",
-      "icon": "T_Railing_Icon",
-      "name": "Stairs Railing",
-      "description": "Basic metal barrier for stairs",
-      "className": "BD_Modular_StairsBarrierL",
-      "categories": [],
-      "buildMenuPriority": 11,
-      "metadata": {
-        "_daData": {
-          "availableRecipes": []
-        },
-        "_bpData": {}
       },
-      "size": {
-        "width": 0,
-        "length": 0,
-        "height": 0
-      },
-      "buildingType": "CustomBuilding",
-      "_bdData": {
-        "buildingType": "ECrBuildingType::CustomBuilding",
-        "droneMaxPlacementDistance": 10000,
-        "stabilityCost": 15,
-        "resourceRequirements": [
-          {
-            "item": "I_BasicBuildingMaterial",
-            "quantity": 1
-          }
-        ]
-      }
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Railing/RailingRegular/T_Railing_Icon"
     },
     "BD_Modular_SafetyBarrierDiagonal": {
       "slug": "angled-safety-barrier",
@@ -13815,7 +13616,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Railing/SafetyBarrierDiagonal/T_Modular_SafetyBarrierDiagonal"
     },
     "BD_Modular_BasePlatform": {
       "slug": "supported-platform",
@@ -13848,7 +13650,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Tiles/BasePlatform/T_BasePlatform_Icon"
     },
     "BD_Modular_ConnectingPlatform": {
       "slug": "platform",
@@ -13881,7 +13684,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Tiles/ConnectingPlatform/T_ConnectingPlatform_Icon"
     },
     "BD_Modular_Stairs": {
       "slug": "stairs",
@@ -13914,7 +13718,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Tiles/Stairs/T_ModularStairs_Icon"
     },
     "BD_Modular_StairsFlat": {
       "slug": "shallow-stairs",
@@ -13947,7 +13752,8 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Tiles/Stairs/StairsFlat/T_Modular_StairsFlat_Icon"
     },
     "BD_Walkway": {
       "slug": "extendable-walkway",
@@ -13980,7 +13786,8 @@
             "quantity": 10
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Modular/Walkway/T_Walkway_Icon"
     },
     "BD_PackageReceiver": {
       "slug": "cargo-receiver",
@@ -14082,7 +13889,8 @@
             "quantity": 100
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Prototypes/ChemicalProcessor/T_ChemicalProcessor_Icon"
     },
     "BD_MiniExporter": {
       "slug": "mini-exporter",
@@ -14115,7 +13923,8 @@
             "quantity": 100
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Prototypes/MiniExporter/T_MiniExporter_Icon"
     },
     "BD_SonicDrill": {
       "slug": "sonic-drill",
@@ -14149,7 +13958,8 @@
             "quantity": 100
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/Prototypes/SonicDrill/T_SonicDrill_Icon"
     },
     "BD_Refinery": {
       "slug": "refinery",
@@ -14703,7 +14513,8 @@
             "quantity": 400
           }
         ]
-      }
+      },
+      "_iconPath": "/Users/echo/Documents/website/SatisfactoryTools/data/StarRupture/Content/Chimera/Buildings/WindPowerGenerator/T_WindPowerGenerator_Icon"
     },
     "BD_WindPowerGeneratorTier2": {
       "slug": "wind-turbine-v-2",

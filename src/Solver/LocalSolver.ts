@@ -165,30 +165,30 @@ export class LocalSolver
 		});
 		
 		if (buildingCount > 0) {
-			// 获取单个建筑的产量（每分钟，100% 时钟速度）
-			const outputAmount = LocalSolver.getOutputAmount(recipe, itemClassName);
-			const buildingOutputPerMin = Formula.calculateProductAmountsPerMinute(
-				building as IManufacturerSchema,
-				recipe,
-				outputAmount,
-				100 // 100% 时钟速度
-			);
-			
-			// 计算产量倍数（目标产量 / 单个建筑产量）
-			// MachineGroup 会根据这个倍数和时钟速度来计算实际需要的建筑数量
-			const productionMultiplier = targetAmountPerMin / buildingOutputPerMin;
-			
-			// 计算需要的时钟速度
-			// 当 productionMultiplier < 1 时，使用 100% 时钟速度，让 MachineGroup 处理降频
-			// 这样 MachineGroup 会计算：Math.floor(productionMultiplier * 100 / 100) = 0，
-			// rest = productionMultiplier，会添加 1 台降频建筑（总共 1 台）
-			const clockSpeed = 100; // 始终使用 100%，让 MachineGroup 处理降频
-			
-			// 添加配方节点：格式为 "配方类名@时钟速度#建筑类名"
-			// amount 应该是产量倍数，MachineGroup 会根据这个倍数计算建筑数量
-			// 注意：每个建筑只能同时生产一个配方，所以不能将不同配方的产量倍数累加
-			// 使用配方类名作为 key 的一部分，确保每个配方都有独立的节点
-			const recipeKey = `${recipe.className}@${clockSpeed}#${building.className}`;
+				// 获取单个建筑的产量（每分钟，100% 时钟速度）
+				const outputAmount = LocalSolver.getOutputAmount(recipe, itemClassName);
+				const buildingOutputPerMin = Formula.calculateProductAmountsPerMinute(
+					building as IManufacturerSchema,
+					recipe,
+					outputAmount,
+					100 // 100% 时钟速度
+				);
+				
+				// 计算产量倍数（目标产量 / 单个建筑产量）
+				// MachineGroup 会根据这个倍数和时钟速度来计算实际需要的建筑数量
+				const productionMultiplier = targetAmountPerMin / buildingOutputPerMin;
+				
+				// 计算需要的时钟速度
+				// 当 productionMultiplier < 1 时，使用 100% 时钟速度，让 MachineGroup 处理降频
+				// 这样 MachineGroup 会计算：Math.floor(productionMultiplier * 100 / 100) = 0，
+				// rest = productionMultiplier，会添加 1 台降频建筑（总共 1 台）
+				const clockSpeed = 100; // 始终使用 100%，让 MachineGroup 处理降频
+				
+				// 添加配方节点：格式为 "配方类名@时钟速度#建筑类名"
+				// amount 应该是产量倍数，MachineGroup 会根据这个倍数计算建筑数量
+				// 注意：每个建筑只能同时生产一个配方，所以不能将不同配方的产量倍数累加
+				// 使用配方类名作为 key 的一部分，确保每个配方都有独立的节点
+				const recipeKey = `${recipe.className}@${clockSpeed}#${building.className}`;
 			
 			console.log('[LocalSolver.calculateProductionChain] 添加配方节点:', {
 				item: itemClassName,
@@ -211,13 +211,13 @@ export class LocalSolver
 				});
 			}
 			
-			// 不累加，每个配方独立计算建筑数量
-			result[recipeKey] = productionMultiplier;
-			
-			// 递归计算所需原材料
-			for (const ingredient of recipe.ingredients) {
+				// 不累加，每个配方独立计算建筑数量
+				result[recipeKey] = productionMultiplier;
+				
+				// 递归计算所需原材料
+				for (const ingredient of recipe.ingredients) {
 				const ingredientName = schema.items[ingredient.item]?.name || ingredient.item;
-				const ingredientAmountPerMin = (targetAmountPerMin / LocalSolver.getOutputAmount(recipe, itemClassName)) * ingredient.amount;
+					const ingredientAmountPerMin = (targetAmountPerMin / LocalSolver.getOutputAmount(recipe, itemClassName)) * ingredient.amount;
 				
 				console.log('[LocalSolver.calculateProductionChain] 递归计算原材料:', {
 					parentItem: itemClassName,
@@ -227,22 +227,22 @@ export class LocalSolver
 					ingredientAmount: ingredientAmountPerMin
 				});
 				
-				const ingredientResult = LocalSolver.calculateProductionChain(
-					ingredient.item,
-					ingredientAmountPerMin,
-					schema
-				);
+					const ingredientResult = LocalSolver.calculateProductionChain(
+						ingredient.item,
+						ingredientAmountPerMin,
+						schema
+					);
 				
 				console.log('[LocalSolver.calculateProductionChain] 原材料计算结果:', {
 					ingredient: ingredientName,
 					keys: Object.keys(ingredientResult),
 					result: ingredientResult
 				});
-				
-				// 合并原材料结果
-				for (const key in ingredientResult) {
-					if (ingredientResult.hasOwnProperty(key)) {
-						result[key] = (result[key] || 0) + ingredientResult[key];
+					
+					// 合并原材料结果
+					for (const key in ingredientResult) {
+						if (ingredientResult.hasOwnProperty(key)) {
+							result[key] = (result[key] || 0) + ingredientResult[key];
 					}
 				}
 			}
@@ -278,16 +278,16 @@ export class LocalSolver
 			
 			// 检查配方是否生产该物品
 			if (recipe.products && Array.isArray(recipe.products)) {
-				for (const product of recipe.products) {
-					if (product.item === itemClassName) {
+			for (const product of recipe.products) {
+				if (product.item === itemClassName) {
 						console.log('[LocalSolver.findRecipesForItem] 找到配方:', {
 							recipe: recipe.className,
 							recipeName: recipe.name,
 							productItem: product.item,
 							productAmount: product.amount
 						});
-						recipes.push(recipe);
-						break;
+					recipes.push(recipe);
+					break;
 					}
 				}
 			}
@@ -376,7 +376,7 @@ export class LocalSolver
 			_bdData: {}
 		};
 	}
-
+	
 	/**
 	 * 获取配方的生产建筑
 	 */
