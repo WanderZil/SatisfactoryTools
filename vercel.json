@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "www",
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
@@ -30,14 +31,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/assets/:path*", "destination": "/www/assets/:path*" },
-    { "source": "/img/:path*", "destination": "/www/img/:path*" },
-    { "source": "/robots.txt", "destination": "/www/robots.txt" },
-    { "source": "/sitemap.xml", "destination": "/www/sitemap.xml" },
-    { "source": "/sitemap-:name*.xml", "destination": "/www/sitemap-:name*.xml" },
-    { "source": "/favicon.ico", "destination": "/www/favicon.ico" },
-    { "source": "/index.html", "destination": "/www/index.html" },
-    { "source": "/:path*", "destination": "/www/index.html" }
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
 
