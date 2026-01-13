@@ -35,6 +35,24 @@ export class ManufacturerRecipesComponentController implements IOnInit
 
 	private getRecipes(): IRecipeSchema[]
 	{
+		// 优先使用建筑的 availableRecipes（从 CRC 文件提取的 recipe 集合）
+		const availableRecipes = (this.building.metadata as any)._daData?.availableRecipes;
+		if (availableRecipes && availableRecipes.length > 0) {
+			const recipeSchemas: IRecipeSchema[] = [];
+			const allRecipes = data.getRawData().recipes;
+			for (const recipeClassName of availableRecipes) {
+				// 从 recipes 中查找
+				const recipe = allRecipes[recipeClassName];
+				if (recipe) {
+					recipeSchemas.push(recipe);
+				}
+			}
+			if (recipeSchemas.length > 0) {
+				return recipeSchemas;
+			}
+		}
+
+		// 如果没有 availableRecipes 或找不到对应的 recipes，使用原来的逻辑
 		const recipeSchemas = Object.values(data.getRawData().recipes);
 		if (this.isManualManufacturer(this.building) && Constants.WORKSHOP_CLASSNAME === this.building.className) {
 			return recipeSchemas.filter((recipe: IRecipeSchema) => {
@@ -47,7 +65,7 @@ export class ManufacturerRecipesComponentController implements IOnInit
 			});
 		}
 		return recipeSchemas.filter((recipe: IRecipeSchema) => {
-			return recipe.producedIn.indexOf(this.building.className) > -1;
+			return recipe.producedIn && recipe.producedIn.indexOf(this.building.className) > -1;
 		});
 	}
 

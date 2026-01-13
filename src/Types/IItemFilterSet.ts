@@ -9,5 +9,6 @@ export interface IItemFilterSet
 	onlyWithEnergyValue: boolean;
 	stackSize: STACK_SIZES | null;
 	physicalState: PHYSICAL_STATES | null;
+	itemType: string | null; // UIItemType 过滤
 
 }

@@ -14,5 +14,39 @@ data/diff.txt
 node_modules
 yarn-error.log
 
-# Generated sources
-www/assets/app.js
+# Generated sources (webpack build output)
+# - Keep JS bundles/chunks out of git; they are produced by `yarn build` on CI/Vercel
+www/assets/*.js
+www/assets/*.js.map
+
+# macOS / IDE noise
+.DS_Store
+**/.DS_Store
+
+# Yarn Berry state (not required for running/building)
+.yarn/install-state.gz
+.yarn/
+.yarnrc.yml
+
+# StarRupture raw extracted data (large, not needed for website runtime)
+data/StarRupture.zip
+data/StarRupture/
+
+# Local extraction/intermediate artifacts (not needed for website runtime)
+AssetRegistry.json
+StarRupture.json
+DATA_MERGE_SUMMARY.md
+EXTRACTION_SUMMARY.md
+STARRUPTURE_DATA_ANALYSIS.md
+UNPACK_GUIDE.md
+data/CraftBuildings_Info.txt
+
+# Local data backups / intermediate exports (not needed for website runtime)
+data/*.backup
+data/*.backup*
+data/*_paths.txt
+data/dataWithStarRupture.json
+data/starRupture*.json
+
+# Prefer WebP in the website; avoid committing duplicated PNG conversions under items
+www/assets/images/items/*.png

@@ -6,6 +6,7 @@ import {ISchematicSchema} from '@src/Schema/ISchematicSchema';
 import {IScope} from 'angular';
 import {BuildingFiltersService} from '@src/Module/Services/BuildingFiltersService';
 import {IItemSchema} from '@src/Schema/IItemSchema';
+import {ICorporationSchema} from '@src/Schema/ICorporationSchema';
 
 export class BuildingController
 {
@@ -15,6 +16,7 @@ export class BuildingController
 	public recipes: IRecipeSchema[];
 	public usagesForBuilding: IRecipeSchema[];
 	public usagesForSchematics: ISchematicSchema[];
+	public corporationUnlocks: Array<{corporation: ICorporationSchema, level: number}> | null = null;
 	public static $inject = ['$state', '$transition$', 'BuildingFiltersService', '$scope'];
 
 	public constructor(
@@ -29,6 +31,7 @@ export class BuildingController
 		this.building = building;
 		this.buildingRecipe = this.getRecipeForCurrentBuilding();
 		this.itemFilterService.filter.query = this.building.name;
+		this.corporationUnlocks = data.getCorporationUnlocksForBuilding(this.building.className);
 		this.$scope.$watch(() => {
 			return this.itemFilterService.filter.query;
 		}, (newValue) => {
@@ -56,6 +59,22 @@ export class BuildingController
 	public resetFilter(): void
 	{
 		this.itemFilterService.resetFilters();
+	}
+
+	public isCraftingBuilding(): boolean
+	{
+		// 检查建筑的 Type 是否为 Crafting
+		const bdData = (this.building as any)._bdData;
+		if (bdData && bdData.buildingType) {
+			return bdData.buildingType.includes('Crafting');
+		}
+		return false;
+	}
+
+
+	public getCorporation(corporation: ICorporationSchema): ICorporationSchema
+	{
+		return corporation;
 	}
 
 }

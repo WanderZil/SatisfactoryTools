@@ -2,15 +2,16 @@ import {RecentlyVisitedItemsService} from '@src/Module/Services/RecentlyVisitedI
 import {IItemSchema} from '@src/Schema/IItemSchema';
 import {IFilterService} from '@src/Types/IFilterService';
 import {Strings} from '@src/Utils/Strings';
+import {StateService} from 'angular-ui-router';
 
 export class CodexController
 {
 
 	public filtersService: IFilterService<any>;
 	public entityPreviewState: string;
-	public static $inject = ['RecentlyVisitedItemsService'];
+	public static $inject = ['RecentlyVisitedItemsService', '$state'];
 
-	public constructor(public recentlyVisited: RecentlyVisitedItemsService)
+	public constructor(public recentlyVisited: RecentlyVisitedItemsService, public $state: StateService)
 	{
 	}
 
@@ -21,7 +22,8 @@ export class CodexController
 
 	public getFilteredItems(): IItemSchema[]
 	{
-		return this.filtersService.filterEntities();
+		const items = this.filtersService.filterEntities();
+		return items;
 	}
 
 }

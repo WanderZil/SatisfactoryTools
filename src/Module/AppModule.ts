@@ -1,6 +1,8 @@
 import {ILocationProvider, IModule, ISCEProvider, IScope, ITimeoutService} from 'angular';
 import {StateService, StateParams, UrlRouterProvider} from 'angular-ui-router';
 import {HomeController} from '@src/Module/Controllers/HomeController';
+import {PrivacyPolicyController} from '@src/Module/Controllers/PrivacyPolicyController';
+import {TermsOfServiceController} from '@src/Module/Controllers/TermsOfServiceController';
 import {AppDirective} from '@src/Module/Directives/AppDirective';
 import {ItemController} from '@src/Module/Controllers/ItemController';
 import {ItemIconDirective} from '@src/Module/Directives/ItemIconDirective';
@@ -15,6 +17,7 @@ import {IAppState, IAppStateProvider} from '@src/Types/IAppStateProvider';
 import data from '@src/Data/Data';
 import {BuildingFiltersService} from '@src/Module/Services/BuildingFiltersService';
 import {CodexComponent} from '@src/Module/Components/CodexComponent';
+import {TabsComponent} from '@src/Module/Components/TabsComponent';
 import {BuildingFilterComponent} from '@src/Module/Components/BuildingFilterComponent';
 import {PerfectScrollbarDirective} from '@src/Module/Directives/PerfectScrollbarDirective';
 import {LazyLoadDirective} from '@src/Module/Directives/LazyLoadDirective';
@@ -35,6 +38,9 @@ import {ComponentOptionsService} from '@src/Module/Services/ComponentOptionsServ
 import {SchematicFiltersService} from '@src/Module/Services/SchematicFiltersService';
 import {SchematicFilterComponent} from '@src/Module/Components/SchematicFilterComponent';
 import {SchematicController} from '@src/Module/Controllers/SchematicController';
+import {CorporationFiltersService} from '@src/Module/Services/CorporationFiltersService';
+import {CorporationFilterComponent} from '@src/Module/Components/CorporationFilterComponent';
+import {CorporationController} from '@src/Module/Controllers/CorporationController';
 import {April} from '@src/Utils/April';
 import {DataProvider} from '@src/Data/DataProvider';
 
@@ -80,41 +86,22 @@ export class AppModule
 					},
 				},
 				{
-					name: 'version',
-					ncyBreadcrumb: {
-						label: 'Ver',
-					},
-					parent: 'page_content',
-					abstract: true,
-					url: '/{version}?share={shareId}',
-					params: {
-						version: {
-							value: null,
-							squash: true,
-						},
-					},
-					onEnter: ['$stateParams', '$state$', ($stateParams: StateParams, $state$: IAppState) => {
-						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
-						$state$.ncyBreadcrumb.label = 'Game version: ' + $stateParams.version;
-					}],
-				},
-				{
 					name: 'listing',
 					ncyBreadcrumb: {
 						skip: true,
 					},
 					abstract: true,
 					url: '',
-					parent: 'version',
+					parent: 'page_content',
 					views: {
 						'page_content@root': 'entityListing',
 					},
 				},
 				{
 					name: 'home',
-					url: '/',
+					url: '/about',
 					ncyBreadcrumb: {
-						label: 'Satisfactory Tools',
+						label: 'About',
 					},
 					parent: 'listing',
 					views: {
@@ -126,28 +113,48 @@ export class AppModule
 					},
 				},
 				{
-					name: 'codex',
-					url: '/codex',
-					parent: 'listing',
-					abstract: true,
+					name: 'privacy-policy',
+					url: '/privacy-policy',
 					ncyBreadcrumb: {
-						parent: 'home',
-						label: 'Codex',
+						label: 'Privacy Policy',
+					},
+					parent: 'listing',
+					views: {
+						'content@listing': {
+							controller: 'PrivacyPolicyController',
+							controllerAs: 'ctrl',
+							template: require('@templates/Controllers/privacy-policy.html'),
+						},
+					},
+				},
+				{
+					name: 'terms-of-service',
+					url: '/terms-of-service',
+					ncyBreadcrumb: {
+						label: 'Terms of Service',
+					},
+					parent: 'listing',
+					views: {
+						'content@listing': {
+							controller: 'TermsOfServiceController',
+							controllerAs: 'ctrl',
+							template: require('@templates/Controllers/terms-of-service.html'),
+						},
 					},
 				},
 				{
 					name: 'schematics',
-					url: '/schematics',
+					url: '/blueprints',
 					ncyBreadcrumb: {
-						label: 'Schematics browser',
-						parent: 'codex',
+						label: 'Recipes',
+						parent: 'home',
 					},
 					onRetain: ['$transition$', 'filterService', ($transition: any, filterService: IFilterService<any>) => {
 						if ('schematic' === $transition.from().name) {
 							filterService.resetFilters();
 						}
 					}],
-					parent: 'codex',
+					parent: 'listing',
 					resolve: {
 						filterService: ['SchematicFiltersService', (service: SchematicFiltersService) => {
 							return service;
@@ -193,15 +200,15 @@ export class AppModule
 					name: 'buildings',
 					url: '/buildings',
 					ncyBreadcrumb: {
-						label: 'Buildings browser',
-						parent: 'codex',
+						label: 'Buildings',
+						parent: 'home',
 					},
 					onRetain: ['$transition$', 'filterService', ($transition: any, filterService: IFilterService<any>) => {
 						if ('building' === $transition.from().name) {
 							filterService.resetFilters();
 						}
 					}],
-					parent: 'codex',
+					parent: 'listing',
 					resolve: {
 						filterService: ['BuildingFiltersService', (service: BuildingFiltersService) => {
 							return service;
@@ -275,10 +282,10 @@ export class AppModule
 					name: 'items',
 					url: '/items',
 					ncyBreadcrumb: {
-						label: 'Item browser',
-						parent: 'codex',
+						label: 'Items',
+						parent: 'home',
 					},
-					parent: 'codex',
+					parent: 'listing',
 					resolve: {
 						filterService: ['ItemFiltersService', (service: ItemFiltersService) => {
 							return service;
@@ -317,12 +324,59 @@ export class AppModule
 					},
 				},
 				{
+					name: 'corporations',
+					url: '/corporations',
+					ncyBreadcrumb: {
+						label: 'Corporations',
+						parent: 'home',
+					},
+					onRetain: ['$transition$', 'filterService', ($transition: any, filterService: IFilterService<any>) => {
+						if ('corporation' === $transition.from().name) {
+							filterService.resetFilters();
+						}
+					}],
+					parent: 'listing',
+					resolve: {
+						filterService: ['CorporationFiltersService', (service: CorporationFiltersService) => {
+							return service;
+						}],
+						entityPreviewState: [() => {
+							return 'corporation';
+						}],
+					},
+					views: {
+						'content@listing': 'codex',
+						'filters@listing': 'corporationFilter',
+					},
+				},
+				{
+					name: 'corporation',
+					url: '/{item}',
+					parent: 'corporations',
+					ncyBreadcrumb: {
+						parent: 'corporations',
+					},
+					onEnter: ['$stateParams', '$state$', ($stateParams: StateParams, $state$: IAppState) => {
+						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
+						$state$.ncyBreadcrumb.label = data.getCorporationBySlug($stateParams.item)?.name;
+					}],
+					views: {
+						'content@listing': {
+							controller: 'CorporationController',
+							controllerAs: 'ctrl',
+							template: require('@templates/Controllers/corporation.html'),
+						},
+						'filters@listing': {
+							template: '', // 隐藏搜索框
+						},
+					},
+				},
+				{
 					name: 'production',
-					url: '/production',
+					url: '/',
 					parent: 'listing',
 					ncyBreadcrumb: {
-						label: 'Production',
-						parent: 'home',
+						label: 'Calculator',
 					},
 					views: {
 						'content@listing': {
@@ -336,6 +390,9 @@ export class AppModule
 			appStates.forEach((state) => {
 				$stateProvider.state(state);
 			});
+
+			// Set default route
+			$urlRouterProvider.otherwise('/');
 		}]);
 		this.app.config([
 			'$breadcrumbProvider',
@@ -347,37 +404,131 @@ export class AppModule
 			},
 		]);
 		this.app.run(['$transitions', '$rootScope', '$state', '$timeout', ($transitions: any, $rootScope: any, $state: StateService, $timeout: ITimeoutService) => {
-			$rootScope.aprilMode = April.isApril();
-			$rootScope.aprilModePossible = April.isAprilPossible();
+			// Initialize DataProvider with default data (0.8 which contains StarRupture data)
+			DataProvider.change('0.8');
 
-			const path = document.location.pathname;
-			let v = '0.8';
-			if (path.indexOf('/1.0-ficsmas') !== -1) {
-				v = '1.0-ficsmas';
-			} else if (path === '/' || path.indexOf('/1.0') !== -1) {
-				v = '1.0';
-			}
-			$rootScope.version = v;
-			DataProvider.change(v);
-
-			$rootScope.changeVersion = (ver: string) => {
-				document.location.href = document.location.href.replace($rootScope.version, ver);
+			const setMetaTag = (selector: string, attr: 'content'|'href', value: string) => {
+				const el = document.querySelector(selector) as HTMLMetaElement | HTMLLinkElement | null;
+				if (!el) {
+					return;
+				}
+				el.setAttribute(attr, value);
 			};
 
-			$transitions.onStart({}, (transition: ITransitionObject<{version: string, share?: string}>) => {
-				const version = transition.params().version;
-				const valid = ['0.8', '1.0', '1.0-ficsmas'];
+			const getAbsUrl = (path: string) => {
+				// Always use absolute URLs for canonical/OG to avoid duplicate indexing.
+				const origin = window.location.origin;
+				if (!path.startsWith('/')) {
+					path = '/' + path;
+				}
+				return origin + path;
+			};
 
-				let defaultVersion = '0.8';
-				if (transition.to().name === 'home') {
-					defaultVersion = '1.0';
+			const updateSeoMeta = () => {
+				// NOTE: This is a SPA. Without SSR/prerender, crawlers may not fully execute JS,
+				// but dynamic title/description/canonical still improves share previews and modern bot indexing.
+				const stateName = ($state.current && $state.current.name) ? $state.current.name : '';
+				const params: any = ($state.params || {});
+
+				let title = 'StarRupture Calculator';
+				let description = 'Production calculator and tools for StarRupture. Plan your industrial base, calculate production chains, and survive the Rupture cycles on planet Arcadia-7!';
+				let urlPath = window.location.pathname;
+				let imageUrl = getAbsUrl('/assets/images/icons/android-chrome-512x512.webp');
+
+				// List pages
+				if (stateName === 'production') {
+					title = 'StarRupture Calculator';
+					urlPath = '/';
+				} else if (stateName === 'home') {
+					title = 'About - StarRupture Calculator';
+					urlPath = '/about';
+				} else if (stateName === 'items') {
+					title = 'StarRupture Items Database';
+					urlPath = '/items';
+				} else if (stateName === 'buildings') {
+					title = 'StarRupture Buildings Database';
+					urlPath = '/buildings';
+				} else if (stateName === 'schematics') {
+					title = 'StarRupture Recipes Database';
+					urlPath = '/blueprints';
+				} else if (stateName === 'corporations') {
+					title = 'StarRupture Corporations';
+					urlPath = '/corporations';
+				} else if (stateName === 'privacy-policy') {
+					title = 'Privacy Policy - StarRupture Calculator';
+					urlPath = '/privacy-policy';
+				} else if (stateName === 'terms-of-service') {
+					title = 'Terms of Service - StarRupture Calculator';
+					urlPath = '/terms-of-service';
 				}
 
-				if (!valid.includes(version)) {
-					transition.abort();
-					$state.go(transition.to().name + '', {...transition.params(), version: defaultVersion}, {location: 'replace', reload: true, inherit: true});
+				// Detail pages (use game data if available)
+				if (stateName === 'item' && params.item) {
+					const item = data.getItemBySlug(params.item);
+					if (item) {
+						title = `${item.name} - StarRupture Item`;
+						description = item.description || description;
+						urlPath = `/items/${item.slug}`;
+						const icon = (item.icon || item.slug);
+						imageUrl = getAbsUrl(`/assets/images/items/${icon}_256.webp`);
+					}
+				} else if (stateName === 'building' && params.item) {
+					const building = data.getBuildingBySlug(params.item);
+					if (building) {
+						title = `${building.name} - StarRupture Building`;
+						description = building.description || description;
+						urlPath = `/buildings/${building.slug}`;
+						const icon = (building.icon || building.slug);
+						imageUrl = getAbsUrl(`/assets/images/items/${icon}_256.webp`);
+					}
+				} else if (stateName === 'schematic' && params.item) {
+					const schematic = data.getSchematicBySlug(params.item);
+					if (schematic) {
+						title = `${schematic.name} - StarRupture Recipe`;
+						description = schematic.description || description;
+						urlPath = `/blueprints/${schematic.slug}`;
+						// Prefer output item icon if present
+						if (schematic.outputItem && schematic.outputItem.item) {
+							const outItem = data.getItemByClassName(schematic.outputItem.item);
+							if (outItem) {
+								const icon = (outItem.icon || outItem.slug);
+								imageUrl = getAbsUrl(`/assets/images/items/${icon}_256.webp`);
+							}
+						}
+					}
+				} else if (stateName === 'corporation' && params.item) {
+					const corp = data.getCorporationBySlug(params.item);
+					if (corp) {
+						title = `${corp.name} - StarRupture Corporation`;
+						description = corp.description || description;
+						urlPath = `/corporations/${corp.slug}`;
+						if (corp.icon) {
+							imageUrl = getAbsUrl(`/assets/images/items/${corp.icon}_256.webp`);
+						}
+					}
 				}
-			})
+
+				const canonicalUrl = getAbsUrl(urlPath === '' ? '/' : urlPath);
+				document.title = title;
+
+				// Standard meta
+				setMetaTag('meta[name="title"]', 'content', title);
+				setMetaTag('meta[name="description"]', 'content', description);
+				// Canonical
+				setMetaTag('link[rel="canonical"]', 'href', canonicalUrl);
+
+				// OpenGraph
+				setMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
+				setMetaTag('meta[property="og:title"]', 'content', title);
+				setMetaTag('meta[property="og:description"]', 'content', description);
+				setMetaTag('meta[property="og:image"]', 'content', imageUrl);
+
+				// Twitter
+				setMetaTag('meta[property="twitter:url"]', 'content', canonicalUrl);
+				setMetaTag('meta[property="twitter:title"]', 'content', title);
+				setMetaTag('meta[property="twitter:description"]', 'content', description);
+				setMetaTag('meta[property="twitter:image"]', 'content', imageUrl);
+			};
 
 			$transitions.onFinish({}, () => {
 				const elements = document.getElementsByClassName('tooltip');
@@ -386,10 +537,9 @@ export class AppModule
 						elements[index].remove();
 					}
 				}
-				setTimeout(() => {
-					$rootScope.version = $state.params.version;
-					DataProvider.change($state.params.version);
-				});
+
+				// Update meta tags after route change (SEO/share previews)
+				$timeout(() => updateSeoMeta(), 0);
 			});
 
 			$timeout(() => {
@@ -446,9 +596,11 @@ export class AppModule
 		this.app.component('itemFilter', new ItemFilterComponent);
 		this.app.component('buildingFilter', new BuildingFilterComponent);
 		this.app.component('schematicFilter', new SchematicFilterComponent);
+		this.app.component('corporationFilter', new CorporationFilterComponent);
 		this.app.component('applicationBreadcrumbs', new ApplicationBreadcrumbsComponent);
 		this.app.component('entityListing', new EntityListingComponent);
 		this.app.component('codex', new CodexComponent);
+		this.app.component('tabs', new TabsComponent);
 		this.app.component('recipesTable', new RecipesTableComponent);
 		// details components
 		this.app.component('manufacturerDetails', new ManufacturerDetailsComponent);
@@ -463,13 +615,18 @@ export class AppModule
 		this.app.service('ItemFiltersService', ItemFiltersService);
 		this.app.service('BuildingFiltersService', BuildingFiltersService);
 		this.app.service('SchematicFiltersService', SchematicFiltersService);
+		this.app.service('CorporationFiltersService', CorporationFiltersService);
 		this.app.service('DataStorageService', DataStorageService);
 		this.app.service('ComponentOptionsService', ComponentOptionsService);
+		this.app.service('Data', () => data);
 
 		this.app.controller('HomeController', HomeController);
+		this.app.controller('PrivacyPolicyController', PrivacyPolicyController);
+		this.app.controller('TermsOfServiceController', TermsOfServiceController);
 		this.app.controller('ItemController', ItemController);
 		this.app.controller('BuildingController', BuildingController);
 		this.app.controller('SchematicController', SchematicController);
+		this.app.controller('CorporationController', CorporationController);
 		this.app.controller('ProductionController', ProductionController);
 	}
 

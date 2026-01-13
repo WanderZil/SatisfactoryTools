@@ -1,0 +1,13 @@
+http://starrupturecalculator.com/*  https://starrupturecalculator.com/:splat  301!
+https://www.starrupturecalculator.com/*  https://starrupturecalculator.com/:splat  301!
+
+# Legacy domain redirects (keep SEO equity if old domain still exists)
+http://satisfactorytools.com/*  https://starrupturecalculator.com/:splat  301!
+https://satisfactorytools.com/*  https://starrupturecalculator.com/:splat  301!
+http://www.satisfactorytools.com/*  https://starrupturecalculator.com/:splat  301!
+https://www.satisfactorytools.com/*  https://starrupturecalculator.com/:splat  301!
+
+# SPA fallback
+/*    /index.html   200
+
+

@@ -244,7 +244,7 @@ export class ProductionTab
 		shareData.metadata.icon = this.icon;
 		axios({
 			method: 'POST',
-			url: 'https://api.satisfactorytools.com/v2/share/?version=' + this.version,
+			url: 'https://api.starrupturecalculator.com/v2/share/?version=' + this.version,
 			data: shareData,
 		}).then((response) => {
 			this.scope.$timeout(0).then(() => {
@@ -445,6 +445,16 @@ export class ProductionTab
 	public convertAlternateRecipeName(name: string): string
 	{
 		return name.replace('Alternate: ', '');
+	}
+
+	public getItem(className: string): IItemSchema|null
+	{
+		return data.getItemByClassName(className);
+	}
+
+	public getBuilding(className: string): any|null
+	{
+		return data.getRawData().buildings[className] || null;
 	}
 
 	public setAllSinkableResources(value: boolean): void

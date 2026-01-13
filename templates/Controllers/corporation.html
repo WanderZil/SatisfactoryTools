@@ -1,0 +1,167 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<h2 class="card-header">{{ctrl.corporation.name}}</h2>
+			<div class="card-body">
+				<span class="float-left mr-3" ng-if="ctrl.corporation.icon">
+					<img ng-src="/assets/images/items/{{ctrl.corporation.icon}}_256.webp" width="128" height="128" alt="{{ctrl.corporation.name}}" onerror="this.style.display='none'">
+				</span>
+				<div>
+					<span ng-if="ctrl.corporation.corporationColor" class="badge mb-2" style="background-color: #{{ctrl.corporation.corporationColor}}; color: white;">
+						Corporation
+					</span>
+				</div>
+				<p style="white-space: pre-line;">{{ctrl.corporation.description}}</p>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-if="ctrl.getCorporationSpecialty()">
+	<div class="col-lg-12">
+		<div class="card mb-3">
+			<h2 class="card-header">Corporation Specialty</h2>
+			<div class="card-body">
+				<p class="text-muted mb-0">
+					<strong>{{ctrl.corporation.name}}</strong> specializes in unlocking <strong>{{ctrl.getCorporationSpecialty()}}</strong>.
+					{{ctrl.corporation.description || 'This corporation offers unique rewards and technologies that enhance your factory operations and gameplay experience.'}}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-if="ctrl.corporation.levels && ctrl.corporation.levels.length > 0">
+	<div class="col-lg-12">
+		<div class="card mb-3">
+			<h2 class="card-header">Levels</h2>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6" ng-repeat="level in ctrl.corporation.levels">
+						<div class="mb-4">
+							<h4>Level {{level.level}}</h4>
+							<table class="table table-sm">
+								<tbody>
+									<tr ng-if="level.reputationRequired">
+										<td class="text-nowrap" style="width: 40%;"><strong>Reputation Required</strong></td>
+										<td>{{level.reputationRequired | number}}</td>
+									</tr>
+									<tr ng-if="level.itemRewards && level.itemRewards.length > 0">
+										<td class="text-nowrap" style="width: 40%;"><strong>Item Rewards</strong></td>
+										<td>
+											<span ng-repeat="reward in level.itemRewards" class="d-inline-block mr-2 mb-1">
+												{{reward.amount}}x
+												<a ng-if="reward.item" ui-sref="item({item: ctrl.getItem(reward.item).slug})">
+													<item-icon item="reward.item"></item-icon>
+												</a>
+											</span>
+										</td>
+									</tr>
+									<tr ng-if="level.buildingRewards && level.buildingRewards.length > 0">
+										<td class="text-nowrap" style="width: 40%;"><strong>Building Rewards</strong></td>
+										<td>
+											<span ng-repeat="reward in level.buildingRewards" class="d-inline-block mr-2 mb-1">
+												<a ng-if="reward.building" ui-sref="building({item: ctrl.getBuilding(reward.building).slug})">
+													<item-icon item="reward.building"></item-icon>
+												</a>
+											</span>
+										</td>
+									</tr>
+									<tr ng-if="level.buildingCollectionRewards && level.buildingCollectionRewards.length > 0">
+										<td class="text-nowrap" style="width: 40%;"><strong>Building Collection Rewards</strong></td>
+										<td>
+											<span ng-repeat="reward in level.buildingCollectionRewards" class="d-inline-block mr-2 mb-1">
+												<small>{{reward.buildingCollection}}</small>
+											</span>
+										</td>
+									</tr>
+									<tr ng-if="level.featureRewards && level.featureRewards.length > 0">
+										<td class="text-nowrap" style="width: 40%;"><strong>Feature Rewards</strong></td>
+										<td>
+											<span ng-repeat="feature in level.featureRewards" class="badge badge-info mr-1 mb-1">{{feature}}</span>
+										</td>
+									</tr>
+									<tr ng-if="level.inventorySlotRewards">
+										<td class="text-nowrap" style="width: 40%;"><strong>Inventory Slot Rewards</strong></td>
+										<td>+{{level.inventorySlotRewards}} slots</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-if="ctrl.getExportedItems().length > 0">
+	<div class="col-lg-12">
+		<div class="card mb-3">
+			<h2 class="card-header">Exports</h2>
+			<div class="card-body">
+				<table class="table table-sm">
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th class="cursor-pointer" ng-click="ctrl.setSort('level')">
+								Level
+								<span ng-if="ctrl.sortColumn === 'level'" class="fas ml-1" ng-class="ctrl.getSortIcon('level')"></span>
+							</th>
+							<th class="cursor-pointer" ng-click="ctrl.setSort('value')">
+								Value
+								<span ng-if="ctrl.sortColumn === 'value'" class="fas ml-1" ng-class="ctrl.getSortIcon('value')"></span>
+							</th>
+							<th class="cursor-pointer" ng-click="ctrl.setSort('buildTime')">
+								Build Time
+								<span ng-if="ctrl.sortColumn === 'buildTime'" class="fas ml-1" ng-class="ctrl.getSortIcon('buildTime')"></span>
+							</th>
+						</tr>
+					</thead>
+							<tbody>
+								<tr ng-repeat="exported in ctrl.sortedExportedItems track by (exported.item.className + '-' + exported.exportInfo.level)">
+							<td>
+								<a ui-sref="item({item: exported.item.slug})">
+									<item-icon item="exported.item.className"></item-icon>
+								</a>
+							</td>
+							<td>
+								<span class="badge badge-secondary">{{exported.exportInfo.level}}</span>
+							</td>
+							<td><strong>{{exported.exportInfo.value}}</strong></td>
+							<td>{{exported.exportInfo.buildTime}}s</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-if="ctrl.getRelatedCorporations().length > 0">
+	<div class="col-lg-12">
+		<div class="card mb-3">
+			<h2 class="card-header">Related Corporations</h2>
+			<div class="card-body">
+				<div class="d-flex flex-wrap">
+					<a ng-repeat="relatedCorp in ctrl.getRelatedCorporations()" 
+					   ui-sref="corporation({item: relatedCorp.slug})" 
+					   class="d-inline-block mr-3 mb-2 text-center"
+					   style="text-decoration: none;">
+						<div ng-if="relatedCorp.icon">
+							<img ng-src="/assets/images/items/{{relatedCorp.icon}}_256.webp" 
+								 width="64" 
+								 height="64" 
+								 alt="{{relatedCorp.name}}" 
+								 onerror="this.style.display='none'"
+								 class="mb-1">
+						</div>
+						<div class="small">{{relatedCorp.name}}</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

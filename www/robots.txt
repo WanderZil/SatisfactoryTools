@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Avoid indexing dev/test artifacts
+Disallow: /test-data.html
+Disallow: /index.php
+
+# Sitemap (keep in sync with <link rel="canonical"> in www/index.html)
+Sitemap: https://starrupturecalculator.com/sitemap.xml
+

@@ -4,6 +4,7 @@ import {IRecipeSchema} from '@src/Schema/IRecipeSchema';
 import {IBuildingSchema, IManufacturerSchema} from '@src/Schema/IBuildingSchema';
 import {ISchematicSchema} from '@src/Schema/ISchematicSchema';
 import {IResourceSchema} from '@src/Schema/IResourceSchema';
+import {ICorporationSchema} from '@src/Schema/ICorporationSchema';
 import {BuildingTypes} from '@src/Types/BuildingTypes';
 import {Constants} from '@src/Constants';
 import {DataProvider} from '@src/Data/DataProvider';
@@ -107,9 +108,94 @@ export class Data
 		return this.getRawData().buildings;
 	}
 
+	public getAllCorporations(): {[key: string]: ICorporationSchema}
+	{
+		return this.getRawData().corporations || {};
+	}
+
+	public getCorporationBySlug(slug: string): ICorporationSchema|null
+	{
+		const corporations = this.getAllCorporations();
+		for (const key in corporations) {
+			if (corporations[key].slug === slug) {
+				return corporations[key];
+			}
+		}
+		return null;
+	}
+
+	public getCorporationByClassName(className: string): ICorporationSchema|null
+	{
+		const corporations = this.getAllCorporations();
+		return corporations[className] || null;
+	}
+
+	// 查找解锁某个建筑的公司和等级
+	public getCorporationUnlocksForBuilding(buildingClassName: string): {corporation: ICorporationSchema, level: number}[] | null
+	{
+		const result: {corporation: ICorporationSchema, level: number}[] = [];
+		const corporations = this.getAllCorporations();
+
+		for (const key in corporations) {
+			const corporation = corporations[key];
+			if (corporation.levels) {
+				for (const level of corporation.levels) {
+					if (level.buildingRewards) {
+						for (const reward of level.buildingRewards) {
+							if (reward.building === buildingClassName) {
+								result.push({corporation: corporation, level: level.level});
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return result.length > 0 ? result : null;
+	}
+
+	// 查找解锁某个 recipe 的公司和等级
+	public getCorporationUnlocksForRecipe(recipeClassName: string): {corporation: ICorporationSchema, level: number}[] | null
+	{
+		// Recipe 通常通过物品解锁，所以需要先找到对应的物品
+		const recipe = this.getSchematicByClassName(recipeClassName);
+		if (!recipe || !recipe.outputItem) {
+			return null;
+		}
+
+		const itemClassName = recipe.outputItem.item;
+		const result: {corporation: ICorporationSchema, level: number}[] = [];
+		const corporations = this.getAllCorporations();
+
+		for (const key in corporations) {
+			const corporation = corporations[key];
+			if (corporation.levels) {
+				for (const level of corporation.levels) {
+					if (level.itemRewards) {
+						for (const reward of level.itemRewards) {
+							if (reward.item === itemClassName) {
+								result.push({corporation: corporation, level: level.level});
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return result.length > 0 ? result : null;
+	}
+
 	public getAllSchematics(): {[key: string]: ISchematicSchema}
 	{
-		return this.getRawData().schematics;
+		// 优先返回 blueprints，如果没有则返回 schematics（向后兼容）
+		const data = this.getRawData();
+		return (data as any).blueprints || data.schematics;
+	}
+
+	public getAllBlueprints(): {[key: string]: ISchematicSchema}
+	{
+		const data = this.getRawData();
+		return (data as any).blueprints || data.schematics;
 	}
 
 	public getRelevantSchematics(schematic: ISchematicSchema): ISchematicSchema[]
@@ -145,7 +231,8 @@ export class Data
 
 	public getSchematicBySlug(slug: string): ISchematicSchema|null
 	{
-		const schematics = this.getRawData().schematics;
+		const data = this.getRawData();
+		const schematics = (data as any).blueprints || data.schematics;
 		for (const key in schematics) {
 			if (schematics[key].slug === slug) {
 				return schematics[key];
@@ -266,18 +353,64 @@ export class Data
 				}
 			}
 		}
+		// 也检查建筑的Build Requirements（ResourceRequirements）
+		const buildings = this.getRawData().buildings;
+		for (const key in buildings) {
+			const building = buildings[key];
+			const bdData = (building as any)._bdData;
+			if (bdData && bdData.resourceRequirements) {
+				for (const req of bdData.resourceRequirements) {
+					if (req.item === item.className) {
+						// 创建一个虚拟的recipe来表示这个building需要这个item
+						// 使用building的className作为key，避免重复
+						const buildingKey = 'building_' + building.className;
+						if (!recipes[buildingKey]) {
+							// 创建一个虚拟recipe，用于显示building信息
+							recipes[buildingKey] = {
+								className: buildingKey,
+								name: building.name,
+								slug: building.slug,
+								products: [{
+									item: building.className,
+									amount: 1,
+								}],
+								ingredients: bdData.resourceRequirements.map((r: any) => ({
+									item: r.item,
+									amount: r.quantity,
+								})),
+								forBuilding: true,
+								alternate: false,
+								inMachine: false,
+								inHand: false,
+								inWorkshop: false,
+								manualTimeMultiplier: 1,
+								producedIn: [],
+								time: 0,
+								isVariablePower: false as const,
+							} as IRecipeSchema;
+						}
+					}
+				}
+			}
+		}
 		return recipes;
 	}
 
 	public getUsagesForSchematicsForItem(item: IItemSchema): {[key: string]: ISchematicSchema}
 	{
-		const schematicData = this.getRawData().schematics;
+		const data = this.getRawData();
+		const schematicData = (data as any).blueprints || data.schematics;
 		const schematics: {[key: string]: ISchematicSchema} = {};
 		for (const key in schematicData) {
 			const schematic = schematicData[key];
-			for (const ingredient of schematic.cost) {
+			// 检查 cost 和 unlockRequirements
+			const costItems = schematic.cost || [];
+			const unlockItems = schematic.unlockRequirements || [];
+			const allItems = [...costItems, ...unlockItems];
+			for (const ingredient of allItems) {
 				if (ingredient.item === item.className) {
 					schematics[key] = schematic;
+					break; // 找到后跳出循环
 				}
 			}
 		}
@@ -286,7 +419,8 @@ export class Data
 
 	public getSchematicByClassName(className: string): ISchematicSchema|null
 	{
-		const schematics = this.getRawData().schematics;
+		const data = this.getRawData();
+		const schematics = (data as any).blueprints || data.schematics;
 		return (className in schematics) ? schematics[className] : null;
 	}
 

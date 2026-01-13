@@ -16,11 +16,26 @@ export class ItemFiltersService implements IFilterService<IItemSchema>
 		onlyWithEnergyValue: false,
 		stackSize: null,
 		physicalState: null,
+		itemType: null,
 	};
 
 	public constructor()
 	{
 		this.filter = {...this.defaultFilterState};
+
+		// 调试信息
+		console.log('ItemFiltersService 初始化');
+		console.log('总物品数:', this.entities.length);
+		const srItems = this.entities.filter(item => item.className && item.className.startsWith('I_') && !item.className.includes('BP_') && !item.className.includes('GA_'));
+		console.log('StarRupture 物品数:', srItems.length);
+		console.log('前10个 StarRupture 物品:', srItems.slice(0, 10).map(item => `${item.name} (${item.className})`));
+
+		// 检查 Aerogel
+		const aerogel = this.entities.find(item => item.name && item.name.toLowerCase().includes('aerogel'));
+		console.log('找到 Aerogel:', aerogel ? `${aerogel.name} (${aerogel.className})` : '未找到');
+		if (aerogel) {
+			console.log('Aerogel 详细信息:', aerogel);
+		}
 	}
 
 	public resetFilters(): void
@@ -33,23 +48,19 @@ export class ItemFiltersService implements IFilterService<IItemSchema>
 	{
 		// Copy instead of working on original collection
 		let itemsToFilter = [...this.entities];
-		if (this.filter.onlyRadioactive) {
-			itemsToFilter = itemsToFilter.filter((item) => {
-				return item.radioactiveDecay > 0;
-			});
+
+		// 调试信息
+		if (this.filter.query && this.filter.query.toLowerCase().includes('aerogel')) {
+			console.log('=== 搜索 Aerogel 调试信息 ===');
+			console.log('过滤前物品数:', itemsToFilter.length);
+			console.log('搜索关键词:', this.filter.query);
+			const aerogelItems = itemsToFilter.filter(item => item.name && item.name.toLowerCase().includes('aerogel'));
+			console.log('找到的 Aerogel 物品:', aerogelItems.map(item => `${item.name} (${item.className})`));
+			if (aerogelItems.length > 0) {
+				console.log('第一个 Aerogel 详细信息:', aerogelItems[0]);
+			}
 		}
 
-		if (this.filter.onlyWithEnergyValue) {
-			itemsToFilter = itemsToFilter.filter((item) => {
-				return item.energyValue > 0;
-			});
-		}
-
-		if (this.filter.physicalState) {
-			itemsToFilter = itemsToFilter.filter((item) => {
-				return ('liquid' === this.filter.physicalState) === item.liquid;
-			});
-		}
 
 		if (this.filter.stackSize) {
 			itemsToFilter = itemsToFilter.filter((item) => {
@@ -62,10 +73,27 @@ export class ItemFiltersService implements IFilterService<IItemSchema>
 			});
 		}
 
-		if (this.filter.query) {
+		if (this.filter.itemType) {
 			itemsToFilter = itemsToFilter.filter((item) => {
-				return item.name.toLowerCase().indexOf(this.filter.query.toLowerCase()) !== -1;
+				return item.uiItemType === this.filter.itemType;
 			});
+		}
+
+		if (this.filter.query) {
+			const queryLower = this.filter.query.toLowerCase();
+			console.log('执行搜索，关键词:', queryLower);
+			itemsToFilter = itemsToFilter.filter((item) => {
+				const nameMatch = item.name && item.name.toLowerCase().indexOf(queryLower) !== -1;
+				const classNameMatch = item.className && item.className.toLowerCase().indexOf(queryLower) !== -1;
+				return nameMatch || classNameMatch;
+			});
+
+			// 调试信息
+			if (queryLower.includes('aerogel')) {
+				console.log('搜索 Aerogel - 过滤后物品数:', itemsToFilter.length);
+				console.log('匹配的物品:', itemsToFilter.map(item => `${item.name} (${item.className})`));
+			}
+			console.log('搜索后物品数:', itemsToFilter.length);
 		}
 
 		return itemsToFilter;

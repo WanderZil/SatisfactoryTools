@@ -1,6 +1,17 @@
 import {IRecipeSchema} from '@src/Schema/IRecipeSchema';
+import {ISchematicSchema} from '@src/Schema/ISchematicSchema';
+import {ICorporationSchema} from '@src/Schema/ICorporationSchema';
 import {IMachineGroupPower} from '@src/Tools/Production/Result/IMachineGroupPower';
 import {IMachineGroupItem} from '@src/Tools/Production/Result/IMachineGroupItem';
+
+export interface IUnlockRequirement
+{
+	type: 'recipe' | 'building';
+	item?: string; // 物品类名（用于 recipe 类型）
+	building?: string; // 建筑类名（用于 building 类型）
+	schematic?: ISchematicSchema; // 解锁该 recipe 的 schematic
+	corporationUnlocks?: Array<{corporation: ICorporationSchema, level: number}>; // 建筑的公司解锁需求
+}
 
 export interface IResultDetails
 {
@@ -27,7 +38,7 @@ export interface IResultDetails
 	hasOutput: boolean;
 	byproducts: {[key: string]: number};
 	hasByproducts: boolean;
-	alternatesNeeded: IRecipeSchema[],
+	unlockRequirements: IUnlockRequirement[],
 
 }
 

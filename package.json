@@ -5,12 +5,15 @@
 	"author": "greeny",
 	"private": true,
 	"scripts": {
-		"build": "export SET NODE_OPTIONS=--openssl-legacy-provider && webpack --mode production",
+		"build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
 		"buildCI": "webpack --mode production",
-		"start": "export SET NODE_OPTIONS=--openssl-legacy-provider && webpack --mode development --progress --color --watch",
+		"start": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --progress --color --watch",
 		"parseDocs": "ts-node -r tsconfig-paths/register bin/parseDocs.ts",
 		"parsePak": "ts-node -r tsconfig-paths/register bin/parsePak.ts",
-		"generateImages": "ts-node -r tsconfig-paths/register bin/generateImages.ts"
+		"generateImages": "ts-node -r tsconfig-paths/register bin/generateImages.ts",
+		"parseStarRupture": "ts-node -r tsconfig-paths/register bin/parseStarRupture.ts",
+		"parseStarRuptureData": "ts-node -r tsconfig-paths/register bin/parseStarRuptureData.ts",
+		"createStarRuptureOnlyData": "ts-node -r tsconfig-paths/register bin/createStarRuptureOnlyData.ts"
 	},
 	"devDependencies": {
 		"@types/angular": "^1.6.56",
@@ -28,7 +31,7 @@
 		"@types/sharp": "^0.29.4",
 		"angular-templatecache-loader": "^0.2.0",
 		"css-loader": "^5.2.7",
-		"node-sass": "^6.0.1",
+		"sass": "^1.56.0",
 		"sass-loader": "^10.2.0",
 		"script-loader": "^0.7.2",
 		"sharp": "^0.29.3",
@@ -68,5 +71,6 @@
 		"ui-select": "^0.19.8",
 		"vis-data": "6.4.1",
 		"vis-network": "7.3.6"
-	}
+	},
+	"packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"
 }

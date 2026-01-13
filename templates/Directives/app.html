@@ -1,8 +1,7 @@
 <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
 	<div class="container-fluid px-xl-5 px-lg-4 px-md-3 px-sm-2 px-1">
 		<a class="navbar-brand" ui-sref="home">
-			<img src="/assets/images/logo/satisfactorySmall.png" height="40" class="d-sm-inline-block d-none">
-			<img src="/assets/images/logo/tools.png" height="40">
+			<img src="/assets/images/icons/android-chrome-192x192.webp" height="40" width="40" alt="StarRupture Calculator Icon">
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -11,89 +10,42 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item" ui-sref-active="active">
-					<a class="nav-link" ui-sref="home">
-						<span class="fas fa-fw fa-home"></span>
-						Home
-					</a>
-				</li>
-				<li class="nav-item" ui-sref-active="active" uib-dropdown>
-					<a class="nav-link dropdown-toggle" data-toggle="dropdown" id="browser_toggle">
-						<i class="fas fa-fw fa-th-large"></i>
-						Codex
-					</a>
-					<div class="dropdown-menu" role="menu" aria-labelledby="browser_toggle">
-						<a class="dropdown-item" ui-sref="items" ui-sref-active="active">
-							<i class="fas fa-fw fa-box-open"></i>
-							Items
-						</a>
-						<a class="dropdown-item" ui-sref="buildings" ui-sref-active="active">
-							<i class="fas fa-fw fa-industry"></i>
-							<span>Buildings</span>
-						</a>
-						<a class="dropdown-item" ui-sref="schematics" ui-sref-active="active">
-							<i class="fas fa-fw fa-flask"></i>
-							<span>Schematics</span>
-						</a>
-					</div>
-				</li>
-				<li class="nav-item" ui-sref-active="active">
 					<a class="nav-link" ui-sref="production">
 						<span class="fas fa-fw fa-chart-line"></span>
 						Calculator
 					</a>
 				</li>
+				<li class="nav-item" ui-sref-active="active">
+					<a class="nav-link" ui-sref="items">
+						<i class="fas fa-fw fa-box-open"></i>
+						Items
+					</a>
+				</li>
+				<li class="nav-item" ui-sref-active="active">
+					<a class="nav-link" ui-sref="buildings">
+						<i class="fas fa-fw fa-industry"></i>
+						Buildings
+					</a>
+				</li>
+				<li class="nav-item" ui-sref-active="active">
+					<a class="nav-link" ui-sref="schematics">
+						<i class="fas fa-fw fa-flask"></i>
+						Recipes
+					</a>
+				</li>
+				<li class="nav-item" ui-sref-active="active">
+					<a class="nav-link" ui-sref="corporations">
+						<i class="fas fa-fw fa-building"></i>
+						Corporations
+					</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav">
-				<li class="nav-item" ng-if="$root.aprilModePossible">
-					<a class="nav-link" ng-if="$root.aprilMode" ng-click="disable()">
-						Disable April mode
+				<li class="nav-item">
+					<a class="nav-link" ui-sref="home">
+						<span class="fas fa-fw fa-info-circle"></span>
+						About
 					</a>
-					<a class="nav-link" ng-if="!$root.aprilMode" ng-click="enable()">
-						Enable April mode
-					</a>
-				</li>
-				<li class="nav-item" uib-dropdown>
-					<a class="nav-link dropdown-toggle" data-toggle="dropdown">
-						<b>Version: {{$root.version}}</b>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" ng-class="{'active': $root.version == '0.8'}" ng-click="$root.changeVersion('0.8')">
-							0.8
-						</a>
-						<a class="dropdown-item" ng-class="{'active': $root.version == '1.0'}" ng-click="$root.changeVersion('1.0')">
-							1.0
-						</a>
-						<a class="dropdown-item" ng-class="{'active': $root.version == '1.0-ficsmas'}" ng-click="$root.changeVersion('1.0-ficsmas')">
-							1.0 (Ficsmas)
-						</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle"  data-toggle="dropdown">
-						<span class="fas fa-users"></span>
-						Community
-					</a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<h6 class="dropdown-header">Contribute</h6>
-						<a class="dropdown-item" href="https://discord.gg/pcGyj8p" target="_blank">
-							<span class="fab fa-fw fa-discord"></span>
-							Discord server
-						</a>
-						<a class="dropdown-item" href="https://github.com/greeny/SatisfactoryTools" target="_blank">
-							<span class="fab fa-fw fa-github"></span>
-							Github repository
-						</a>
-						<div class="dropdown-divider"></div>
-						<h6 class="dropdown-header">Support me</h6>
-						<a class="dropdown-item" href="https://www.paypal.me/greenydev" target="_blank">
-							<span class="fab fa-fw fa-paypal"></span>
-							Donate through Paypal
-						</a>
-						<a class="dropdown-item" href="https://patreon.com/greeny_dev" target="_blank">
-							<span class="fab fa-fw fa-patreon"></span>
-							Pledge on Patreon
-						</a>
-					</div>
 				</li>
 			</ul>
 		</div>
@@ -101,56 +53,42 @@
 </nav>
 
 <div class="container-fluid px-xl-5 px-lg-4 px-md-3 px-sm-2 px-1" style="margin-top: 60px;">
-	<!--<div class="alert alert-danger alert-dismissible fade show" ng-if="$root.version == '1.0'">
-		<b>Looking for FICSMAS production?</b> Change your version in top right corner! Merry FICSMAS!
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	</div>-->
-
-	<div class="alert alert-success alert-dismissible fade show">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-		<div class="row">
-			<div class="col-sm-3">
-				<img src="/assets/images/cart-race.png" class="img-fluid" style="max-height: 175px;">
-			</div>
-
-			<div class="col-sm-9">
-				<p><strong>Join fellow pioneers for a fun, goofy Satisfactory community competition!</strong></p>
-
-				<a href="https://www.reddit.com/r/SatisfactoryGame/comments/1nmrjty/we_are_hosting_the_goofiest_competition_in/" target="_blank" class="alert-link">Click here for more info.</a>
-			</div>
-		</div>
-	</div>
-
 	<div ui-view></div>
 
 	<hr>
 
-	<footer>
-		<p class="text-secondary">
-			Made by <a href="https://github.com/greeny">greeny</a>. Source code available at <a href="https://github.com/greeny/SatisfactoryTools">Github</a>.
-			Old website: <a href="https://satisfactory.greeny.dev/">https://satisfactory.greeny.dev/</a>.
-		</p>
-	</footer>
-</div>
-
-<div class="modal" tabindex="-1" ng-if="version === '0.8'" id="modal">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title">Old version!</h3>
-			</div>
-			<div class="modal-body">
-				<p class="alert alert-danger">
-					<b>You're looking at Tools for Update 8!</b> If you want to calculate builds for full release (1.0), use the button below to switch.<br>
-					You can use the export/import functionality to move production lines to 1.0 Tools.
+	<footer class="footer mt-5 py-4">
+		<div class="row">
+			<div class="col-md-6">
+				<h5>StarRupture Tools</h5>
+				<p class="text-secondary">
+					A production calculator and planning tool for StarRupture.<br>
+					This is an unofficial fan-made tool and is not affiliated with Creepy Jar.
 				</p>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Stay on 0.8 Tools</button>
-				<a ng-click="changeVersion('1.0')" class="btn btn-success">Go to 1.0 Tools</a>
+			<div class="col-md-3">
+				<h6>Resources</h6>
+				<ul class="list-unstyled">
+					<li><a href="https://store.steampowered.com/app/1631270/_StarRupture/" target="_blank" class="text-secondary">StarRupture on Steam</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h6>Legal</h6>
+				<ul class="list-unstyled">
+					<li><a ui-sref="privacy-policy" class="text-secondary">Privacy Policy</a></li>
+					<li><a ui-sref="terms-of-service" class="text-secondary">Terms of Service</a></li>
+				</ul>
 			</div>
 		</div>
-	</div>
+		<hr class="mt-4 mb-3">
+		<div class="row">
+			<div class="col-12 text-center text-secondary">
+				<small>
+					&copy; 2026 StarRupture Tools. Built with data extracted from StarRupture.<br>
+					StarRupture is a trademark of Creepy Jar. All rights reserved.
+				</small>
+			</div>
+		</div>
+	</footer>
 </div>
 

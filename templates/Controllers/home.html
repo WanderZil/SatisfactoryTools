@@ -1,25 +1,116 @@
 <div class="jumbotron">
-	<h1 class="display-2" ng-bind="$root.aprilMode ? 'Snuttisfactory Tools' : 'Satisfactory Tools'">Satisfactory Tools</h1>
+	<h1 class="display-2">StarRupture Calculator</h1>
 
 	<p class="lead">
-		The best tool to calculate your production lines, now in a new coat!
+		Production calculator and planning tools for StarRupture - Plan your industrial empire on planet Arcadia-7
 	</p>
 
 	<hr class="my-4">
 
+	<div class="row mt-4">
+		<div class="col-md-6">
+			<h3>About StarRupture</h3>
+			<p>
+				<strong>StarRupture</strong> is a first-person open-world base-building survival game developed by Creepy Jar, the creators of Green Hell.
+				The game entered Steam Early Access on January 6, 2026.
+			</p>
+			<p>
+				You play as a convicted prisoner exiled to the distant planet <strong>Arcadia-7</strong>, forced to mine resources and build industrial bases
+				to pay off your debt to the corporation. The planet's star, <strong>Ruptura</strong>, periodically releases catastrophic energy waves called
+				"Ruptures" that sweep across the surface, destroying everything in their path.
+			</p>
+		</div>
+		<div class="col-md-6">
+			<h3>Game Features</h3>
+			<ul>
+				<li><strong>Industrial Automation:</strong> Build complex production chains from ore mining to orbital launches</li>
+				<li><strong>Rail System:</strong> Unique drone-based logistics with bandwidth limitations</li>
+				<li><strong>Survival Cycles:</strong> Prepare for periodic Rupture events that reshape the planet</li>
+				<li><strong>Combat & Defense:</strong> Defend your base from aggressive Vermin swarms</li>
+				<li><strong>Co-op Multiplayer:</strong> Team up with up to 4 players to build and survive together</li>
+				<li><strong>Corporate Contracts:</strong> Work for different corporations with unique tech trees</li>
+			</ul>
+		</div>
+	</div>
+
+	<hr class="my-4">
+
+	<h3>About This Tool</h3>
 	<p>
-		This tool was made by <a href="https://github.com/greeny">greeny</a>, with help from <a href="https://github.com/kptLucek">Lucek</a> and <a href="https://github.com/greeny/SatisfactoryTools/graphs/contributors">other contributors</a>.
+		This production calculator helps you plan efficient production chains, calculate resource requirements, and optimize your industrial base.
+		Use the <strong>Calculator</strong> to design your production lines, or browse the <strong>Database</strong> to learn about items, buildings, and schematics.
 	</p>
 
-	<p>
-		Special thanks to my testers: Caledorn, flo025, GenericGames, Gruffus, LilithKitsune, MagicCookie, pancakes, Pleasure, SLiPCoR, Soerili, Tom, Totalxclipse, VanStorm and 𝔅𝔯3𝔲𝔨𝔢𝔯 🎀 𝔍𝔢𝔫𝔦𝔣𝔣𝔢𝔯.
-	</p>
+	<div class="mt-4">
+		<a class="btn btn-primary btn-lg" ui-sref="production" role="button">
+			<i class="fas fa-chart-line"></i> Open Calculator
+		</a>
+		<a class="btn btn-secondary btn-lg ml-2" ui-sref="items" role="button">
+			<i class="fas fa-book"></i> Browse Database
+		</a>
+		<button class="btn btn-info btn-lg ml-2" ng-click="ctrl.showFeedbackForm = true" role="button">
+			<i class="fas fa-comment"></i> Feedback
+		</button>
+	</div>
 
-	<p>
-		Also thanks to all the people that decided to support me financially and help me with covering the costs of running the server. If you're interested to help as well, you can check out <strong>Paypal or Patreon</strong> links in the top right of the website.
-	</p>
+	<!-- Feedback Modal -->
+	<div ng-if="ctrl.showFeedbackForm" class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Send Feedback</h5>
+					<button type="button" class="close" ng-click="ctrl.closeFeedbackForm()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form ng-submit="ctrl.submitFeedback()">
+						<div class="form-group">
+							<label for="feedbackName">Your Name <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="feedbackName" ng-model="ctrl.feedbackData.name" required>
+						</div>
+						<div class="form-group">
+							<label for="feedbackEmail">Your Email <span class="text-danger">*</span></label>
+							<input type="email" class="form-control" id="feedbackEmail" ng-model="ctrl.feedbackData.email" required>
+						</div>
+						<div class="form-group">
+							<label for="feedbackSubject">Subject <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="feedbackSubject" ng-model="ctrl.feedbackData.subject" required>
+						</div>
+						<div class="form-group">
+							<label for="feedbackMessage">Message <span class="text-danger">*</span></label>
+							<textarea class="form-control" id="feedbackMessage" rows="6" ng-model="ctrl.feedbackData.message" required></textarea>
+						</div>
+						<div class="alert alert-success" ng-if="ctrl.feedbackSuccess">
+							Thank you for your feedback! We'll get back to you soon.
+						</div>
+						<div class="alert alert-danger" ng-if="ctrl.feedbackError">
+							{{ctrl.feedbackError}}
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" ng-click="ctrl.closeFeedbackForm()">Close</button>
+					<button type="button" class="btn btn-primary" ng-click="ctrl.submitFeedback()" ng-disabled="ctrl.feedbackSubmitting">
+						<span ng-if="ctrl.feedbackSubmitting">
+							<i class="fas fa-spinner fa-spin"></i> Sending...
+						</span>
+						<span ng-if="!ctrl.feedbackSubmitting">
+							<i class="fas fa-paper-plane"></i> Send Feedback
+						</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop fade show" ng-if="ctrl.showFeedbackForm" ng-click="ctrl.closeFeedbackForm()"></div>
 
-	<p>
-		You can also join my <a href="https://discord.gg/pcGyj8p" target="_blank">Discord server</a> and chat about the tools and Satisfactory in general!
+	<hr class="my-4">
+
+	<p class="text-muted">
+		<small>
+			This is an unofficial fan-made tool and is not affiliated with Creepy Jar or StarRupture.<br>
+			Tool originally created for Satisfactory by <a href="https://github.com/greeny">greeny</a>, adapted for StarRupture.
+		</small>
 	</p>
 </div>

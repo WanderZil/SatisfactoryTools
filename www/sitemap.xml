@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc>https://starrupturecalculator.com/sitemap-static.xml</loc>
+		<lastmod>2026-01-13</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://starrupturecalculator.com/sitemap-items.xml</loc>
+		<lastmod>2026-01-13</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://starrupturecalculator.com/sitemap-buildings.xml</loc>
+		<lastmod>2026-01-13</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://starrupturecalculator.com/sitemap-blueprints.xml</loc>
+		<lastmod>2026-01-13</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://starrupturecalculator.com/sitemap-corporations.xml</loc>
+		<lastmod>2026-01-13</lastmod>
+	</sitemap>
+</sitemapindex>

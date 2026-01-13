@@ -1,22 +1,109 @@
-<table class="table two-columns">
-	<tbody>
-		<tr ng-if="ctrl.isAutonomousManufacturer(ctrl.building)">
-			<td>Overclock</td>
-			<td>
-				{{ctrl.options.overclock}}%
-				<input class="w-100" ng-model="ctrl.options.overclock" type="range" min="1" max="250" step="1">
-			</td>
-		</tr>
-		<tr ng-if="ctrl.isAutonomousManufacturer(ctrl.building)">
-			<td>Power consumption</td>
-			<td>
-				{{ctrl.powerConsumption|number}} MW<br>
-				<span class="text-muted" ng-if="ctrl.building.metadata.isVariablePower">({{ctrl.minPowerConsumption|number}} - {{ctrl.maxPowerConsumption|number}} MW, depending on recipe)</span>
-			</td>
-		</tr>
-		<tr ng-if="ctrl.isAutonomousManufacturer(ctrl.building)">
-			<td>Manufacturing speed multiplier</td>
-			<td>x{{ctrl.manufacturingSpeed|number}}</td>
-		</tr>
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-md-6">
+		<table class="table">
+			<tbody>
+				<!-- DA 文件属性 -->
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.craftingLoopDuration">
+					<td>Crafting Loop Duration</td>
+					<td>{{ctrl.building.metadata._daData.craftingLoopDuration}}s</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.logisticsType">
+					<td>Logistics Type</td>
+					<td>{{ctrl.building.metadata._daData.logisticsType}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.hasInputStorage !== undefined">
+					<td>Has Input Storage</td>
+					<td>{{ctrl.building.metadata._daData.hasInputStorage ? 'Yes' : 'No'}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata.inventorySize">
+					<td>Output Inventory Size</td>
+					<td>{{ctrl.building.metadata.inventorySize}} slots</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata.inputInventorySize">
+					<td>Input Inventory Size</td>
+					<td>{{ctrl.building.metadata.inputInventorySize}} slots</td>
+				</tr>
+				
+				<!-- BP 文件属性 -->
+				<tr ng-if="ctrl.building.metadata._bpData && ctrl.building.metadata._bpData.requestMultiplier">
+					<td>Request Multiplier</td>
+					<td>{{ctrl.building.metadata._bpData.requestMultiplier}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._bpData && ctrl.building.metadata._bpData.numOfBuildingStages">
+					<td>Number of Building Stages</td>
+					<td>{{ctrl.building.metadata._bpData.numOfBuildingStages}}</td>
+				</tr>
+				
+				<!-- 计算出的属性 -->
+				<tr ng-if="ctrl.building.metadata.manufacturingSpeed">
+					<td>Manufacturing Speed</td>
+					<td>x{{ctrl.building.metadata.manufacturingSpeed|number:2}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata.powerConsumption">
+					<td>Power Consumption</td>
+					<td>{{ctrl.building.metadata.powerConsumption}} MW</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-6">
+		<table class="table">
+			<tbody>
+				<!-- BD 文件属性 -->
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.stabilityCost !== undefined && ctrl.building._bdData.stabilityCost !== null">
+					<td>Stability Cost</td>
+					<td>{{ctrl.building._bdData.stabilityCost}}</td>
+				</tr>
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.resourceRequirements && ctrl.building._bdData.resourceRequirements.length > 0">
+					<td>Build Requirements</td>
+					<td>
+						<span ng-repeat="req in ctrl.building._bdData.resourceRequirements" class="d-inline-block mr-2">
+							{{req.quantity}}x
+							<a ng-if="req.item" ui-sref="item({item: ctrl.getItem(req.item).slug})">
+								<item-icon item="req.item"></item-icon>
+							</a>
+						</span>
+					</td>
+				</tr>
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.corporation">
+					<td>Corporation</td>
+					<td>
+						<a ng-if="ctrl.corporation" ui-sref="corporation({item: ctrl.corporation.slug})">
+							<img ng-if="ctrl.corporation.icon" ng-src="/assets/images/items/{{ctrl.corporation.icon}}_64.webp" width="32" height="32" alt="{{ctrl.corporation.name}}" tooltip title="{{ctrl.corporation.name}}" onerror="this.style.display='none'">
+							<span ng-if="!ctrl.corporation.icon">{{ctrl.corporation.name}}</span>
+						</a>
+						<span ng-if="!ctrl.corporation">{{ctrl.building._bdData.corporation}}</span>
+					</td>
+				</tr>
+				<tr ng-if="ctrl.corporationUnlocks && ctrl.corporationUnlocks.length > 0">
+					<td>Unlock Requirements</td>
+					<td>
+						<span ng-repeat="unlock in ctrl.corporationUnlocks track by (unlock.corporation.className + '-' + unlock.level)" class="d-inline-block mr-2 mb-1">
+							<a ui-sref="corporation({item: unlock.corporation.slug})">
+								<img ng-if="unlock.corporation.icon" ng-src="/assets/images/items/{{unlock.corporation.icon}}_64.webp" width="32" height="32" alt="{{unlock.corporation.name}}" tooltip title="{{unlock.corporation.name}}" onerror="this.style.display='none'">
+								<span ng-if="!unlock.corporation.icon">{{unlock.corporation.name}}</span>
+							</a>
+							<small class="text-muted">Level {{unlock.level}}</small>
+						</span>
+					</td>
+				</tr>
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.minPlacementDistance">
+					<td>Min Placement Distance</td>
+					<td>{{ctrl.building._bdData.minPlacementDistance}} m</td>
+				</tr>
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.maxPlacementDistance">
+					<td>Max Placement Distance</td>
+					<td>{{ctrl.building._bdData.maxPlacementDistance}} m</td>
+				</tr>
+				<tr ng-if="ctrl.building._bdData && ctrl.building._bdData.droneMaxPlacementDistance">
+					<td>Drone Max Placement Distance</td>
+					<td>{{ctrl.building._bdData.droneMaxPlacementDistance}} m</td>
+				</tr>
+				<tr ng-if="ctrl.building.size && (ctrl.building.size.width > 0 || ctrl.building.size.length > 0)">
+					<td>Size</td>
+					<td>{{ctrl.building.size.width / 100}}m x {{ctrl.building.size.length / 100}}m</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

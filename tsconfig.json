@@ -19,5 +19,11 @@
 			"@bin/*": ["./bin/*"],
 			"@templates/*": ["./templates/*"]
 		}
-	}
+	},
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"bin/**"
+	]
 }

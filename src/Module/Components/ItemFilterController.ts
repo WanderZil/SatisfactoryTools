@@ -1,6 +1,7 @@
 import {Constants} from '@src/Constants';
 import {ItemFiltersService} from '@src/Module/Services/ItemFiltersService';
 import {IOnInit, ITimeoutService} from 'angular';
+import data from '@src/Data/Data';
 
 export class ItemFilterController implements IOnInit
 {
@@ -30,10 +31,14 @@ export class ItemFilterController implements IOnInit
 			};
 		}),
 	];
+
+	public itemTypes: string[] = [];
+
 	public static $inject = ['ItemFiltersService', '$timeout'];
 
 	public constructor(public filtersService: ItemFiltersService, private $timeout: ITimeoutService)
 	{
+		this.itemTypes = this.getUniqueItemTypes();
 	}
 
 	public $onInit(): void
@@ -41,6 +46,16 @@ export class ItemFilterController implements IOnInit
 		this.$timeout(() => {
 			document.getElementById('queryInput')?.focus();
 		});
+	}
+
+	private getUniqueItemTypes(): string[] {
+		const types = new Set<string>();
+		for (const item of Object.values(data.getAllItems())) {
+			if (item.uiItemType) {
+				types.add(item.uiItemType);
+			}
+		}
+		return Array.from(types).sort();
 	}
 
 }

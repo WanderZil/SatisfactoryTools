@@ -13,6 +13,8 @@ export interface IBuildingSchema
 	buildMenuPriority: number;
 	metadata: IBuildingMetadataSchema;
 	size: ISizeSchema;
+	buildingType?: string; // 建筑类型，如 "Crafting", "Transport", "Power", "Extraction", "Defensive" 等
+	_bdData?: any; // StarRupture 扩展数据（从 BD 文件提取）
 
 }
 

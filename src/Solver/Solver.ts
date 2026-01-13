@@ -1,23 +1,14 @@
-import axios from 'axios';
 import {IProductionToolResponse} from '@src/Tools/Production/IProductionToolResponse';
 import {IProductionDataApiRequest} from '@src/Tools/Production/IProductionData';
+import {LocalSolver} from '@src/Solver/LocalSolver';
 
 export class Solver
 {
 
 	public static solveProduction(productionRequest: IProductionDataApiRequest, callback: (response: IProductionToolResponse) => void): void
 	{
-		axios({
-			method: 'post',
-			url: 'https://api.satisfactorytools.com/v2/solver',
-			data: productionRequest,
-		}).then((response) => {
-			if ('result' in response.data) {
-				callback(response.data.result);
-			}
-		}).catch(() => {
-			callback({});
-		});
+		// 使用本地求解器替代在线 API
+		LocalSolver.solveProduction(productionRequest, callback);
 	}
 
 }

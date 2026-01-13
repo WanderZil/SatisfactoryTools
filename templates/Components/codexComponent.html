@@ -1,11 +1,11 @@
-<div class="recipe-list">
+<div class="recipe-list" ng-if="ctrl.$state.current.name !== 'corporation' && ctrl.$state.current.name.indexOf('corporation.') !== 0">
 	<div class="card text-center item-card" ng-repeat="item in ctrl.filterService.filterEntities() | orderBy:'name'">
 		<a ng-if="!item.requiredSchematics" class="recipe-name stretched-link" ui-sref="{{ctrl.entityPreviewState}}({item: item.slug})">
-			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.png">
+			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}">
 			{{item.name}}
 		</a>
 		<a ng-if="item.requiredSchematics" class="recipe-name stretched-link pt-2" ui-sref="{{ctrl.entityPreviewState}}({item: item.slug})">
-			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.png">
+			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}">
 			{{item.name}}
 			<small class="text-muted d-block">
 				{{ctrl.getSchematicType(item.type)}}
@@ -13,3 +13,71 @@
 		</a>
 	</div>
 </div>
+
+<!-- SEO helper copy: show only on the Items listing page (not item detail pages) -->
+<section class="mt-4 mb-4" ng-if="ctrl.$state && ctrl.$state.current && ctrl.$state.current.name === 'items'">
+	<h2 class="h5 mb-3">About StarRupture Items</h2>
+	<p class="text-muted mb-2">
+		The <strong>starrupture items</strong> catalog covers everything you will handle in a factory run: raw resources, refined materials, intermediate components, tools, consumables, and late-game products.
+		Understanding how <strong>starrupture items</strong> flow through recipes is the key to scaling production without bottlenecks.
+	</p>
+	<p class="text-muted mb-2">
+		In StarRupture, most <strong>starrupture items</strong> are part of a chain: basic inputs are mined or harvested, processed into stable intermediates, then assembled into higher-tier goods.
+		Those goods are continuously consumed by manufacturing, upgrades, and progression, so planning the per-minute balance (production vs consumption) matters.
+	</p>
+	<p class="text-muted mb-0">
+		Use this list of <strong>starrupture items</strong> to explore what each item is used for, which recipes unlock it, and how it affects your production network.
+		As you unlock more recipes and buildings, <strong>starrupture items</strong> become more specialized—supporting automation, energy systems, and advanced crafting paths.
+	</p>
+</section>
+
+<!-- SEO helper copy: show only on the Buildings listing page (not building detail pages) -->
+<section class="mt-4 mb-4" ng-if="ctrl.$state && ctrl.$state.current && ctrl.$state.current.name === 'buildings'">
+	<h2 class="h5 mb-3">About StarRupture Buildings</h2>
+	<p class="text-muted mb-2">
+		<strong>StarRupture Buildings</strong> form the backbone of your industrial infrastructure, from basic resource extractors to advanced manufacturing facilities.
+		Each of these <strong>StarRupture Buildings</strong> serves a specific role: miners extract raw materials, smelters refine ores, factories assemble components, and generators power your entire operation.
+	</p>
+	<p class="text-muted mb-2">
+		Understanding the capabilities and requirements of <strong>StarRupture Buildings</strong> is essential for efficient production planning.
+		Different <strong>StarRupture Buildings</strong> have varying power consumption, manufacturing speeds, and recipe compatibility—factors that directly impact your factory's throughput and energy balance.
+	</p>
+	<p class="text-muted mb-0">
+		Use this comprehensive list of <strong>StarRupture Buildings</strong> to compare their specifications, unlock requirements, and production capabilities.
+		As you progress, you'll unlock more advanced <strong>StarRupture Buildings</strong> that enable faster production, new recipes, and greater automation efficiency.
+	</p>
+</section>
+
+<!-- SEO helper copy: show only on the Recipes (Schematics) listing page (not recipe detail pages) -->
+<section class="mt-4 mb-4" ng-if="ctrl.$state && ctrl.$state.current && ctrl.$state.current.name === 'schematics'">
+	<h2 class="h5 mb-3">About StarRupture Recipes</h2>
+	<p class="text-muted mb-2">
+		<strong>StarRupture Recipes</strong> define how raw materials and components are transformed into finished products through your manufacturing facilities.
+		Each <strong>StarRupture Recipe</strong> specifies input ingredients, output products, production time, and the buildings required to execute it.
+	</p>
+	<p class="text-muted mb-2">
+		Mastering <strong>StarRupture Recipes</strong> is crucial for optimizing your production chains and minimizing waste.
+		Many <strong>StarRupture Recipes</strong> offer alternative production paths that trade different resource inputs for improved efficiency or reduced complexity.
+	</p>
+	<p class="text-muted mb-0">
+		Browse this complete database of <strong>StarRupture Recipes</strong> to discover optimal production strategies, unlock requirements, and ingredient dependencies.
+		As you unlock new <strong>StarRupture Recipes</strong>, you'll gain access to more efficient manufacturing processes and advanced product lines.
+	</p>
+</section>
+
+<!-- SEO helper copy: show only on the Corporations listing page (not corporation detail pages) -->
+<section class="mt-4 mb-4" ng-if="ctrl.$state && ctrl.$state.current && ctrl.$state.current.name === 'corporations'">
+	<h2 class="h5 mb-3">About StarRupture Corporations</h2>
+	<p class="text-muted mb-2">
+		<strong>StarRupture Corporations</strong> represent the major factions and organizations that control technology and resources across the game world.
+		Each <strong>StarRupture Corporation</strong> offers unique unlockable content, including buildings, items, and recipes that become available as you progress through their reward tiers.
+	</p>
+	<p class="text-muted mb-2">
+		Building relationships with <strong>StarRupture Corporations</strong> through progression and resource contributions unlocks powerful new capabilities for your factory.
+		Different <strong>StarRupture Corporations</strong> specialize in various aspects of production, from advanced manufacturing to energy systems and automation.
+	</p>
+	<p class="text-muted mb-0">
+		Explore this guide to <strong>StarRupture Corporations</strong> to understand their unlock requirements, available rewards, and how they fit into your overall progression strategy.
+		Strategic investment in <strong>StarRupture Corporations</strong> can significantly accelerate your factory's development and unlock game-changing technologies.
+	</p>
+</section>

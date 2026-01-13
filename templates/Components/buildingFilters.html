@@ -13,6 +13,14 @@
 <div class="d-flex flex-row">
 	<div uib-collapse="!ctrl.filtersService.filter.showAdvanced">
 		<div class="d-flex flex-row justify-content-start align-items-center">
+			<div class="form-group" style="margin-right: 10px;">
+				<label>Building Type
+					<select ng-model="ctrl.filtersService.filter.buildingType" class="form-control">
+						<option value="">All Types</option>
+						<option ng-repeat="type in ctrl.buildingTypes" value="{{type}}">{{type}}</option>
+					</select>
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="mr-auto"></div>

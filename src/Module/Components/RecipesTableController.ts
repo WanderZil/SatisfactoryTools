@@ -36,6 +36,9 @@ export class RecipesTableController
 
 	public getMachine(recipe: IRecipeSchema): IManufacturerSchema|null
 	{
+		if (!recipe.producedIn || recipe.producedIn.length === 0) {
+			return null;
+		}
 		return data.getManufacturerByClassName(recipe.producedIn[0]);
 	}
 

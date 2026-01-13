@@ -13,20 +13,6 @@
 <div class="d-flex flex-row">
 	<div uib-collapse="!ctrl.filtersService.filter.showAdvanced">
 		<div class="d-flex flex-row justify-content-start align-items-center">
-			<div class="d-flex flex-column justify-content-center align-items-start" style="margin-right: 10px;">
-				<div class="form-check">
-					<label class="form-check-label">
-						<input type="checkbox" class="form-check-input" ng-model="ctrl.filtersService.filter.onlyRadioactive">
-						<span>Show only radioactive</span>
-					</label>
-				</div>
-				<div class="form-check">
-					<label class="form-check-label">
-						<input type="checkbox" class="form-check-input" ng-model="ctrl.filtersService.filter.onlyWithEnergyValue">
-						<span>With energy value only</span>
-					</label>
-				</div>
-			</div>
 			<div class="form-group" style="margin-right: 10px;">
 				<label>Stack size
 					<select ng-model="ctrl.filtersService.filter.stackSize" class="form-control">
@@ -35,10 +21,10 @@
 				</label>
 			</div>
 			<div class="form-group" style="margin-right: 10px;">
-				<label>Physical state
-					<select ng-model="ctrl.filtersService.filter.physicalState" class="form-control">
-						<option ng-repeat="option in ctrl.physicalStates" value="{{option.value}}">{{option.key}}
-						</option>
+				<label>Item Type
+					<select ng-model="ctrl.filtersService.filter.itemType" class="form-control">
+						<option value="">All Types</option>
+						<option ng-repeat="type in ctrl.itemTypes" value="{{type}}">{{type}}</option>
 					</select>
 				</label>
 			</div>

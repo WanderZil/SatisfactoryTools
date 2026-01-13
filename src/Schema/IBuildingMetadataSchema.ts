@@ -10,12 +10,15 @@ export interface IBuildingMetadataSchema
 	powerConsumptionExponent?: number;
 	manufacturingSpeed?: number;
 	inventorySize?: number;
+	inputInventorySize?: number;
 	flowLimit?: number;
 	maxPressure?: number;
 	storageCapacity?: number;
 	isVariablePower?: boolean;
 	minPowerConsumption?: number;
 	maxPowerConsumption?: number;
+	_daData?: any; // StarRupture 扩展数据（从 DA 文件提取）
+	_bpData?: any; // StarRupture 扩展数据（从 BP 文件提取）
 
 }
 

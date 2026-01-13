@@ -70,7 +70,7 @@ export class ProductionController
 			if ('share' in query) {
 				axios({
 					method: 'GET',
-					url: 'https://api.satisfactorytools.com/v2/share/' + encodeURIComponent(query.share),
+					url: 'https://api.starrupturecalculator.com/v2/share/' + encodeURIComponent(query.share),
 				}).then((response) => {
 					$timeout(0).then(() => {
 						const tabData: IProductionData = response.data.data;
@@ -232,9 +232,14 @@ export class ProductionController
 		this.addEmptyTab();
 	}
 
-	public getItem(className: string): IItemSchema
+	public getItem(className: string): IItemSchema|null
 	{
-		return model.getItem(className).prototype;
+		try {
+			return model.getItem(className).prototype;
+		} catch (e) {
+			// 如果 Model 中不存在，尝试从 Data 中获取
+			return data.getItemByClassName(className);
+		}
 	}
 
 	public getBuilding(className: string): IBuildingSchema|null

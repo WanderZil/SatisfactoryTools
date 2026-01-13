@@ -5,7 +5,7 @@
 				<th>Recipe name</th>
 				<th>Ingredients</th>
 				<th>Products</th>
-				<th>Machine</th>
+				<th>Build time</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,7 +22,7 @@
 							</a>
 							<br>
 						</span>
-						<span ng-if="recipe.inMachine">{{ctrl.recipeResourcesPerMinute(ctrl.getMachine(recipe), recipe, ingredient.amount, ctrl.options.overclock)|number}}&nbsp;/&nbsp;min</span>
+						<span ng-if="recipe.inMachine && ctrl.getMachine(recipe)">{{ctrl.recipeResourcesPerMinute(ctrl.getMachine(recipe), recipe, ingredient.amount, ctrl.options.overclock)|number}}&nbsp;/&nbsp;m</span>
 					</div>
 				</td>
 				<td>
@@ -34,32 +34,11 @@
 							</a>
 							<br>
 						</span>
-						<span ng-if="recipe.inMachine">{{ctrl.recipeResourcesPerMinute(ctrl.getMachine(recipe), recipe, product.amount, ctrl.options.overclock)|number}}&nbsp;/&nbsp;min</span>
+						<span ng-if="recipe.inMachine && ctrl.getMachine(recipe)">{{ctrl.recipeResourcesPerMinute(ctrl.getMachine(recipe), recipe, product.amount, ctrl.options.overclock)|number}}&nbsp;/&nbsp;m</span>
 					</div>
 				</td>
 				<td>
-					<span class="item-amount" ng-if="recipe.inMachine">
-						<a ui-sref="building({item: ctrl.getMachine(recipe).slug})">
-							<item-icon item="ctrl.getMachine(recipe)" size="32"></item-icon>
-						</a>
-					</span>
-					<span class="item-amount" ng-if="recipe.inWorkshop">
-						<a ui-sref="building({item: ctrl.getBuilding('Desc_Workshop_C').slug})">
-							<item-icon item="ctrl.getBuilding('Desc_Workshop_C')" size="32"></item-icon>
-						</a>
-					</span>
-					<span class="item-amount" ng-if="!recipe.inWorkshop && recipe.inHand">
-						<a ui-sref="building({item: ctrl.getBuilding('Desc_WorkBench_C').slug})">
-							<item-icon item="ctrl.getBuilding('Desc_WorkBench_C')" size="32"></item-icon>
-						</a>
-					</span>
-					<br>
-					<span ng-if="recipe.inMachine">
-						{{recipe.time / ctrl.options.overclock * 100|number}}s ({{60 / ctrl.recipeTime(recipe, ctrl.getMachine(recipe), ctrl.options.overclock)|number}} cycles&nbsp;/&nbsp;min)
-					</span>
-					<span ng-if="recipe.inMachine && recipe.isVariablePower" class="text-muted"><br>
-						{{ctrl.getRecipeMinPower(recipe)|number}} - {{ctrl.getRecipeMaxPower(recipe)|number}} MW
-					</span>
+					{{recipe.time}}s
 				</td>
 			</tr>
 		</tbody>

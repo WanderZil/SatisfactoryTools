@@ -1,3 +1,5 @@
+<h1>StarRupture Calculator</h1>
+
 <h2>Production</h2>
 
 <p>
@@ -804,36 +806,85 @@
 					</div>
 
 					<div class="card mb-3">
-						<h4 class="d-flex card-header cursor-pointer" ng-click="ctrl.tab.state.overviewCollapsed['alternates'] = !ctrl.tab.state.overviewCollapsed['alternates']">
-							<span class="fas fa-sync-alt mr-2"></span>
-							<span class="flex-grow-1 text-left">Alternate recipes needed</span>
-							<span ng-class="{'fas': true, 'fa-chevron-down': ctrl.tab.state.overviewCollapsed['alternates'], 'fa-chevron-up': !ctrl.tab.state.overviewCollapsed['alternates']}"></span>
+						<h4 class="d-flex card-header cursor-pointer" ng-click="ctrl.tab.state.overviewCollapsed['unlockRequirements'] = !ctrl.tab.state.overviewCollapsed['unlockRequirements']">
+							<span class="fas fa-lock mr-2"></span>
+							<span class="flex-grow-1 text-left">Unlock Requirement</span>
+							<span ng-class="{'fas': true, 'fa-chevron-down': ctrl.tab.state.overviewCollapsed['unlockRequirements'], 'fa-chevron-up': !ctrl.tab.state.overviewCollapsed['unlockRequirements']}"></span>
 						</h4>
 
-						<div class="card-body" ng-if="!ctrl.tab.state.overviewCollapsed['alternates']">
+						<div class="card-body" ng-if="!ctrl.tab.state.overviewCollapsed['unlockRequirements']">
 							<table class="table table-sm table-hover">
 								<thead>
 									<tr>
-										<th></th>
-										<th>Recipe</th>
+										<th>Type</th>
+										<th>Item/Building</th>
+										<th>Requirement</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="recipe in ctrl.tab.resultNew.details.alternatesNeeded" class="alt-recipe-row">
-										<td class="text-right table-cell-adjust-size">
-											<span ng-repeat="product in recipe.products" class="recipe-item">
-												<item-icon item="product.item" size="20" tooltip="1"></item-icon>
+									<tr ng-repeat="req in ctrl.tab.resultNew.details.unlockRequirements">
+										<td class="text-left">
+											<span ng-if="req.type === 'recipe'" class="badge badge-info">Recipe</span>
+											<span ng-if="req.type === 'building'" class="badge badge-warning">Building</span>
+										</td>
+										<td class="text-left">
+											<span ng-if="req.type === 'recipe' && req.item">
+												<item-icon item="req.item" size="20" tooltip="1"></item-icon>
+												<span ng-if="ctrl.getItem(req.item)">{{ctrl.getItem(req.item).name}}</span>
+												<span ng-if="!ctrl.getItem(req.item)">{{req.item}}</span>
+											</span>
+											<span ng-if="req.type === 'recipe' && !req.item && req.schematic">
+												{{req.schematic.name}}
+											</span>
+											<span ng-if="req.type === 'building' && req.building">
+												<item-icon item="req.building" size="20" tooltip="1"></item-icon>
+												<span ng-if="ctrl.getBuilding(req.building)">{{ctrl.getBuilding(req.building).name}}</span>
+												<span ng-if="!ctrl.getBuilding(req.building)">{{req.building}}</span>
 											</span>
 										</td>
 										<td class="text-left">
-											{{ctrl.tab.convertAlternateRecipeName(recipe.name)}}
+											<span ng-if="req.schematic">
+												<a ui-sref="schematic({item: req.schematic.slug})" class="d-inline-block mr-2">
+													<item-icon item="req.schematic.className" size="24" tooltip="1"></item-icon>
+												</a>
+												<a ui-sref="schematic({item: req.schematic.slug})">
+													<strong>{{req.schematic.name}}</strong>
+												</a>
+												<span ng-if="req.schematic.unlockRequirements && req.schematic.unlockRequirements.length > 0">
+													<br><small class="text-muted">
+														Requires: 
+														<span ng-repeat="unlockReq in req.schematic.unlockRequirements" class="d-inline-block mr-2">
+															{{unlockReq.amount}}x
+															<a ng-if="ctrl.getItem(unlockReq.item)" ui-sref="item({item: ctrl.getItem(unlockReq.item).slug})">
+																<item-icon item="unlockReq.item" size="20" tooltip="1"></item-icon>
+															</a>
+															<span ng-if="!ctrl.getItem(unlockReq.item)">{{unlockReq.item}}</span>
+														</span>
+													</small>
+												</span>
+											</span>
+											<span ng-if="req.corporationUnlocks && req.corporationUnlocks.length > 0">
+												<span ng-repeat="corpUnlock in req.corporationUnlocks track by ($index + '-' + corpUnlock.level)" class="d-inline-block mr-2 mb-1">
+													<a ui-sref="corporation({item: corpUnlock.corporation.slug})" tooltip title="{{corpUnlock.corporation.name}} Level {{corpUnlock.level}}">
+														<img ng-if="corpUnlock.corporation.icon" 
+															 ng-src="/assets/images/items/{{corpUnlock.corporation.icon}}_64.webp" 
+															 width="24" 
+															 height="24" 
+															 alt="{{corpUnlock.corporation.name}}" 
+															 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+														<span ng-if="corpUnlock.corporation.icon" style="display: none;" class="badge badge-secondary">{{corpUnlock.corporation.name}}</span>
+														<span ng-if="!corpUnlock.corporation.icon" class="badge badge-secondary">{{corpUnlock.corporation.name}}</span>
+													</a>
+													<small class="text-muted">Level {{corpUnlock.level}}</small>
+												</span>
+											</span>
 										</td>
 									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="2">
-											<b>Total: {{ctrl.tab.resultNew.details.alternatesNeeded.length}}</b>
+										<td colspan="3">
+											<b>Total: {{ctrl.tab.resultNew.details.unlockRequirements.length}}</b>
 										</td>
 									</tr>
 								</tfoot>
@@ -981,9 +1032,14 @@
 							{{ctrl.getBuilding(building).name}}
 						</td>
 						<td class="text-left">
-							<span ng-repeat="(item, amount) in data.resources" class="mx-2">
-								<span class="mr-1">{{amount}}x</span>
-								<item-icon item="item" size="24" tooltip="1"></item-icon>
+							<span ng-if="ctrl.getBuilding(building) && ctrl.getBuilding(building)._bdData && ctrl.getBuilding(building)._bdData.resourceRequirements && ctrl.getBuilding(building)._bdData.resourceRequirements.length > 0">
+								<span ng-repeat="req in ctrl.getBuilding(building)._bdData.resourceRequirements" class="mx-2">
+									<span class="mr-1">{{req.quantity * data.amount}}x</span>
+									<item-icon item="req.item" size="24" tooltip="1"></item-icon>
+								</span>
+							</span>
+							<span ng-if="!ctrl.getBuilding(building) || !ctrl.getBuilding(building)._bdData || !ctrl.getBuilding(building)._bdData.resourceRequirements || ctrl.getBuilding(building)._bdData.resourceRequirements.length === 0" class="text-muted">
+								No build cost
 							</span>
 
 							<table class="table table-hover mt-2" ng-if="ctrl.tab.state.buildingsExpanded[building]">
@@ -1099,6 +1155,182 @@
 					</tr>
 				</tfoot>
 			</table>
+		</div>
+	</div>
+</div>
+
+<!-- SEO Content Section -->
+<div class="container mt-5 mb-5 pb-5">
+	<div class="row">
+		<div class="col-12">
+			<hr class="my-5">
+
+			<section class="seo-content" style="line-height: 1.8;">
+				<h2 class="mb-5 text-center" style="font-size: 2rem; font-weight: 600;">StarRupture Calculator - Plan Your Industrial Empire</h2>
+
+				<div class="row mb-5">
+					<div class="col-md-6 mb-5 mb-md-0">
+						<h3 class="mb-4" style="font-size: 1.5rem; color: #df691a;">Why Use This StarRupture Calculator?</h3>
+						<p class="mb-4" style="font-size: 1.05rem;">
+							The <strong>StarRupture Calculator</strong> is the ultimate production planning tool for StarRupture players.
+							Whether you're a beginner just starting on planet Arcadia-7 or an experienced pioneer optimizing complex production chains,
+							this <strong>StarRupture production calculator</strong> helps you:
+						</p>
+						<ul class="list-unstyled" style="font-size: 1.05rem;">
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Optimize resource usage</strong> - Calculate exact material requirements for your StarRupture factory</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Plan production chains</strong> - Visualize dependencies from raw ore to finished products</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Minimize waste</strong> - Identify byproducts and optimize material flow in StarRupture</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Calculate power needs</strong> - Ensure your power grid can handle your industrial base</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Test alternate recipes</strong> - Compare different StarRupture production methods</li>
+							<li class="mb-3"><i class="fas fa-check-circle text-success mr-2"></i><strong>Save and share</strong> - Export your StarRupture production plans and share with teammates</li>
+						</ul>
+					</div>
+
+					<div class="col-md-6">
+						<h3 class="mb-4" style="font-size: 1.5rem; color: #df691a;">How to Use the StarRupture Calculator</h3>
+						<ol style="font-size: 1.05rem; padding-left: 1.5rem;">
+							<li class="mb-3"><strong>Add Products</strong> - Click the "+" button to add items you want to produce in StarRupture</li>
+							<li class="mb-3"><strong>Set Production Goals</strong> - Choose between items per minute or maximize production mode</li>
+							<li class="mb-3"><strong>Configure Resources</strong> - Set available raw resource limits on planet Arcadia-7</li>
+							<li class="mb-3"><strong>Select Recipes</strong> - Enable or disable alternate recipes for your StarRupture factory</li>
+							<li class="mb-3"><strong>View Results</strong> - See required buildings, power consumption, and material flow</li>
+							<li class="mb-3"><strong>Optimize</strong> - Adjust settings to find the most efficient StarRupture production setup</li>
+						</ol>
+						<div class="alert alert-warning mt-4" style="font-size: 1.05rem;">
+							<strong><i class="fas fa-lightbulb mr-2"></i>Pro Tip:</strong> Use multiple tabs to plan different production lines in StarRupture.
+							Each tab is automatically saved in your browser, so you can return to your StarRupture calculator anytime.
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-5 mb-5">
+					<div class="col-12">
+						<h3 class="mb-5 text-center" style="font-size: 1.75rem; color: #df691a;">Frequently Asked Questions - StarRupture Calculator</h3>
+						<div class="faq-section">
+							<div class="faq-item mb-5 pb-4 border-bottom">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: What is the StarRupture Calculator?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									The StarRupture Calculator is a free online production planning tool for the game StarRupture.
+									It helps you calculate optimal production chains, resource requirements, and factory layouts on planet Arcadia-7.
+								</p>
+							</div>
+
+							<div class="faq-item mb-5 pb-4 border-bottom">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: How accurate is this StarRupture production calculator?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									Our StarRupture calculator uses data extracted directly from the game files, ensuring 100% accuracy with
+									production rates, recipe requirements, and building specifications. All calculations match in-game mechanics.
+								</p>
+							</div>
+
+							<div class="faq-item mb-5 pb-4 border-bottom">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: Can I save my StarRupture production plans?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									Yes! The StarRupture Calculator automatically saves all your production tabs in your browser.
+									You can also export them as .sft files and import them later or share with other StarRupture players.
+								</p>
+							</div>
+
+							<div class="faq-item mb-5 pb-4 border-bottom">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: Does the calculator work for multiplayer StarRupture?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									Absolutely! Whether you're playing solo or with up to 4 players in co-op, this StarRupture calculator
+									helps your team coordinate production lines and optimize resource distribution across your shared base.
+								</p>
+							</div>
+
+							<div class="faq-item mb-5 pb-4 border-bottom">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: What makes this different from other factory game calculators?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									This StarRupture Calculator is specifically designed for StarRupture's unique mechanics including
+									the Rail System bandwidth limitations, Rupture survival cycles, and corporate contract requirements.
+									It accounts for StarRupture-specific buildings and production chains.
+								</p>
+							</div>
+
+							<div class="faq-item mb-5 pb-4">
+								<h5 class="mb-3" style="font-size: 1.25rem;"><strong><i class="fas fa-question-circle text-primary mr-2"></i>Q: Is this StarRupture calculator free to use?</strong></h5>
+								<p style="font-size: 1.05rem; padding-left: 2rem;">
+									Yes, completely free! This is a community tool created by factory game enthusiasts for StarRupture players.
+									No registration, no ads, no payment required.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-5 mb-5">
+					<div class="col-12">
+						<h3 class="mb-5 text-center" style="font-size: 1.75rem; color: #df691a;">StarRupture Production Planning Features</h3>
+						<div class="row">
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-chart-line mr-2"></i> Advanced Calculations</h5>
+									<p style="font-size: 1.05rem;">
+										Calculate complex production chains for StarRupture with support for alternate recipes,
+										resource constraints, and building limitations.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-project-diagram mr-2"></i> Visual Production Flow</h5>
+									<p style="font-size: 1.05rem;">
+										Visualize your entire StarRupture production network from raw materials to finished products
+										with interactive graphs and dependency trees.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-bolt mr-2"></i> Power Management</h5>
+									<p style="font-size: 1.05rem;">
+										See exact power requirements for your StarRupture factory, including peak consumption
+										and average usage across all buildings.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-cogs mr-2"></i> Building Requirements</h5>
+									<p style="font-size: 1.05rem;">
+										Get precise building counts needed for your StarRupture production goals,
+										from constructors to manufacturers to assemblers.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-recycle mr-2"></i> Byproduct Handling</h5>
+									<p style="font-size: 1.05rem;">
+										Identify and manage byproducts in your StarRupture production chains,
+										with support for AWESOME Sink integration.
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 mb-4">
+								<div class="p-4 h-100 border rounded" style="background-color: transparent; border-color: rgba(255,255,255,0.2);">
+									<h5 class="mb-3" style="font-size: 1.25rem; color: #df691a;"><i class="fas fa-share-alt mr-2"></i> Share & Export</h5>
+									<p style="font-size: 1.05rem;">
+										Export your StarRupture calculator results and share with your team or the community.
+										Perfect for multiplayer coordination.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="alert alert-info mt-5 p-4" style="font-size: 1.05rem; border-left: 5px solid #17a2b8;">
+					<h5 class="mb-3" style="font-size: 1.5rem;"><i class="fas fa-info-circle mr-2"></i> About StarRupture</h5>
+					<p class="mb-0">
+						<strong>StarRupture</strong> is a first-person open-world base-building survival game where you play as a convicted prisoner
+						on planet Arcadia-7. Build automated production lines, survive periodic Rupture events, and work off your debt
+						to the corporation through industrial automation. This StarRupture Calculator helps you optimize every aspect
+						of your factory production.
+					</p>
+				</div>
+			</section>
 		</div>
 	</div>
 </div>

@@ -90,11 +90,14 @@ export class MachineGroup
 		let max = 0;
 		let isVariable = false;
 
-		power += machine.amount * (this.recipeData.machine.metadata.powerConsumption * Math.pow(machine.clockSpeed / 100, this.recipeData.machine.metadata.powerConsumptionExponent));
+		// StarRupture: 电力消耗直接按建筑数量乘以 Power Consumption，不考虑降频
+		// 例如：1 台 Smelter 就是 5 MW，不管是否降频
+		const powerConsumption = this.recipeData.machine.metadata.powerConsumption || 0;
+		power = machine.amount * powerConsumption;
 
 		if (this.recipeData.recipe.isVariablePower) {
-			max = machine.amount * this.recipeData.recipe.maxPower * Math.pow(machine.clockSpeed / 100, this.recipeData.machine.metadata.powerConsumptionExponent);
-			const min = machine.amount * this.recipeData.recipe.minPower * Math.pow(machine.clockSpeed / 100, this.recipeData.machine.metadata.powerConsumptionExponent);
+			max = machine.amount * (this.recipeData.recipe.maxPower || powerConsumption);
+			const min = machine.amount * (this.recipeData.recipe.minPower || powerConsumption);
 			power = (max + min) / 2;
 			isVariable = true;
 		}

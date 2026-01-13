@@ -1,99 +1,71 @@
 <div class="row">
-	<div class="col-md-6">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card mb-3">
-					<h2 class="card-header">Schematic: {{ctrl.schematic.name}}</h2>
-					<div class="card-body">
-						<table class="table two-columns">
-							<tbody>
-								<tr>
-									<td>Type</td>
-									<td>{{ctrl.getSchematicType(ctrl.schematic.type)}}</td>
-								</tr>
-								<tr>
-									<td>Tier</td>
-									<td>{{ctrl.schematic.tier}}</td>
-								</tr>
-								<tr>
-									<td>Time to research:</td>
-									<td>{{ctrl.schematic.time}} seconds</td>
-								</tr>
-								<tr>
-									<td>Cost</td>
-									<td>
-										<span class="item-amount" ng-repeat="ingredient in ctrl.schematic.cost">
-											{{ingredient.amount}}x
-											<a ui-sref="item({item: ctrl.getItem(ingredient.item).slug})">
-												<item-icon item="ingredient.item"></item-icon>
-											</a>
-										</span>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+	<div class="col-md-4">
+		<div class="card mb-3">
+			<div class="card-body text-center">
+				<div class="mb-3">
+					<item-icon item="ctrl.schematic.className" size="128"></item-icon>
 				</div>
+				<h2 class="card-title">{{ctrl.schematic.name}}</h2>
+				<p class="text-muted" ng-if="ctrl.schematic.description">{{ctrl.schematic.description}}</p>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<div class="card mb-3">
-			<h2 class="card-header">Schematic details</h2>
+			<h2 class="card-header">Recipe Details</h2>
 			<div class="card-body">
 				<table class="table two-columns">
 					<tbody>
-						<tr ng-if="ctrl.schematic.requiredSchematics.length">
+						<tr>
+							<td>Type</td>
+							<td>{{ctrl.getSchematicType(ctrl.schematic.type)}}</td>
+						</tr>
+						<tr ng-if="ctrl.schematic.neededResources && ctrl.schematic.neededResources.length > 0">
 							<td>
-								Requires schematics:
+								Needed Resources:
 							</td>
 							<td>
-								<div ng-repeat="schematic in ctrl.schematic.requiredSchematics">
-									<a ui-sref="schematic({item: ctrl.getSchematic(schematic).slug})">
-										{{ctrl.getSchematic(schematic).name}}
+								<span class="item-amount" ng-repeat="resource in ctrl.schematic.neededResources">
+									{{resource.amount}}x
+									<a ui-sref="item({item: ctrl.getItem(resource.item).slug})">
+										<item-icon item="resource.item"></item-icon>
 									</a>
-								</div>
+								</span>
 							</td>
 						</tr>
-						<tr ng-if="ctrl.schematic.unlock.recipes.length">
+						<tr ng-if="ctrl.schematic.outputItem">
 							<td>
-								Unlocks recipes/buildings:
+								Output Item:
 							</td>
 							<td>
-								<div ng-repeat="recipe in ctrl.schematic.unlock.recipes">
-									{{ctrl.getRecipe(recipe).name}}
-								</div>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.schematic.unlock.scannerResources.length">
-							<td>
-								Unlocks scanner resources:
-							</td>
-							<td>
-								<div ng-repeat="item in ctrl.schematic.unlock.scannerResources">
-									{{ctrl.getItem(item).name}}
-								</div>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.schematic.unlock.inventorySlots > 0">
-							<td>
-								Adds inventory slots:
-							</td>
-							<td>
-								+{{ctrl.schematic.unlock.inventorySlots}}
-							</td>
-						</tr>
-						<tr ng-if="ctrl.schematic.unlock.giveItems.length">
-							<td>
-								Gives items to player:
-							</td>
-							<td>
-								<div ng-repeat="item in ctrl.schematic.unlock.giveItems">
-									{{item.amount}}x
-									<a ui-sref="item({item: ctrl.getItem(item.item).slug})">
-										<item-icon item="item.item"></item-icon>
+								<span class="item-amount">
+									{{ctrl.schematic.outputItem.amount}}x
+									<a ui-sref="item({item: ctrl.getItem(ctrl.schematic.outputItem.item).slug})">
+										<item-icon item="ctrl.schematic.outputItem.item"></item-icon>
 									</a>
-								</div>
+								</span>
+							</td>
+						</tr>
+						<tr ng-if="ctrl.schematic.buildTime">
+							<td>
+								Build Time:
+							</td>
+							<td>
+								{{ctrl.schematic.buildTime}}s
+							</td>
+						</tr>
+						<tr ng-if="ctrl.corporationUnlocks && ctrl.corporationUnlocks.length > 0">
+							<td>
+								Unlock Requirements:
+							</td>
+							<td>
+								<span ng-repeat="unlock in ctrl.corporationUnlocks track by (unlock.corporation.className + '-' + unlock.level)" class="d-inline-block mr-2 mb-1">
+									<a ui-sref="corporation({item: unlock.corporation.slug})">
+										<img ng-if="unlock.corporation.icon" ng-src="/assets/images/items/{{unlock.corporation.icon}}_64.webp" width="32" height="32" alt="{{unlock.corporation.name}}" tooltip title="{{unlock.corporation.name}}" onerror="this.style.display='none'">
+										<span ng-if="!unlock.corporation.icon">{{unlock.corporation.name}}</span>
+									</a>
+									<small class="text-muted">Level {{unlock.level}}</small>
+								</span>
 							</td>
 						</tr>
 					</tbody>

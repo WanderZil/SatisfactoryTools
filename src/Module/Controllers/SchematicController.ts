@@ -6,6 +6,7 @@ import {default as angular, IScope} from 'angular';
 import {SchematicFiltersService} from '@src/Module/Services/SchematicFiltersService';
 import {Strings} from '@src/Utils/Strings';
 import {IItemSchema} from '@src/Schema/IItemSchema';
+import {ICorporationSchema} from '@src/Schema/ICorporationSchema';
 import ELK from 'elkjs/lib/elk.bundled';
 import {IElkGraph} from '@src/Solver/IElkGraph';
 import {Edge, Network, Node} from 'vis-network';
@@ -14,6 +15,7 @@ export class SchematicController
 {
 
 	public schematic: ISchematicSchema;
+	public corporationUnlocks: Array<{corporation: ICorporationSchema, level: number}> | null = null;
 	public static $inject = ['$state', '$transition$', 'SchematicFiltersService', '$scope'];
 
 	private nodeWidth = 300;
@@ -28,6 +30,7 @@ export class SchematicController
 		}
 		this.schematic = currentSchematic;
 		this.schematicFiltersService.filter.query = this.schematic.name;
+		this.corporationUnlocks = data.getCorporationUnlocksForRecipe(this.schematic.className);
 		this.$scope.$watch(() => {
 			return this.schematicFiltersService.filter.query;
 		}, (newValue) => {
@@ -57,9 +60,10 @@ export class SchematicController
 
 		for (const key in schematics) {
 			const schematic = schematics[key];
+			const levelLabel = schematic.level ? 'Level: ' + schematic.level : 'Tier: ' + schematic.tier;
 			const node: any = {
 				id: id,
-				label: '<b>' + schematic.name + '</b>\nTier: ' + schematic.tier,
+				label: '<b>' + schematic.name + '</b>\n' + levelLabel,
 				slug: schematic.slug,
 			};
 			if (schematic.className === currentSchematic.className) {
@@ -187,9 +191,23 @@ export class SchematicController
 		return Strings.convertSchematicType(type);
 	}
 
+	public getOutputItem(): IItemSchema|null
+	{
+		if (this.schematic.outputItem) {
+			return this.getItem(this.schematic.outputItem.item);
+		}
+		return null;
+	}
+
 	public resetFilter(): void
 	{
 		this.schematicFiltersService.resetFilters();
+	}
+
+
+	public getCorporation(corporation: ICorporationSchema): ICorporationSchema
+	{
+		return corporation;
 	}
 
 }

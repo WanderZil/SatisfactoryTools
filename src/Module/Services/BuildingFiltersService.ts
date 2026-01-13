@@ -7,11 +7,12 @@ export class BuildingFiltersService implements IFilterService<IBuildingSchema>
 {
 
 	public filter: IBuildingFilterSet;
-	public entities: IBuildingSchema[] = Object.values(data.getAllBuildings());
+	public entities: IBuildingSchema[] = Object.values(data.getAllBuildings()); // 显示所有建筑
 
 	private defaultFilterState: IBuildingFilterSet = {
 		query: '',
 		showAdvanced: false,
+		buildingType: undefined,
 	};
 
 	public constructor()
@@ -33,6 +34,13 @@ export class BuildingFiltersService implements IFilterService<IBuildingSchema>
 		if (this.filter.query) {
 			itemsToFilter = itemsToFilter.filter((item) => {
 				return item.name.toLowerCase().indexOf(this.filter.query.toLowerCase()) !== -1;
+			});
+		}
+
+		// 按建筑类型过滤
+		if (this.filter.buildingType) {
+			itemsToFilter = itemsToFilter.filter((item) => {
+				return item.buildingType === this.filter.buildingType;
 			});
 		}
 

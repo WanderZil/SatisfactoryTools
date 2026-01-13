@@ -1,0 +1,27 @@
+<ul class="nav nav-tabs mb-3">
+	<li class="nav-item">
+		<a class="nav-link" ng-class="{active: ctrl.isActive('items')}" ng-click="ctrl.goToState('items')">
+			<i class="fas fa-fw fa-box-open"></i>
+			Items
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" ng-class="{active: ctrl.isActive('buildings')}" ng-click="ctrl.goToState('buildings')">
+			<i class="fas fa-fw fa-industry"></i>
+			Buildings
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" ng-class="{active: ctrl.isActive('schematics')}" ng-click="ctrl.goToState('schematics')">
+			<i class="fas fa-fw fa-flask"></i>
+			Recipes
+		</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" ng-class="{active: ctrl.isActive('corporations')}" ng-click="ctrl.goToState('corporations')">
+			<i class="fas fa-fw fa-building"></i>
+			Corporations
+		</a>
+	</li>
+</ul>
+

@@ -1,8 +1,9 @@
-<div class="row">
-	<div class="col-sm-6">
-	</div>
-	<div class="col-sm-6">
-		<ui-view name="filters"></ui-view>
+<div ng-if="$ctrl.$state.includes('items') || $ctrl.$state.includes('buildings') || $ctrl.$state.includes('schematics') || $ctrl.$state.includes('corporations')" ng-init="console.log('[entityListing] tabs - $state.name:', $ctrl.$state.name, 'includes items:', $ctrl.$state.includes('items'), 'includes buildings:', $ctrl.$state.includes('buildings'), 'includes schematics:', $ctrl.$state.includes('schematics'), 'includes corporations:', $ctrl.$state.includes('corporations'))">
+	<tabs></tabs>
+</div>
+<div class="row" ng-if="!$ctrl.$state.includes('item') && !$ctrl.$state.includes('building') && !$ctrl.$state.includes('schematic') && !$ctrl.$state.includes('corporation')" ng-init="console.log('[entityListing] filters row - $state.name:', $ctrl.$state.name, 'is item detail:', $ctrl.$state.includes('item'), 'is building detail:', $ctrl.$state.includes('building'), 'is schematic detail:', $ctrl.$state.includes('schematic'), 'is corporation detail:', $ctrl.$state.includes('corporation'), 'should show filters:', !$ctrl.$state.includes('item') && !$ctrl.$state.includes('building') && !$ctrl.$state.includes('schematic') && !$ctrl.$state.includes('corporation'))">
+	<div class="col-sm-12">
+		<ui-view name="filters" ng-init="console.log('[entityListing] filters ui-view - rendering filters view, state:', $ctrl.$state.name)"></ui-view>
 	</div>
 </div>
-<ui-view name="content"></ui-view>
+<ui-view name="content" ng-init="console.log('[entityListing] content ui-view - rendering content view, state:', $ctrl.$state.name)"></ui-view>
