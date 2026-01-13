@@ -18,6 +18,7 @@
 		"createStarRuptureOnlyData": "ts-node -r tsconfig-paths/register bin/createStarRuptureOnlyData.ts"
 	},
 	"devDependencies": {
+		"@sparticuz/chromium": "^131.0.0",
 		"@types/angular": "^1.6.56",
 		"@types/angular-breadcrumb": "^0.4.22",
 		"@types/angular-sanitize": "^1.7.0",
@@ -33,7 +34,7 @@
 		"@types/sharp": "^0.29.4",
 		"angular-templatecache-loader": "^0.2.0",
 		"css-loader": "^5.2.7",
-		"puppeteer": "^21.7.0",
+		"puppeteer-core": "^21.7.0",
 		"sass": "^1.56.0",
 		"sass-loader": "^10.2.0",
 		"script-loader": "^0.7.2",

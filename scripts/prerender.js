@@ -22,7 +22,7 @@ async function main() {
     return;
   }
 
-  const puppeteer = require('puppeteer');
+  const puppeteer = require('puppeteer-core');
 
   const root = path.resolve(__dirname, '..');
   const outDir = path.join(root, 'www');
@@ -51,10 +51,8 @@ async function main() {
 
   console.log(`[prerender] server started: ${baseUrl}`);
 
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  const launchOptions = await getLaunchOptions();
+  const browser = await puppeteer.launch(launchOptions);
 
   try {
     for (const route of routes) {
@@ -203,5 +201,59 @@ main().catch((e) => {
   console.error('[prerender] failed:', e);
   process.exit(1);
 });
+
+async function getLaunchOptions() {
+  // Vercel runs on Linux, where Chromium sandbox is typically unavailable.
+  // Use @sparticuz/chromium to avoid Puppeteer downloading a browser at install time (which often times out on CI/Vercel).
+  if (process.env.VERCEL || process.platform === 'linux') {
+    const chromium = require('@sparticuz/chromium');
+    return {
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless
+    };
+  }
+
+  // Local fallback (mac/windows): user must have Chrome installed.
+  // You can override with PUPPETEER_EXECUTABLE_PATH.
+  const override = process.env.PUPPETEER_EXECUTABLE_PATH;
+  const executablePath = override || findLocalChrome();
+  if (!executablePath) {
+    throw new Error(
+      '[prerender] No local Chrome found. Set PUPPETEER_EXECUTABLE_PATH=/path/to/Chrome to run prerender locally.'
+    );
+  }
+  return {
+    headless: 'new',
+    executablePath,
+    args: []
+  };
+}
+
+function findLocalChrome() {
+  const candidates = [];
+  if (process.platform === 'darwin') {
+    candidates.push(
+      '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      '/Applications/Chromium.app/Contents/MacOS/Chromium'
+    );
+  } else if (process.platform === 'win32') {
+    const pf = process.env['PROGRAMFILES'] || 'C:\\\\Program Files';
+    const pf86 = process.env['PROGRAMFILES(X86)'] || 'C:\\\\Program Files (x86)';
+    candidates.push(
+      `${pf}\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe`,
+      `${pf86}\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe`
+    );
+  }
+  for (const p of candidates) {
+    try {
+      if (fs.existsSync(p)) return p;
+    } catch (e) {
+      // ignore
+    }
+  }
+  return null;
+}
 
 
