@@ -68,12 +68,37 @@ export class ProductionController
 		$timeout(() => {
 			const query = this.$location.search();
 			if ('share' in query) {
-				axios({
-					method: 'GET',
-					url: 'https://api.starrupturecalculator.com/v2/share/' + encodeURIComponent(query.share),
-				}).then((response) => {
+				const shareId = query.share;
+				// Try to decode as base64 first (fallback method)
+				let tabData: IProductionData | null = null;
+				try {
+					const decoded = decodeURIComponent(atob(shareId));
+					tabData = JSON.parse(decoded);
+				} catch (e) {
+					// Not base64 encoded, try API
+					axios({
+						method: 'GET',
+						url: 'https://api.starrupturecalculator.com/v2/share/' + encodeURIComponent(shareId),
+					}).then((response) => {
+						$timeout(0).then(() => {
+							tabData = response.data.data;
+							tabData.metadata.name = 'Shared: ' + tabData.metadata.name;
+							const tab = new ProductionTab(this.scope, $rootScope.version, tabData);
+							this.tabs.push(tab);
+							this.tab = tab;
+							this.saveState();
+							this.$location.search('');
+						});
+					}).catch((error) => {
+						console.error('Failed to load shared data from API:', error);
+						this.$location.search('');
+					});
+					return;
+				}
+				
+				// If base64 decode succeeded, use that data
+				if (tabData) {
 					$timeout(0).then(() => {
-						const tabData: IProductionData = response.data.data;
 						tabData.metadata.name = 'Shared: ' + tabData.metadata.name;
 						const tab = new ProductionTab(this.scope, $rootScope.version, tabData);
 						this.tabs.push(tab);
@@ -81,9 +106,7 @@ export class ProductionController
 						this.saveState();
 						this.$location.search('');
 					});
-				}).catch(() => {
-					this.$location.search('');
-				});
+				}
 			}
 		});
 	}

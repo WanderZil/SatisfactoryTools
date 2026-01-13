@@ -242,21 +242,71 @@ export class ProductionTab
 		const shareData = angular.copy(this.data);
 		shareData.metadata.name = this.name;
 		shareData.metadata.icon = this.icon;
+		
+		// Try to use API first, but fallback to URL-based sharing if API fails
+		const apiUrl = 'https://api.starrupturecalculator.com/v2/share/?version=' + this.version;
 		axios({
 			method: 'POST',
-			url: 'https://api.starrupturecalculator.com/v2/share/?version=' + this.version,
+			url: apiUrl,
 			data: shareData,
+			timeout: 10000, // 10 second timeout
 		}).then((response) => {
 			this.scope.$timeout(0).then(() => {
-				this.shareLink = response.data.link;
-				Strings.copyToClipboard(response.data.link, 'Link for sharing has been copied to clipboard.');
+				if (response.data && response.data.link) {
+					let link = response.data.link;
+					// Ensure the link is a complete URL with the correct domain
+					if (link && !link.startsWith('http://') && !link.startsWith('https://')) {
+						// If it's a relative path, make it absolute
+						if (link.startsWith('/')) {
+							link = 'https://starrupturecalculator.com' + link;
+						} else {
+							link = 'https://starrupturecalculator.com/?share=' + encodeURIComponent(link);
+						}
+					} else if (link && link.includes('satisfactorytools.com')) {
+						// Replace old domain with new domain if present
+						link = link.replace(/https?:\/\/(www\.)?satisfactorytools\.com/g, 'https://starrupturecalculator.com');
+					}
+					this.shareLink = link;
+					Strings.copyToClipboard(link, 'Link for sharing has been copied to clipboard.');
+				} else {
+					// API returned success but no link, fallback to URL-based sharing
+					this.fallbackToUrlSharing(shareData);
+				}
 			});
-		}).catch(() => {
+		}).catch((error) => {
 			this.scope.$timeout(0).then(() => {
-				this.shareLink = '';
-				alert('Couldn\'t get the share link.');
+				console.error('Share API error:', error);
+				console.error('API URL:', apiUrl);
+				console.error('Error details:', {
+					message: error.message,
+					response: error.response ? {
+						status: error.response.status,
+						data: error.response.data
+					} : 'No response',
+					request: error.request ? 'Request made but no response' : 'No request made'
+				});
+				// Fallback to URL-based sharing if API fails
+				this.fallbackToUrlSharing(shareData);
 			});
 		});
+	}
+
+	private fallbackToUrlSharing(shareData: IProductionData): void
+	{
+		// Fallback: encode data directly in URL using base64
+		try {
+			const jsonString = JSON.stringify(shareData);
+			// Use base64 encoding (browser native btoa)
+			const encoded = btoa(unescape(encodeURIComponent(jsonString)));
+			// Create share URL with encoded data
+			const shareUrl = 'https://starrupturecalculator.com/?share=' + encodeURIComponent(encoded);
+			this.shareLink = shareUrl;
+			Strings.copyToClipboard(shareUrl, 'Link for sharing has been copied to clipboard. (Using direct URL encoding)');
+		} catch (error) {
+			console.error('Fallback URL sharing error:', error);
+			this.shareLink = '';
+			alert('Couldn\'t generate share link. The data might be too large. Please try again or contact support.');
+		}
 	}
 
 	public unregister(): void

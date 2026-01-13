@@ -8,7 +8,7 @@
 
 <ul class="nav nav-tabs production-nav-tabs" ui-sortable="{axis: 'x',  'ui-floating': true}" ng-model="ctrl.tabs">
 	<li class="nav-item d-flex">
-		<a class="nav-link align-self-center" ng-click="ctrl.tab = null" ng-class="{active: ctrl.tab === null}" title="Manage production lines, export and import" tooltip>
+		<a href="#" class="nav-link align-self-center" ng-click="ctrl.tab = null; $event.preventDefault();" ng-class="{active: ctrl.tab === null}" title="Manage production lines, export and import" tooltip role="button" tabindex="0">
 			<span class="fas fa-tasks"></span>
 		</a>
 	</li>
@@ -19,7 +19,7 @@
 		</span>
 	</li>
 	<li class="nav-item d-flex new-tab">
-		<a class="nav-link align-self-center" ng-click="ctrl.addEmptyTab();" title="Add new production line" tooltip>
+		<a href="#" class="nav-link align-self-center" ng-click="ctrl.addEmptyTab(); $event.preventDefault();" title="Add new production line" tooltip role="button" tabindex="0">
 			<span ng-class="{'fas': true, 'fa-plus': !ctrl.addingInProgress, 'fa-spin': ctrl.addingInProgress, 'fa-sync-alt': ctrl.addingInProgress}"></span>
 		</a>
 	</li>
@@ -32,15 +32,15 @@
 				{{ctrl.selectedTabs.length}} out of {{ctrl.tabs.length}} selected
 			</span>
 			<span class="btn-group">
-				<a class="btn btn-dark w-auto" ng-click="ctrl.selectAllTabs()">All</a>
-				<a class="btn btn-dark w-auto" ng-click="ctrl.selectedTabs = []">None</a>
+				<a href="#" class="btn btn-dark w-auto" ng-click="ctrl.selectAllTabs(); $event.preventDefault();" role="button" tabindex="0">All</a>
+				<a href="#" class="btn btn-dark w-auto" ng-click="ctrl.selectedTabs = []; $event.preventDefault();" role="button" tabindex="0">None</a>
 			</span>
 
 			<span class="btn-group">
-				<a class="btn btn-info" ng-click="ctrl.exportSelectedTabs()" tooltip title="Export selected tabs">
+				<a href="#" class="btn btn-info" ng-click="ctrl.exportSelectedTabs(); $event.preventDefault();" tooltip title="Export selected tabs" role="button" tabindex="0">
 					<span class="fas fa-fw fa-file-export"></span>
 				</a>
-				<a class="btn btn-danger" ng-click="ctrl.removeSelectedTabs()" tooltip title="Remove selected tabs">
+				<a href="#" class="btn btn-danger" ng-click="ctrl.removeSelectedTabs(); $event.preventDefault();" tooltip title="Remove selected tabs" role="button" tabindex="0">
 					<span class="fas fa-fw fa-trash-alt"></span>
 				</a>
 			</span>
@@ -96,7 +96,7 @@
 					<label>
 						<input type="file" id="importFile">
 					</label>
-					<a ng-click="ctrl.tryImport()" class="btn btn-success">Import</a>
+					<a href="#" ng-click="ctrl.tryImport(); $event.preventDefault();" class="btn btn-success" role="button" tabindex="0">Import</a>
 				</div>
 			</div>
 		</div>
@@ -133,19 +133,19 @@
 			</span>
 
 			<span class="btn-group">
-				<a class="btn btn-info" ng-click="ctrl.tab.copyShareLink()" tooltip title="Share tab">
+				<a href="#" class="btn btn-info" ng-click="ctrl.tab.copyShareLink(); $event.preventDefault();" tooltip title="Share tab" role="button" tabindex="0">
 					<span class="fas fa-share-alt"></span>
 				</a>
-				<a class="btn btn-success" ng-click="ctrl.cloneTab(ctrl.tab)" tooltip title="Clone tab">
+				<a href="#" class="btn btn-success" ng-click="ctrl.cloneTab(ctrl.tab); $event.preventDefault();" tooltip title="Clone tab" role="button" tabindex="0">
 					<span ng-class="{'far': !ctrl.cloningInProgress, 'fas': ctrl.cloningInProgress, 'fa-fw': true, 'fa-clone': !ctrl.cloningInProgress, 'fa-spin': ctrl.cloningInProgress, 'fa-sync-alt': ctrl.cloningInProgress}"></span>
 				</a>
-				<a class="btn btn-warning" ng-click="ctrl.tab.resetData()" tooltip title="Reset tab to default">
+				<a href="#" class="btn btn-warning" ng-click="ctrl.tab.resetData(); $event.preventDefault();" tooltip title="Reset tab to default" role="button" tabindex="0">
 					<span class="fas fa-fw fa-eraser"></span>
 				</a>
-				<a class="btn btn-danger" ng-click="ctrl.removeTab(ctrl.tab)" tooltip title="Remove tab">
+				<a href="#" class="btn btn-danger" ng-click="ctrl.removeTab(ctrl.tab); $event.preventDefault();" tooltip title="Remove tab" role="button" tabindex="0">
 					<span class="fas fa-fw fa-trash-alt"></span>
 				</a>
-				<a class="btn btn-secondary" ng-click="ctrl.tab.state.expanded = !ctrl.tab.state.expanded" tooltip title="{{ctrl.tab.state.expanded ? 'Collapse' : 'Expand'}}">
+				<a href="#" class="btn btn-secondary" ng-click="ctrl.tab.state.expanded = !ctrl.tab.state.expanded; $event.preventDefault();" tooltip title="{{ctrl.tab.state.expanded ? 'Collapse' : 'Expand'}}" role="button" tabindex="0">
 					<span ng-if="ctrl.tab.state.expanded" class="fas fa-fw fa-chevron-up"></span>
 					<span ng-if="!ctrl.tab.state.expanded" class="fas fa-fw fa-chevron-down"></span>
 				</a>
@@ -156,25 +156,25 @@
 				<div class="col-md-2 border-right border-light">
 					<ul class="nav nav-tabs flex-column">
 						<li class="nav-item">
-							<a href="javascript: void(0);" class="nav-link" ng-class="{active: ctrl.tab.tab === 'production'}" ng-click="ctrl.tab.tab = 'production'">
+							<a href="#" class="nav-link" ng-class="{active: ctrl.tab.tab === 'production'}" ng-click="ctrl.tab.tab = 'production'; $event.preventDefault();" role="button" tabindex="0">
 								<span class="fas fa-fw fa-chart-line mr-1"></span>
 								Production
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="javascript: void(0);" class="nav-link" ng-class="{active: ctrl.tab.tab === 'items'}" ng-click="ctrl.tab.tab = 'items'">
+							<a href="#" class="nav-link" ng-class="{active: ctrl.tab.tab === 'items'}" ng-click="ctrl.tab.tab = 'items'; $event.preventDefault();" role="button" tabindex="0">
 								<span class="fas fa-fw fa-box-open mr-1"></span>
 								Items, Input
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="javascript: void(0);" class="nav-link" ng-class="{active: ctrl.tab.tab === 'recipes'}" ng-click="ctrl.tab.tab = 'recipes'">
+							<a href="#" class="nav-link" ng-class="{active: ctrl.tab.tab === 'recipes'}" ng-click="ctrl.tab.tab = 'recipes'; $event.preventDefault();" role="button" tabindex="0">
 								<span class="fas fa-fw fa-scroll mr-1"></span>
 								Recipes
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="javascript: void(0);" class="nav-link" ng-class="{active: ctrl.tab.tab === 'machines'}" ng-click="ctrl.tab.tab = 'machines'">
+							<a href="#" class="nav-link" ng-class="{active: ctrl.tab.tab === 'machines'}" ng-click="ctrl.tab.tab = 'machines'; $event.preventDefault();" role="button" tabindex="0">
 								<span class="fas fa-fw fa-industry mr-1"></span>
 								Machines
 							</a>
@@ -609,27 +609,27 @@
 		</div>
 		<ul class="nav nav-pills nav-justified result-nav">
 			<li class="nav-item">
-				<a class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'overview'}" ng-click="ctrl.tab.resultTab = 'overview'">
+				<a href="#" class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'overview'}" ng-click="ctrl.tab.resultTab = 'overview'; $event.preventDefault();" role="button" tabindex="0">
 					<span class="fas fa-info-circle mr-1"></span> Overview
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'visualization'}" ng-click="ctrl.tab.resultTab = 'visualization'">
+				<a href="#" class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'visualization'}" ng-click="ctrl.tab.resultTab = 'visualization'; $event.preventDefault();" role="button" tabindex="0">
 					<span class="fas fa-project-diagram mr-1"></span> Visualization
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'power'}" ng-click="ctrl.tab.resultTab = 'power'">
+				<a href="#" class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'power'}" ng-click="ctrl.tab.resultTab = 'power'; $event.preventDefault();" role="button" tabindex="0">
 					<span class="fas fa-bolt mr-1"></span> Power
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'items'}" ng-click="ctrl.tab.resultTab = 'items'">
+				<a href="#" class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'items'}" ng-click="ctrl.tab.resultTab = 'items'; $event.preventDefault();" role="button" tabindex="0">
 					<span class="fas fa-pallet mr-1"></span> Items
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'buildings'}" ng-click="ctrl.tab.resultTab = 'buildings'">
+				<a href="#" class="nav-link" ng-class="{active: ctrl.tab.resultTab === 'buildings'}" ng-click="ctrl.tab.resultTab = 'buildings'; $event.preventDefault();" role="button" tabindex="0">
 					<span class="fas fa-industry mr-1"></span> Buildings
 				</a>
 			</li>
