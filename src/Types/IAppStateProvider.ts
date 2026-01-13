@@ -1,5 +1,3 @@
-import {Ng1StateDeclaration, StateProvider} from 'angular-ui-router';
-
 interface IAppBreadcrumbState
 {
 	ncyBreadcrumb?: {
@@ -11,14 +9,18 @@ interface IAppBreadcrumbState
 	ncyBreadcrumbLink?: string;
 }
 
-export interface IAppState extends Ng1StateDeclaration, IAppBreadcrumbState
+// Keep state/provider types loosely typed to avoid ui-router type export mismatches across environments (local vs CI/Vercel).
+export interface IAppState extends IAppBreadcrumbState
 {
-
+	// Allow ui-router state definitions to include any additional properties (url, parent, views, resolve, etc).
+	// This avoids depending on a specific ui-router .d.ts export set, which differs between environments.
+	[key: string]: any;
+	name?: string;
 }
 
-export interface IAppStateProvider extends StateProvider
+export interface IAppStateProvider
 {
-	state(definition: IAppState): StateProvider;
+	state(definition: IAppState): any;
 
-	state(name: string, definition: IAppState): StateProvider;
+	state(name: string, definition: IAppState): any;
 }

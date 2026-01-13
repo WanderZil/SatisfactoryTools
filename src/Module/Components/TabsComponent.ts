@@ -1,10 +1,9 @@
 import {IComponentOptions} from 'angular';
-import {StateService} from 'angular-ui-router';
 
 export class TabsComponent implements IComponentOptions
 {
 
-	public controller = ['$state', function($state: StateService) {
+	public controller = ['$state', function($state: any) {
 		this.isActive = (state: string) => {
 			return $state.is(state) || $state.includes(state);
 		};

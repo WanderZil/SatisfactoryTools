@@ -3,6 +3,9 @@ import {Constants} from '@src/Constants';
 import {saveAs} from 'file-saver';
 import * as base64 from 'base-64';
 
+// jQuery is available globally at runtime (Bootstrap toast relies on it). Declare for TS on CI/Vercel.
+declare const $: any;
+
 export class Strings
 {
 

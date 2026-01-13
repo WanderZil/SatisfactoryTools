@@ -2,7 +2,6 @@ import {RecentlyVisitedItemsService} from '@src/Module/Services/RecentlyVisitedI
 import {IItemSchema} from '@src/Schema/IItemSchema';
 import {IFilterService} from '@src/Types/IFilterService';
 import {Strings} from '@src/Utils/Strings';
-import {StateService} from 'angular-ui-router';
 
 export class CodexController
 {
@@ -11,7 +10,8 @@ export class CodexController
 	public entityPreviewState: string;
 	public static $inject = ['RecentlyVisitedItemsService', '$state'];
 
-	public constructor(public recentlyVisited: RecentlyVisitedItemsService, public $state: StateService)
+	// `$state` is provided by ui-router at runtime; keep it loosely typed to avoid type export mismatches on CI/Vercel.
+	public constructor(public recentlyVisited: RecentlyVisitedItemsService, public $state: any)
 	{
 	}
 

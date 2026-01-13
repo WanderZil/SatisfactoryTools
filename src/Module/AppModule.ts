@@ -1,5 +1,4 @@
 import {ILocationProvider, IModule, ISCEProvider, IScope, ITimeoutService} from 'angular';
-import {StateService, StateParams, UrlRouterProvider} from 'angular-ui-router';
 import {HomeController} from '@src/Module/Controllers/HomeController';
 import {PrivacyPolicyController} from '@src/Module/Controllers/PrivacyPolicyController';
 import {TermsOfServiceController} from '@src/Module/Controllers/TermsOfServiceController';
@@ -38,6 +37,8 @@ import {ComponentOptionsService} from '@src/Module/Services/ComponentOptionsServ
 import {SchematicFiltersService} from '@src/Module/Services/SchematicFiltersService';
 import {SchematicFilterComponent} from '@src/Module/Components/SchematicFilterComponent';
 import {SchematicController} from '@src/Module/Controllers/SchematicController';
+// jQuery is provided globally at runtime (loaded via vendor scripts). Declare to satisfy TS on CI/Vercel.
+declare const $: any;
 import {CorporationFiltersService} from '@src/Module/Services/CorporationFiltersService';
 import {CorporationFilterComponent} from '@src/Module/Components/CorporationFilterComponent';
 import {CorporationController} from '@src/Module/Controllers/CorporationController';
@@ -56,7 +57,7 @@ export class AppModule
 	{
 		this.app.config([
 			'$locationProvider', '$stateProvider', '$urlRouterProvider', '$sceProvider',
-			($locationProvider: ILocationProvider, $stateProvider: IAppStateProvider, $urlRouterProvider: UrlRouterProvider, $sceProvider: ISCEProvider) => {
+			($locationProvider: ILocationProvider, $stateProvider: any, $urlRouterProvider: any, $sceProvider: ISCEProvider) => {
 			$locationProvider.html5Mode({
 				enabled: true,
 				requireBase: false,
@@ -175,7 +176,7 @@ export class AppModule
 					ncyBreadcrumb: {
 						parent: 'schematics',
 					},
-					onEnter: ['$stateParams', '$state$', 'ComponentOptionsService', ($stateParams: StateParams, $state$: IAppState, options: ComponentOptionsService) => {
+					onEnter: ['$stateParams', '$state$', 'ComponentOptionsService', ($stateParams: any, $state$: IAppState, options: ComponentOptionsService) => {
 						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
 						$state$.ncyBreadcrumb.label = data.getSchematicBySlug($stateParams.item)?.name;
 						options.reset();
@@ -229,7 +230,7 @@ export class AppModule
 					ncyBreadcrumb: {
 						parent: 'buildings',
 					},
-					onEnter: ['$stateParams', '$state$', 'ComponentOptionsService', ($stateParams: StateParams, $state$: IAppState, options: ComponentOptionsService) => {
+					onEnter: ['$stateParams', '$state$', 'ComponentOptionsService', ($stateParams: any, $state$: IAppState, options: ComponentOptionsService) => {
 						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
 						$state$.ncyBreadcrumb.label = data.getBuildingBySlug($stateParams.item)?.name;
 						options.reset();
@@ -311,7 +312,7 @@ export class AppModule
 					ncyBreadcrumb: {
 						parent: 'items',
 					},
-					onEnter: ['$stateParams', '$state$', ($stateParams: StateParams, $state$: IAppState) => {
+					onEnter: ['$stateParams', '$state$', ($stateParams: any, $state$: IAppState) => {
 						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
 						$state$.ncyBreadcrumb.label = data.getItemBySlug($stateParams.item)?.name;
 					}],
@@ -356,7 +357,7 @@ export class AppModule
 					ncyBreadcrumb: {
 						parent: 'corporations',
 					},
-					onEnter: ['$stateParams', '$state$', ($stateParams: StateParams, $state$: IAppState) => {
+					onEnter: ['$stateParams', '$state$', ($stateParams: any, $state$: IAppState) => {
 						$state$.ncyBreadcrumb = $state$.ncyBreadcrumb || {};
 						$state$.ncyBreadcrumb.label = data.getCorporationBySlug($stateParams.item)?.name;
 					}],
@@ -403,7 +404,7 @@ export class AppModule
 				});
 			},
 		]);
-		this.app.run(['$transitions', '$rootScope', '$state', '$timeout', ($transitions: any, $rootScope: any, $state: StateService, $timeout: ITimeoutService) => {
+		this.app.run(['$transitions', '$rootScope', '$state', '$timeout', ($transitions: any, $rootScope: any, $state: any, $timeout: ITimeoutService) => {
 			// Initialize DataProvider with default data (0.8 which contains StarRupture data)
 			DataProvider.change('0.8');
 

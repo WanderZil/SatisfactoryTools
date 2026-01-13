@@ -1,10 +1,9 @@
-import {Ng1StateDeclaration} from 'angular-ui-router';
-
 export interface ITransitionObject<T>
 {
 
 	abort: () => void;
-	to: () => Ng1StateDeclaration;
+	// Keep this loosely typed to avoid ui-router type export mismatches across environments (local vs CI/Vercel).
+	to: () => any;
 	params(): T;
 
 }
