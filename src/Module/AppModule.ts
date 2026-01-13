@@ -430,14 +430,16 @@ export class AppModule
 				const stateName = ($state.current && $state.current.name) ? $state.current.name : '';
 				const params: any = ($state.params || {});
 
-				let title = 'StarRupture Calculator';
+				// Slightly longer title helps SEO and makes the browser tab clearer.
+				// Keep the brand at the front so it still matches user expectations.
+				let title = 'StarRupture Calculator - Production Planner & Database';
 				let description = 'Production calculator and tools for StarRupture. Plan your industrial base, calculate production chains, and survive the Rupture cycles on planet Arcadia-7!';
 				let urlPath = window.location.pathname;
 				let imageUrl = getAbsUrl('/assets/images/icons/android-chrome-512x512.webp');
 
 				// List pages
 				if (stateName === 'production') {
-					title = 'StarRupture Calculator';
+					title = 'StarRupture Calculator - Production Planner & Database';
 					urlPath = '/';
 				} else if (stateName === 'home') {
 					title = 'About - StarRupture Calculator';
