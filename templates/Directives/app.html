@@ -53,7 +53,15 @@
 </nav>
 
 <div class="container-fluid px-xl-5 px-lg-4 px-md-3 px-sm-2 px-1" style="margin-top: 60px;">
-	<div ui-view></div>
+	<div ng-if="$root.dataLoading" class="visualization-result" style="margin-top: 10px;">
+		<span class="fas fa-spin fa-sync-alt mr-2"></span>
+		Loading data...
+	</div>
+	<div ng-if="$root.dataLoadingError" class="alert alert-danger mt-3">
+		{{$root.dataLoadingError}}
+	</div>
+
+	<div ui-view ng-if="!$root.dataLoading && !$root.dataLoadingError"></div>
 
 	<hr>
 

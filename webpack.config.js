@@ -2,6 +2,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const TSLintPlugin = require('tslint-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = (env, argv) => {
 	const mode = (argv && argv.mode) ? argv.mode : 'development';
@@ -16,11 +17,11 @@ module.exports = (env, argv) => {
 
 		entry: './src/app.ts',
 		output: {
-			path: __dirname,
-			filename: './www/assets/app.js',
-			// Needed for code-splitting: ensure async chunks are emitted into www/assets
-			// and loaded from /assets/ at runtime.
-			chunkFilename: isProd ? './www/assets/[name].[contenthash:8].js' : './www/assets/[name].js',
+			// Emit bundles directly into www/assets so runtime chunk URLs are /assets/<chunk>.js
+			// (avoids incorrect URLs like /assets/./www/assets/<chunk>.js which break chunk loading).
+			path: path.join(__dirname, 'www', 'assets'),
+			filename: 'app.js',
+			chunkFilename: isProd ? '[name].[contenthash:8].js' : '[name].js',
 			publicPath: '/assets/',
 			// Avoid extra debug metadata in production bundles.
 			pathinfo: !isProd,
