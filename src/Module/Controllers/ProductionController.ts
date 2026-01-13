@@ -81,9 +81,9 @@ export class ProductionController
 						url: 'https://api.starrupturecalculator.com/v2/share/' + encodeURIComponent(shareId),
 					}).then((response) => {
 						$timeout(0).then(() => {
-							tabData = response.data.data;
-							tabData.metadata.name = 'Shared: ' + tabData.metadata.name;
-							const tab = new ProductionTab(this.scope, $rootScope.version, tabData);
+							const apiTabData: IProductionData = response.data.data;
+							apiTabData.metadata.name = 'Shared: ' + apiTabData.metadata.name;
+							const tab = new ProductionTab(this.scope, $rootScope.version, apiTabData);
 							this.tabs.push(tab);
 							this.tab = tab;
 							this.saveState();
@@ -97,10 +97,11 @@ export class ProductionController
 				}
 				
 				// If base64 decode succeeded, use that data
-				if (tabData) {
+				if (tabData !== null) {
+					const finalTabData: IProductionData = tabData;
 					$timeout(0).then(() => {
-						tabData.metadata.name = 'Shared: ' + tabData.metadata.name;
-						const tab = new ProductionTab(this.scope, $rootScope.version, tabData);
+						finalTabData.metadata.name = 'Shared: ' + finalTabData.metadata.name;
+						const tab = new ProductionTab(this.scope, $rootScope.version, finalTabData);
 						this.tabs.push(tab);
 						this.tab = tab;
 						this.saveState();
