@@ -8,3 +8,5 @@ Disallow: /index.php
 # Sitemap (keep in sync with <link rel="canonical"> in www/index.html)
 Sitemap: https://starrupturecalculator.com/sitemap.xml
 
+# Note: Do not add non-standard directives like "Content-signal" as they are not recognized by search engines
+
