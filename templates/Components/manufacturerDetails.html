@@ -40,8 +40,35 @@
 					<td>x{{ctrl.building.metadata.manufacturingSpeed|number:2}}</td>
 				</tr>
 				<tr ng-if="ctrl.building.metadata.powerConsumption">
-					<td>Power Consumption</td>
+					<td ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.powerType && ctrl.building.metadata._daData.powerType.includes('Producer')">Power Production</td>
+					<td ng-if="!ctrl.building.metadata._daData || !ctrl.building.metadata._daData.powerType || !ctrl.building.metadata._daData.powerType.includes('Producer')">Power Consumption</td>
 					<td>{{ctrl.building.metadata.powerConsumption}} MW</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.powerType">
+					<td>Power Type</td>
+					<td>{{ctrl.building.metadata._daData.powerType.split('::').pop()}}</td>
+				</tr>
+				
+				<!-- Power 类型特殊属性 -->
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.coolingCapacityUsing !== undefined">
+					<td>Cooling Capacity</td>
+					<td>{{ctrl.building.metadata._daData.coolingCapacityUsing}}</td>
+				</tr>
+				
+				<!-- Extraction 类型特殊属性 -->
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.logisticsSocketCount !== undefined && ctrl.building.metadata._daData.logisticsSocketCount > 0">
+					<td>Logistics Sockets</td>
+					<td>{{ctrl.building.metadata._daData.logisticsSocketCount}} ({{ctrl.building.metadata._daData.logisticsSocketTypes.join(', ')}})</td>
+				</tr>
+				
+				<!-- 通用属性 -->
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.aggroMax !== undefined">
+					<td>Aggro Max</td>
+					<td>{{ctrl.building.metadata._daData.aggroMax}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.maxAggroDistance !== undefined">
+					<td>Max Aggro Distance</td>
+					<td>{{ctrl.building.metadata._daData.maxAggroDistance / 100 | number:1}} m</td>
 				</tr>
 				
 				<!-- 防御参数 -->

@@ -468,6 +468,10 @@ export class ProductionResult
 		average = Numbers.round(average);
 		max = Numbers.round(max);
 
+		// 计算最优发电建筑组合
+		const optimalGenerators = this.calculateOptimalGenerators(average);
+		const optimalGeneratorsMax = isVariable && max > average ? this.calculateOptimalGenerators(max) : undefined;
+
 		this.details.power = {
 			total: {
 				isVariable: isVariable,
@@ -476,7 +480,64 @@ export class ProductionResult
 			},
 			byBuilding: byBuilding,
 			byRecipe: byRecipe,
+			optimalGenerators: optimalGenerators,
+			optimalGeneratorsMax: optimalGeneratorsMax,
 		};
+	}
+
+	private calculateOptimalGenerators(powerNeeded: number): Array<{buildingClassName: string, count: number}>
+	{
+		if (powerNeeded <= 0) {
+			return [];
+		}
+
+		// 获取所有发电建筑
+		const allBuildings = data.getRawData().buildings;
+		const generators: Array<{building: any, power: number}> = [];
+		for (const key in allBuildings) {
+			const building = allBuildings[key];
+			if (building.metadata && building.metadata._daData && building.metadata._daData.powerType && 
+				building.metadata._daData.powerType.includes('Producer') && building.metadata.powerConsumption) {
+				generators.push({ building: building, power: building.metadata.powerConsumption });
+			}
+		}
+		// 按发电量从高到低排序
+		generators.sort((a, b) => b.power - a.power);
+
+		const result: Array<{buildingClassName: string, count: number}> = [];
+		let remainingPower = powerNeeded;
+		
+		// 贪心算法：优先使用发电量大的建筑
+		for (const gen of generators) {
+			if (remainingPower <= 0) {
+				break;
+			}
+			if (gen.power <= 0) {
+				continue;
+			}
+			const count = Math.floor(remainingPower / gen.power);
+			if (count > 0) {
+				result.push({ buildingClassName: gen.building.className, count: count });
+				remainingPower -= count * gen.power;
+			}
+		}
+		
+		// 如果还有剩余电力需求，用最小的发电建筑补齐
+		if (remainingPower > 0 && generators.length > 0) {
+			const smallestGenerator = generators[generators.length - 1];
+			if (smallestGenerator.power > 0) {
+				const additionalCount = Math.ceil(remainingPower / smallestGenerator.power);
+				// 检查是否已经在结果中
+				const existingIndex = result.findIndex(r => r.buildingClassName === smallestGenerator.building.className);
+				if (existingIndex >= 0) {
+					result[existingIndex].count += additionalCount;
+				} else {
+					result.push({ buildingClassName: smallestGenerator.building.className, count: additionalCount });
+				}
+			}
+		}
+		
+		return result;
 	}
 
 	private findUnlockRequirements(schema: IJsonSchema): void

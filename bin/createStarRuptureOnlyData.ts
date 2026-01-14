@@ -78,6 +78,94 @@ function isDataPointItem(className: string, name: string): boolean {
 	       name.toLowerCase().includes('data point');
 }
 
+// 解析 Consumable 类型物品的额外属性
+function parseConsumableProperties(itemClassName: string): any {
+	try {
+		const itemsDir = path.join(__dirname, '..', 'data', 'StarRupture', 'Content', 'Chimera', 'Items');
+		const itemFilePath = path.join(itemsDir, itemClassName + '.json');
+		
+		if (!fs.existsSync(itemFilePath)) {
+			return null;
+		}
+		
+		const content = fs.readFileSync(itemFilePath, 'utf-8');
+		const data = JSON.parse(content);
+		
+		// 查找 Default__ 对象，它包含物品属性
+		const defaultObj = data.find((obj: any) =>
+			obj.Name && obj.Name.startsWith('Default__') && obj.Properties
+		);
+		
+		if (!defaultObj || !defaultObj.Properties) {
+			return null;
+		}
+		
+		const props = defaultObj.Properties;
+		
+		// 检查是否为 Consumable 类型
+		if (props.UIItemType !== 'EUIItemType::Consumable') {
+			return null;
+		}
+		
+		// 提取 AbilityEffectsToApply 中的效果名称
+		const abilityEffects: Array<{tagName?: string; effectName?: string}> = [];
+		if (props.AbilityEffectsToApply?.Effects) {
+			for (const effect of props.AbilityEffectsToApply.Effects) {
+				if (effect.Value?.Effects && effect.Value.Effects.length > 0) {
+					for (const effectObj of effect.Value.Effects) {
+						if (effectObj.ObjectName) {
+							// 提取效果名称，如 "BlueprintGeneratedClass'GE_ToxicityInstantEffectClear_C'" -> "GE_ToxicityInstantEffectClear"
+							const effectMatch = effectObj.ObjectName.match(/(\w+)_C['"]/);
+							if (effectMatch) {
+								abilityEffects.push({
+									tagName: effect.Key?.TagName,
+									effectName: effectMatch[1],
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// 提取 SystemAbilities 中的能力名称
+		const systemAbilities: Array<{tagName?: string; abilityName?: string}> = [];
+		if (props.SystemAbilities?.AbilityClasses) {
+			for (const ability of props.SystemAbilities.AbilityClasses) {
+				if (ability.Value?.ObjectName) {
+					// 提取能力名称，如 "BlueprintGeneratedClass'GA_UseEdibleItem_C'" -> "GA_UseEdibleItem"
+					const abilityMatch = ability.Value.ObjectName.match(/(\w+)_C['"]/);
+					if (abilityMatch) {
+						systemAbilities.push({
+							tagName: ability.Key?.TagName,
+							abilityName: abilityMatch[1],
+						});
+					}
+				}
+			}
+		}
+		
+		// 提取 StackingType，去掉 "ENxItemStackType::" 前缀
+		let stackingType: string | undefined = undefined;
+		if (props.StackingType) {
+			stackingType = props.StackingType.replace(/^ENxItemStackType::/, '');
+		}
+		
+		return {
+			healthChange: props.HealthChange,
+			toxicityChange: props.ToxicityChange,
+			experience: props.Experience,
+			stackingType: stackingType,
+			maxStack: props.MaxStack,
+			abilityEffects: abilityEffects.length > 0 ? abilityEffects : undefined,
+			systemAbilities: systemAbilities.length > 0 ? systemAbilities : undefined,
+		};
+	} catch (error) {
+		// 静默失败，不影响其他物品的处理
+		return null;
+	}
+}
+
 // 转换物品
 function convertItem(srItem: any): IItemSchema {
 	// 如果是 DataPoint 物品，使用统一的图标
@@ -89,6 +177,12 @@ function convertItem(srItem: any): IItemSchema {
 	let uiItemType: string | undefined = undefined;
 	if (srItem.uiItemType) {
 		uiItemType = srItem.uiItemType.replace(/^EUIItemType::/, '');
+	}
+	
+	// 如果是 Consumable 类型，提取额外属性
+	let consumableData: any = undefined;
+	if (uiItemType === 'Consumable') {
+		consumableData = parseConsumableProperties(srItem.className);
 	}
 	
 	return {
@@ -105,6 +199,7 @@ function convertItem(srItem: any): IItemSchema {
 		fluidColor: { r: 0, g: 0, b: 0, a: 0 },
 		isDataPoint: isDataPointItem(srItem.className, srItem.name), // 标记为 DataPoint 物品
 		uiItemType: uiItemType, // 存储 UIItemType（去掉前缀）
+		consumableData: consumableData, // Consumable 类型物品的额外属性
 	};
 }
 
@@ -544,11 +639,15 @@ function parseBuildingDA(buildingName: string): any {
 	// 尝试解析 DesignParams 文件（用于防御建筑）
 	let defenseData: any = null;
 	const possibleDesignParamsPaths = [
-		designParamsPath,
-		designParamsPathAlt,
+		designParamsPath, // TurretTier1/DA_TurretTier1DesignParams.json
+		designParamsPathAlt, // Turret_Tier1/DA_Turret_Tier1DesignParams.json
+		// 目录带下划线，但文件名不带下划线的情况（如 Turret_Tier1/DA_TurretTier1DesignParams.json）
+		path.join(buildingsDir, dirNameWithUnderscore, 'DA_' + dirName + 'DesignParams.json'),
 		path.join(buildingsDir, dirNameWithUnderscore, 'DA_' + dirNameWithUnderscore + 'DesignParams.json'),
 		path.join(buildingsDir, dirName.replace('Tier2', ''), 'DA_' + dirName.replace('Tier2', '') + 'DesignParams.json'),
 		path.join(buildingsDir, dirName.replace('Tier2', 'Tier_2'), 'DA_' + dirName.replace('Tier2', 'Tier_2') + 'DesignParams.json'),
+		// 目录带下划线，但文件名不带下划线的 Tier2 情况
+		path.join(buildingsDir, dirName.replace('Tier2', 'Tier_2'), 'DA_' + dirName + 'DesignParams.json'),
 		path.join(buildingsDir, 'Interiors', dirName, 'DA_' + dirName + 'DesignParams.json'),
 	];
 	for (const possiblePath of possibleDesignParamsPaths) {
@@ -711,6 +810,28 @@ function parseDAFile(daPath: string): any {
 		const inputInventoryRows = logisticsTrait?.Properties?.Parameters?.InputInventoryRows;
 		const hasInputStorage = logisticsTrait?.Properties?.Parameters?.bHasInputStorage;
 		
+		// 查找 CrMassTemperatureTrait 以获取温度相关属性（Power 和 Extraction 类型）
+		const temperatureTrait = data.find((obj: any) => obj.Type === 'CrMassTemperatureTrait');
+		const coolingCapacityUsing = temperatureTrait?.Properties?.TemperatureParameters?.CoolingCapacityUsing;
+		
+		// 查找 CrMassBuildingStabilityTrait 以获取稳定性成本（Power 类型）
+		const stabilityTrait = data.find((obj: any) => obj.Type === 'CrMassBuildingStabilityTrait');
+		const stabilityCost = stabilityTrait?.Properties?.StabilityData?.Cost;
+		
+		// 查找 CrMassAggroTargetTrait 以获取仇恨值相关属性（所有类型）
+		const aggroTrait = data.find((obj: any) => obj.Type === 'CrMassAggroTargetTrait');
+		const aggroMax = aggroTrait?.Properties?.Parameters?.AggroMax;
+		const maxAggroDistance = aggroTrait?.Properties?.Parameters?.MaxAggroDistance;
+		
+		// 查找 CrLogisticsSocketsTrait 以获取物流接口信息（Extraction 类型）
+		const logisticsSocketsTrait = data.find((obj: any) => obj.Type === 'CrLogisticsSocketsTrait');
+		const logisticsSockets = logisticsSocketsTrait?.Properties?.Params?.Sockets || [];
+		const logisticsSocketCount = logisticsSockets.length;
+		const logisticsSocketTypes = logisticsSockets.map((socket: any) => socket.Type).filter((type: any) => type);
+		
+		// 查找 CrElectricityTrait 以获取电力类型（Producer/Consumer）
+		const electricityType = electricityTrait?.Properties?.Parameters?.Type;
+		
 		return {
 			isCraftingBuilding: isCraftingBuilding,
 			craftingLoopDuration: craftingLoopDuration,
@@ -718,12 +839,22 @@ function parseDAFile(daPath: string): any {
 			availableRecipes: availableRecipes, // 从 CRC 文件提取的 recipe 列表
 			manufacturingSpeed: craftingLoopDuration ? 1.0 / craftingLoopDuration : undefined,
 			powerConsumption: powerConsumption,
+			powerType: electricityType, // Producer 或 Consumer
 			logisticsType: logisticsType,
 			inventoryColumns: inventoryColumns,
 			inventoryRows: inventoryRows,
 			inputInventoryColumns: inputInventoryColumns,
 			inputInventoryRows: inputInventoryRows,
 			hasInputStorage: hasInputStorage,
+			// Power 类型特殊属性
+			coolingCapacityUsing: coolingCapacityUsing,
+			stabilityCost: stabilityCost,
+			// 通用属性
+			aggroMax: aggroMax,
+			maxAggroDistance: maxAggroDistance,
+			// Extraction 类型特殊属性
+			logisticsSocketCount: logisticsSocketCount,
+			logisticsSocketTypes: logisticsSocketTypes,
 		};
 	} catch (error) {
 		console.error(`Error parsing DA file ${daPath}:`, error);
@@ -913,6 +1044,16 @@ function convertBuilding(bdData: any, daData: any, bpData: any): IBuildingSchema
 		logisticsType: daData?.logisticsType,
 		hasInputStorage: daData?.hasInputStorage,
 		defenseData: daData?.defenseData, // 防御建筑的设计参数
+		// Power 类型特殊属性
+		coolingCapacityUsing: daData?.coolingCapacityUsing,
+		stabilityCost: daData?.stabilityCost,
+		powerType: daData?.powerType, // Producer 或 Consumer
+		// 通用属性
+		aggroMax: daData?.aggroMax,
+		maxAggroDistance: daData?.maxAggroDistance,
+		// Extraction 类型特殊属性
+		logisticsSocketCount: daData?.logisticsSocketCount,
+		logisticsSocketTypes: daData?.logisticsSocketTypes,
 	};
 	metadata._bpData = {
 		craftingSpeed: bpData?.craftingSpeed,

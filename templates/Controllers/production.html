@@ -660,8 +660,14 @@
 											{{inputData.used|number}}
 										</td>
 										<td class="table-cell-adjust-size text-left pr-2">
-											<item-icon item="item" size="24"></item-icon>
-											{{ctrl.getItem(item).name}}
+											<a ng-if="ctrl.getRouteStateForClassName(item)" ui-sref="{{ctrl.getRouteStateForClassName(item)}}({item: ctrl.getSlugForClassName(item)})">
+												<item-icon item="item" size="24"></item-icon>
+											</a>
+											<item-icon ng-if="!ctrl.getRouteStateForClassName(item)" item="item" size="24"></item-icon>
+											<a ng-if="ctrl.getRouteStateForClassName(item)" ui-sref="{{ctrl.getRouteStateForClassName(item)}}({item: ctrl.getSlugForClassName(item)})">
+												{{ctrl.getItem(item).name}}
+											</a>
+											<span ng-if="!ctrl.getRouteStateForClassName(item)">{{ctrl.getItem(item).name}}</span>
 										</td>
 										<td class="table-cell-adjust-size text-left text-muted">
 											{{inputData.usedPercentage|number}}% of input ({{inputData.max|number}})
@@ -698,8 +704,14 @@
 											{{data.used|number}}
 										</td>
 										<td class="text-left table-cell-adjust-size pr-2">
-											<item-icon item="resource" size="24" tooltip="1"></item-icon>
-											{{ctrl.getItem(resource).name}}
+											<a ng-if="ctrl.getRouteStateForClassName(resource) && ctrl.getSlugForClassName(resource)" ng-attr-ui-sref="{{ctrl.getRouteStateForClassName(resource)}}({item: ctrl.getSlugForClassName(resource)})">
+												<item-icon item="resource" size="24" tooltip="1"></item-icon>
+												{{ctrl.getItem(resource).name}}
+											</a>
+											<span ng-if="!ctrl.getRouteStateForClassName(resource) || !ctrl.getSlugForClassName(resource)">
+												<item-icon item="resource" size="24" tooltip="1"></item-icon>
+												{{ctrl.getItem(resource).name}}
+											</span>
 										</td>
 										<td class="text-left text-muted">
 											<span ng-if="data.enabled">{{data.usedPercentage|number}}% of limit ({{data.max}})</span>
@@ -734,8 +746,14 @@
 											{{amount|number}}
 										</td>
 										<td class="text-left">
-											<item-icon item="item" size="24"></item-icon>
-											{{ctrl.getItem(item).name}}
+											<a ng-if="ctrl.getRouteStateForClassName(item) && ctrl.getSlugForClassName(item)" ng-attr-ui-sref="{{ctrl.getRouteStateForClassName(item)}}({item: ctrl.getSlugForClassName(item)})">
+												<item-icon item="item" size="24"></item-icon>
+												{{ctrl.getItem(item).name}}
+											</a>
+											<span ng-if="!ctrl.getRouteStateForClassName(item) || !ctrl.getSlugForClassName(item)">
+												<item-icon item="item" size="24"></item-icon>
+												{{ctrl.getItem(item).name}}
+											</span>
 										</td>
 									</tr>
 									<tr ng-repeat="(item, amount) in ctrl.tab.resultNew.details.byproducts">
@@ -743,8 +761,14 @@
 											{{amount|number}}
 										</td>
 										<td class="text-left text-muted">
-											<item-icon item="item" size="24"></item-icon>
-											{{ctrl.getItem(item).name}}
+											<a ng-if="ctrl.getRouteStateForClassName(item)" ui-sref="{{ctrl.getRouteStateForClassName(item)}}({item: ctrl.getSlugForClassName(item)})">
+												<item-icon item="item" size="24"></item-icon>
+											</a>
+											<item-icon ng-if="!ctrl.getRouteStateForClassName(item)" item="item" size="24"></item-icon>
+											<a ng-if="ctrl.getRouteStateForClassName(item)" ui-sref="{{ctrl.getRouteStateForClassName(item)}}({item: ctrl.getSlugForClassName(item)})">
+												{{ctrl.getItem(item).name}}
+											</a>
+											<span ng-if="!ctrl.getRouteStateForClassName(item)">{{ctrl.getItem(item).name}}</span>
 											(byproduct)
 										</td>
 									</tr>
@@ -774,8 +798,14 @@
 											{{data.amount}}
 										</td>
 										<td class="text-left">
-											<item-icon item="building" size="24" tooltip="1"></item-icon>
-											{{ctrl.getBuilding(building).name}}
+											<a ng-if="ctrl.getRouteStateForClassName(building)" ui-sref="{{ctrl.getRouteStateForClassName(building)}}({item: ctrl.getSlugForClassName(building)})">
+												<item-icon item="building" size="24" tooltip="1"></item-icon>
+											</a>
+											<item-icon ng-if="!ctrl.getRouteStateForClassName(building)" item="building" size="24" tooltip="1"></item-icon>
+											<a ng-if="ctrl.getRouteStateForClassName(building)" ui-sref="{{ctrl.getRouteStateForClassName(building)}}({item: ctrl.getSlugForClassName(building)})">
+												{{ctrl.getBuilding(building).name}}
+											</a>
+											<span ng-if="!ctrl.getRouteStateForClassName(building)">{{ctrl.getBuilding(building).name}}</span>
 										</td>
 									</tr>
 								</tbody>
@@ -800,8 +830,32 @@
 						</h4>
 
 						<div class="card-body" ng-if="!ctrl.tab.state.overviewCollapsed['power']">
-							<b>{{ctrl.tab.resultNew.details.power.total.average|number}} MW</b>
-							<span class="text-muted" ng-if="ctrl.tab.resultNew.details.power.total.isVariable">(up to {{ctrl.tab.resultNew.details.power.total.max|number}} MW)</span>
+							<div class="mb-2">
+								<b>{{ctrl.tab.resultNew.details.power.total.average|number}} MW</b>
+								<span class="text-muted" ng-if="ctrl.tab.resultNew.details.power.total.isVariable">(up to {{ctrl.tab.resultNew.details.power.total.max|number}} MW)</span>
+							</div>
+							<div ng-if="ctrl.tab.resultNew.details.power.total.average > 0 && ctrl.tab.resultNew.details.power.optimalGenerators && ctrl.tab.resultNew.details.power.optimalGenerators.length > 0" class="mt-3">
+								<small class="text-muted d-block mb-2">Power Supply:</small>
+								<div class="mb-2">
+									<span ng-repeat="combo in ctrl.tab.resultNew.details.power.optimalGenerators track by combo.buildingClassName" class="mr-2">
+										<span class="font-weight-bold">{{combo.count}}x</span>
+										<a ng-if="ctrl.getRouteStateForClassName(combo.buildingClassName)" ui-sref="{{ctrl.getRouteStateForClassName(combo.buildingClassName)}}({item: ctrl.getSlugForClassName(combo.buildingClassName)})">
+											<item-icon item="combo.buildingClassName" size="20"></item-icon>
+										</a>
+										<item-icon ng-if="!ctrl.getRouteStateForClassName(combo.buildingClassName)" item="combo.buildingClassName" size="20"></item-icon>
+									</span>
+								</div>
+								<div ng-if="ctrl.tab.resultNew.details.power.optimalGeneratorsMax && ctrl.tab.resultNew.details.power.optimalGeneratorsMax.length > 0" class="text-muted">
+									<small>Max: </small>
+									<span ng-repeat="combo in ctrl.tab.resultNew.details.power.optimalGeneratorsMax track by combo.buildingClassName" class="mr-2">
+										<span class="font-weight-bold">{{combo.count}}x</span>
+										<a ng-if="ctrl.getRouteStateForClassName(combo.buildingClassName)" ui-sref="{{ctrl.getRouteStateForClassName(combo.buildingClassName)}}({item: ctrl.getSlugForClassName(combo.buildingClassName)})">
+											<item-icon item="combo.buildingClassName" size="20"></item-icon>
+										</a>
+										<item-icon ng-if="!ctrl.getRouteStateForClassName(combo.buildingClassName)" item="combo.buildingClassName" size="20"></item-icon>
+									</span>
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -829,17 +883,29 @@
 										</td>
 										<td class="text-left">
 											<span ng-if="req.type === 'recipe' && req.item">
-												<item-icon item="req.item" size="20" tooltip="1"></item-icon>
-												<span ng-if="ctrl.getItem(req.item)">{{ctrl.getItem(req.item).name}}</span>
-												<span ng-if="!ctrl.getItem(req.item)">{{req.item}}</span>
+												<a ng-if="ctrl.getRouteStateForClassName(req.item) && ctrl.getSlugForClassName(req.item)" ng-attr-ui-sref="{{ctrl.getRouteStateForClassName(req.item)}}({item: ctrl.getSlugForClassName(req.item)})">
+													<item-icon item="req.item" size="20" tooltip="1"></item-icon>
+													<span ng-if="ctrl.getItem(req.item)">{{ctrl.getItem(req.item).name}}</span>
+												</a>
+												<span ng-if="!ctrl.getRouteStateForClassName(req.item) || !ctrl.getSlugForClassName(req.item)">
+													<item-icon item="req.item" size="20" tooltip="1"></item-icon>
+													<span ng-if="ctrl.getItem(req.item)">{{ctrl.getItem(req.item).name}}</span>
+													<span ng-if="!ctrl.getItem(req.item)">{{req.item}}</span>
+												</span>
 											</span>
 											<span ng-if="req.type === 'recipe' && !req.item && req.schematic">
 												{{req.schematic.name}}
 											</span>
 											<span ng-if="req.type === 'building' && req.building">
-												<item-icon item="req.building" size="20" tooltip="1"></item-icon>
-												<span ng-if="ctrl.getBuilding(req.building)">{{ctrl.getBuilding(req.building).name}}</span>
-												<span ng-if="!ctrl.getBuilding(req.building)">{{req.building}}</span>
+												<a ng-if="ctrl.getRouteStateForClassName(req.building) && ctrl.getSlugForClassName(req.building)" ng-attr-ui-sref="{{ctrl.getRouteStateForClassName(req.building)}}({item: ctrl.getSlugForClassName(req.building)})">
+													<item-icon item="req.building" size="20" tooltip="1"></item-icon>
+													<span ng-if="ctrl.getBuilding(req.building)">{{ctrl.getBuilding(req.building).name}}</span>
+												</a>
+												<span ng-if="!ctrl.getRouteStateForClassName(req.building) || !ctrl.getSlugForClassName(req.building)">
+													<item-icon item="req.building" size="20" tooltip="1"></item-icon>
+													<span ng-if="ctrl.getBuilding(req.building)">{{ctrl.getBuilding(req.building).name}}</span>
+													<span ng-if="!ctrl.getBuilding(req.building)">{{req.building}}</span>
+												</span>
 											</span>
 										</td>
 										<td class="text-left">

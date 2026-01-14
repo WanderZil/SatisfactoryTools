@@ -87,51 +87,66 @@ export class ManufacturerDetailsComponentController
 		}
 		const allCorporations = data.getAllCorporations();
 		
-		// 首先尝试精确匹配
-		for (const key in allCorporations) {
-			const corp = allCorporations[key];
-			if (corp.name === name) {
-				return corp;
-			}
-		}
-		
 		// 如果name是枚举格式（如 "ECrCorporation::SelenianCORP"），尝试提取公司名称
-		const enumMatch = name.match(/::(\w+)$/);
-		if (enumMatch) {
-			const enumValue = enumMatch[1];
-			// 建立映射关系
-			const enumToNameMap: {[key: string]: string} = {
-				'SelenianCORP': 'SelenianCorporation',
-				'CleverRobotics': 'CleverCorporation',
-				'FutureHealthSolutions': 'FutureCorporation',
-				'GriffithsCorporation': 'GriffithsCorporation',
-				'MoonEnergyCorporation': 'MoonCorporation',
-				'StartingCorporation': 'StartingCorporation',
-			};
-			
-			// 先尝试直接映射
-			if (enumToNameMap[enumValue]) {
-				for (const key in allCorporations) {
-					const corp = allCorporations[key];
-					if (corp.name === enumToNameMap[enumValue]) {
-						return corp;
+		if (name.includes('::')) {
+			const parts = name.split('::');
+			if (parts.length > 1) {
+				const corpEnum = parts[1]; // 如 "SelenianCORP", "CleverRobotics"
+				
+				// 创建映射：ECrCorporation enum -> CD_ className
+				const corpMapping: {[key: string]: string} = {
+					'SelenianCORP': 'CD_SelenianCorp',
+					'SelenianCorporation': 'CD_SelenianCorp',
+					'CleverRobotics': 'CD_CleverCorp',
+					'FutureHealthSolution': 'CD_FutureCorp',
+					'FutureHealthSolutions': 'CD_FutureCorp',
+					'GriffithsBlueCorporation': 'CD_GriffithsCorp',
+					'GriffithsCorp': 'CD_GriffithsCorp',
+					'MoonEnergyCorporation': 'CD_MoonCorp',
+					'MoonEnergy': 'CD_MoonCorp',
+					'FE_FinalCorporation': 'CD_FE_FinalCorp',
+					'StartingCorp': 'CD_StartingCorp',
+				};
+				
+				// 首先尝试直接映射
+				let corpClassName = corpMapping[corpEnum] || null;
+				
+				// 如果映射中没有，尝试通过 className 匹配（去掉 CD_ 前缀后比较）
+				if (!corpClassName) {
+					for (const key in allCorporations) {
+						// 从 className 中提取核心名称（去掉 CD_ 前缀）
+						const corpKeyName = key.replace(/^CD_/, '').toLowerCase();
+						// 从 enum 中提取核心名称
+						const enumName = corpEnum.toLowerCase().replace(/corp|corporation/gi, '').trim();
+						// 尝试匹配
+						if (corpKeyName.includes(enumName) || enumName.includes(corpKeyName)) {
+							corpClassName = key;
+							break;
+						}
 					}
 				}
-			}
-			
-			// 尝试模糊匹配：SelenianCORP -> SelenianCorporation
-			// 或者 CleverRobotics -> CleverCorporation
-			for (const key in allCorporations) {
-				const corp = allCorporations[key];
-				const corpNameUpper = corp.name.toUpperCase();
-				const enumValueUpper = enumValue.toUpperCase();
-				// 检查公司名称是否包含枚举值（去掉CORP、Corporation等后缀）
-				const enumValueClean = enumValueUpper.replace(/CORP$/, '').replace(/CORPORATION$/, '');
-				const corpNameClean = corpNameUpper.replace(/CORPORATION$/, '');
-				if (corpNameClean.includes(enumValueClean) || enumValueClean.includes(corpNameClean)) {
-					return corp;
+				
+				// 如果仍然没有匹配，尝试通过名称匹配
+				if (!corpClassName) {
+					for (const key in allCorporations) {
+						const corp = allCorporations[key];
+						// 检查名称是否匹配（忽略大小写和特殊字符）
+						const normalizedEnum = corpEnum.toLowerCase().replace(/corp|corporation/gi, '').trim();
+						const normalizedName = (corp.name || '').toLowerCase().replace(/corp|corporation/gi, '').trim();
+						if (normalizedName.includes(normalizedEnum) || normalizedEnum.includes(normalizedName)) {
+							corpClassName = key;
+							break;
+						}
+					}
+				}
+				
+				if (corpClassName) {
+					return allCorporations[corpClassName] || null;
 				}
 			}
+		} else {
+			// 直接使用作为 className
+			return allCorporations[name] || null;
 		}
 		
 		return null;

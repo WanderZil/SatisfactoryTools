@@ -31,6 +31,8 @@ export interface IResultDetails
 			[key: string]: IMachinePowerDetails;
 		};
 		total: IMachineGroupPower;
+		optimalGenerators?: Array<{buildingClassName: string, count: number}>;
+		optimalGeneratorsMax?: Array<{buildingClassName: string, count: number}>;
 	};
 	hasInput: boolean;
 	rawResources: {[key: string]: IRawResourceResultDetails};

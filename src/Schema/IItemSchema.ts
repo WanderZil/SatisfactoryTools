@@ -14,6 +14,22 @@ export interface IItemExportInfo {
 	moon?: IItemExportValue[];
 }
 
+export interface IConsumableData {
+	healthChange?: number;
+	toxicityChange?: number;
+	experience?: number;
+	stackingType?: string;
+	maxStack?: number;
+	abilityEffects?: Array<{
+		tagName?: string;
+		effectName?: string;
+	}>;
+	systemAbilities?: Array<{
+		tagName?: string;
+		abilityName?: string;
+	}>;
+}
+
 export interface IItemSchema
 {
 
@@ -31,5 +47,6 @@ export interface IItemSchema
 	isDataPoint?: boolean; // 标记为 DataPoint 物品，不显示详情页链接
 	export?: IItemExportInfo; // 导出信息
 	uiItemType?: string; // UIItemType 属性，如 "EUIItemType::Resource", "EUIItemType::BlueprintItem", "EUIItemType::Consumable", "EUIItemType::Valuable"
+	consumableData?: IConsumableData; // Consumable 类型物品的额外属性
 
 }

@@ -60,9 +60,26 @@ export class BuildingController
 						'StartingCorp': 'CD_StartingCorp',
 					};
 					
+					// 首先尝试直接映射
 					corpClassName = corpMapping[corpEnum] || null;
 					
-					// 如果映射中没有，尝试通过名称匹配
+					// 如果映射中没有，尝试通过 className 匹配（去掉 CD_ 前缀后比较）
+					if (!corpClassName) {
+						const allCorps = data.getAllCorporations();
+						for (const key in allCorps) {
+							// 从 className 中提取核心名称（去掉 CD_ 前缀）
+							const corpKeyName = key.replace(/^CD_/, '').toLowerCase();
+							// 从 enum 中提取核心名称
+							const enumName = corpEnum.toLowerCase().replace(/corp|corporation/gi, '').trim();
+							// 尝试匹配
+							if (corpKeyName.includes(enumName) || enumName.includes(corpKeyName)) {
+								corpClassName = key;
+								break;
+							}
+						}
+					}
+					
+					// 如果仍然没有匹配，尝试通过名称匹配
 					if (!corpClassName) {
 						const allCorps = data.getAllCorporations();
 						for (const key in allCorps) {
@@ -84,6 +101,12 @@ export class BuildingController
 			
 			if (corpClassName) {
 				this.corporation = data.getCorporationByClassName(corpClassName);
+				// 如果仍然没有找到，尝试通过 slug 匹配
+				if (!this.corporation && corpClassName.startsWith('CD_')) {
+					// 尝试将 className 转换为可能的 slug
+					const possibleSlug = corpClassName.replace(/^CD_/, '').toLowerCase().replace(/corp$/, '');
+					this.corporation = data.getCorporationBySlug(possibleSlug);
+				}
 			}
 		}
 		this.$scope.$watch(() => {

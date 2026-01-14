@@ -98,7 +98,26 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 35,
+        "toxicityChange": -30,
+        "experience": 18,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ToxicityInstantEffectClear"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AntidoteGel": {
       "slug": "antidotegel",
@@ -118,7 +137,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": -100,
+        "experience": 30,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ToxicityInstantEffectClear"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AntidoteShards": {
       "slug": "antidoteshards",
@@ -138,7 +175,26 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 60,
+        "toxicityChange": -40,
+        "experience": 35,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ToxicityInstantEffectClear"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AntimatterGenerator": {
       "slug": "antimattergenerator",
@@ -178,7 +234,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AquaBlockCapsules": {
       "slug": "aquablockcapsules",
@@ -198,7 +265,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_AquaBlockCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AquaChew": {
       "slug": "aquachew",
@@ -218,7 +303,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 30,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AquaFluid": {
       "slug": "aquafluid",
@@ -238,7 +334,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 30,
+        "toxicityChange": 10,
+        "experience": 18,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AquaGel": {
       "slug": "aquagel",
@@ -258,7 +367,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 20,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_AquaStimShards": {
       "slug": "aquastimshards",
@@ -278,7 +398,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 40,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_AquaStimShards"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_ArcReactor": {
       "slug": "arcreactor",
@@ -583,7 +721,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 30,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CalorieBlockCapsules": {
       "slug": "calorieblockcapsules",
@@ -603,7 +752,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_CalorieBlockCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CalorieChew": {
       "slug": "caloriechew",
@@ -623,7 +790,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CalorieFluid": {
       "slug": "caloriefluid",
@@ -643,7 +821,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 30,
+        "toxicityChange": 10,
+        "experience": 20,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CalorieGel": {
       "slug": "caloriegel",
@@ -663,7 +854,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 20,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CalorieStimShards": {
       "slug": "caloriestimshards",
@@ -683,7 +885,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 40,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_CalorieStimShards"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CarbonSonar": {
       "slug": "carbonsonar",
@@ -752,7 +972,24 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ClearCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CoalOre": {
       "slug": "coalore",
@@ -955,7 +1192,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_CorrosionResPlasm"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_CrabLoot": {
       "slug": "crabloot",
@@ -975,7 +1230,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 10,
+        "toxicityChange": 15,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Cyclotrone": {
       "slug": "cyclotrone",
@@ -1615,7 +1882,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_DrainResPlasm"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_DroneData": {
       "slug": "droneeventlog",
@@ -1789,7 +2074,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 40,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_EnergyBoostCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_EnergyBoostChew": {
       "slug": "energyboostchew",
@@ -1809,7 +2112,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 20,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_EnergyBoostChew"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_EnergyStimShards": {
       "slug": "energystimshards",
@@ -1829,7 +2150,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 30,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_EnergyStimShards"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Epoxy": {
       "slug": "epoxy",
@@ -1925,7 +2264,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 18,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_FireWaveOre": {
       "slug": "firewaveore",
@@ -2050,7 +2400,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 50,
+        "experience": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_GoethiteIngot": {
       "slug": "goethiteingot",
@@ -2190,7 +2552,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 30,
+        "toxicityChange": 10,
+        "experience": 4,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Gyroscope": {
       "slug": "stabilizer",
@@ -2280,7 +2655,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 90,
+        "toxicityChange": 40,
+        "experience": 40,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_HeatResistantSheet": {
       "slug": "heatresistantsheet",
@@ -2385,7 +2773,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 2,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Hydrolite": {
       "slug": "hydrolite",
@@ -2405,7 +2804,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 12,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Impeller": {
       "slug": "impeller",
@@ -2474,7 +2884,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_InfectionResPlasm"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_IntermediateBuildingMaterial": {
       "slug": "intermediatebuildingmaterial",
@@ -2996,7 +3424,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_NutriBlockCapsules": {
       "slug": "nutriblockcapsules",
@@ -3016,7 +3455,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_NutriBlockCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_NutriChew": {
       "slug": "nutrichew",
@@ -3036,7 +3493,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 20,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_NutriFluid": {
       "slug": "nutrifluid",
@@ -3056,7 +3524,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 30,
+        "toxicityChange": 10,
+        "experience": 22,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_NutriGel": {
       "slug": "nutrigel",
@@ -3076,7 +3557,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 30,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_NutriStimShards": {
       "slug": "nutristimshards",
@@ -3096,7 +3588,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 45,
+        "experience": 40,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_NutriStimShards"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_OnboardInstruments": {
       "slug": "onboardinstruments",
@@ -3176,7 +3686,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 10,
+        "experience": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_PayloadStage": {
       "slug": "payloadstage",
@@ -3316,7 +3838,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 2,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Polisnack": {
       "slug": "polisnack",
@@ -3336,7 +3869,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 14,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_PowerCell": {
       "slug": "powercell",
@@ -3441,7 +3985,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "experience": 3,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_PrismHerb": {
       "slug": "prismherb",
@@ -3461,7 +4016,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 10,
+        "experience": 8,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_PropulsionStage": {
       "slug": "propulsionstage",
@@ -3550,7 +4117,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": -70,
+        "experience": 22,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ToxicityInstantEffectClear"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Purplant": {
       "slug": "purplant",
@@ -3570,7 +4155,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": -40,
+        "experience": 5,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_ToxicityInstantEffectClear"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_PyriteOre": {
       "slug": "pyrite",
@@ -3810,7 +4413,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 30,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_RegenCapsules"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_ReinforcedFrame": {
       "slug": "reinforcedframe",
@@ -4192,7 +4813,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 20,
+        "experience": 3,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_SerpentRoot"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_SerpentSticks": {
       "slug": "serpentsticks",
@@ -4212,7 +4851,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 30,
+        "experience": 12,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_SerpentSticks"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_SilicaSand": {
       "slug": "syntheticsilicon",
@@ -4286,7 +4943,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 55,
+        "toxicityChange": 10,
+        "experience": 17,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_StarTears": {
       "slug": "startears",
@@ -4306,7 +4976,20 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 20,
+        "toxicityChange": 5,
+        "experience": 4,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Stator": {
       "slug": "stator",
@@ -4375,7 +5058,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 25,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_Sulbon"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_Sulheart": {
       "slug": "sulheart",
@@ -4395,7 +5096,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 25,
+        "experience": 8,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_SulphurOre": {
       "slug": "sulphur",
@@ -4538,7 +5251,26 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 50,
+        "toxicityChange": -30,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_SupporterSurvivalPack"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_SurvivalFoodPack": {
       "slug": "survivalfoodpack",
@@ -4558,7 +5290,19 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "healthChange": 15,
+        "experience": 25,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_SyntheticDNA": {
       "slug": "syntheticdna",
@@ -4667,7 +5411,25 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 40,
+        "experience": 50,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "abilityEffects": [
+          {
+            "tagName": "GameplayEffect",
+            "effectName": "GE_TermoResPlasm"
+          }
+        ],
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_TestResourceItem": {
       "slug": "resourceitem",
@@ -5126,7 +5888,18 @@
         "a": 0
       },
       "isDataPoint": false,
-      "uiItemType": "Consumable"
+      "uiItemType": "Consumable",
+      "consumableData": {
+        "toxicityChange": 10,
+        "stackingType": "StackByType",
+        "maxStack": 100,
+        "systemAbilities": [
+          {
+            "tagName": "Input.Item.Use",
+            "abilityName": "GA_UseEdibleItem"
+          }
+        ]
+      }
     },
     "I_WolframBar": {
       "slug": "wolframbar",
@@ -11407,7 +12180,15 @@
           "availableRecipes": [
             "CR_SulphurOre"
           ],
-          "logisticsType": "ECrMassLogisticsType::Producer"
+          "logisticsType": "ECrMassLogisticsType::Producer",
+          "coolingCapacityUsing": 60,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 1,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output"
+          ]
         },
         "_bpData": {
           "numOfBuildingStages": 1
@@ -11447,7 +12228,10 @@
         "_daData": {
           "isCraftingBuilding": true,
           "craftingLoopDuration": 5.888,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "aggroMax": 130,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -11499,7 +12283,19 @@
             "CR_Scanner"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 150,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -11543,7 +12339,11 @@
           "isCraftingBuilding": false,
           "availableRecipes": [],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "stabilityCost": 30,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -11674,7 +12474,18 @@
             "CR_Syringe"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 5,
+          "stabilityCost": 70,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 3,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -11716,7 +12527,11 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::Consumer"
+          "logisticsType": "ECrMassLogisticsType::Consumer",
+          "powerType": "ECrMassElectricityAgentType::Producer",
+          "maxAggroDistance": 2000,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -12344,7 +13159,14 @@
           "recipeCollection": "CrItemRecipeCollection'CRC_Exporter'",
           "availableRecipes": [],
           "logisticsType": "ECrMassLogisticsType::Consumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 5,
+          "stabilityCost": 60,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "logisticsSocketCount": 1,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "numOfBuildingStages": 1
@@ -12411,7 +13233,20 @@
             "CR_TrackingDevice"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 40,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 5,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -12479,7 +13314,20 @@
             "CR_TrackingDevice"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 40,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 5,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -12590,7 +13438,19 @@
             "CR_Supermagnet"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 8,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -12641,7 +13501,15 @@
           "availableRecipes": [
             "CR_Helium"
           ],
-          "logisticsType": "ECrMassLogisticsType::Producer"
+          "logisticsType": "ECrMassLogisticsType::Producer",
+          "coolingCapacityUsing": 60,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 1,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output"
+          ]
         },
         "_bpData": {
           "numOfBuildingStages": 1
@@ -12700,7 +13568,20 @@
             "CR_Pump"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 15,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 5,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -12753,7 +13634,9 @@
             "CR_Analyze"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {},
         "manufacturingSpeed": 1
@@ -12785,7 +13668,9 @@
       "metadata": {
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -12818,7 +13703,9 @@
       "metadata": {
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -12897,7 +13784,9 @@
             "CR_TermoResPlasm"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {},
         "manufacturingSpeed": 1
@@ -12947,7 +13836,9 @@
             "CR_FEAccessItem"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {},
         "manufacturingSpeed": 1
@@ -12983,7 +13874,9 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::Storage"
+          "logisticsType": "ECrMassLogisticsType::Storage",
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -13018,7 +13911,9 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::Storage"
+          "logisticsType": "ECrMassLogisticsType::Storage",
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -13051,7 +13946,9 @@
       "metadata": {
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -13084,7 +13981,9 @@
       "metadata": {
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -13117,7 +14016,9 @@
       "metadata": {
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -13157,7 +14058,15 @@
           "isCraftingBuilding": true,
           "recipeCollection": "CrItemRecipeCollection'CRC_MechanicalDrill'",
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::Producer"
+          "logisticsType": "ECrMassLogisticsType::Producer",
+          "coolingCapacityUsing": 3,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 1,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output"
+          ]
         },
         "_bpData": {
           "numOfBuildingStages": 1
@@ -13986,7 +14895,18 @@
             "CR_PressurizedHelium"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 60,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 3,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -14030,7 +14950,19 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::ProducerConsumer"
+          "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
+          "coolingCapacityUsing": 5,
+          "stabilityCost": 60,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet"
+          ]
         },
         "_bpData": {}
       },
@@ -14081,7 +15013,17 @@
             "CR_CalciumBlock"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 3,
+          "stabilityCost": 80,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 2,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Output",
+            "ECrLogisticsSocketType::Input"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -14125,7 +15067,14 @@
         "powerConsumptionExponent": 1.6,
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "coolingCapacityUsing": 5,
+          "stabilityCost": 60,
+          "powerType": "ECrMassElectricityAgentType::Producer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -14165,7 +15114,14 @@
         "powerConsumptionExponent": 1.6,
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "coolingCapacityUsing": 250,
+          "stabilityCost": 70,
+          "powerType": "ECrMassElectricityAgentType::Producer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -14205,7 +15161,19 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::ProducerConsumer"
+          "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
+          "coolingCapacityUsing": 40,
+          "stabilityCost": 70,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet"
+          ]
         },
         "_bpData": {}
       },
@@ -14245,7 +15213,18 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::ProducerConsumer"
+          "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
+          "stabilityCost": 80,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet"
+          ]
         },
         "_bpData": {}
       },
@@ -14299,7 +15278,19 @@
             "CR_Superconductor"
           ],
           "logisticsType": "ECrMassLogisticsType::ProducerConsumer",
-          "hasInputStorage": true
+          "hasInputStorage": true,
+          "coolingCapacityUsing": 150,
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Input",
+            "ECrLogisticsSocketType::Output"
+          ]
         },
         "_bpData": {
           "craftingSpeed": 1.5,
@@ -14341,7 +15332,13 @@
         "powerConsumptionExponent": 1.6,
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "stabilityCost": 90,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -14376,7 +15373,20 @@
       "buildMenuPriority": 0,
       "metadata": {
         "_daData": {
-          "availableRecipes": []
+          "availableRecipes": [],
+          "defenseData": {
+            "ammoItem": "StandardAmmoItem",
+            "meshWithMuzzleComponentTag": "Rifle",
+            "enemyDetectionRadius": 3500,
+            "baseDamage": 30,
+            "accidentalPlayerDamage": 6,
+            "rateOfFire": 0.2,
+            "patrollingSpeed": 35,
+            "rotationTowardsTargetSpeed": 70,
+            "allowAttackEnemyToTurretAngleInDeg": 10,
+            "spreadInDeg": 0,
+            "maxUpAndDownTiltAngleInDeg": 70
+          }
         },
         "_bpData": {}
       },
@@ -14411,7 +15421,19 @@
       "buildMenuPriority": 2,
       "metadata": {
         "_daData": {
-          "availableRecipes": []
+          "availableRecipes": [],
+          "defenseData": {
+            "ammoItem": "StandardAmmoItem",
+            "meshWithMuzzleComponentTag": "Rifle",
+            "enemyDetectionRadius": 5000,
+            "baseDamage": 15,
+            "accidentalPlayerDamage": 3,
+            "rateOfFire": 0.05,
+            "patrollingSpeed": 30,
+            "rotationTowardsTargetSpeed": 60,
+            "allowAttackEnemyToTurretAngleInDeg": 10,
+            "canRequestAmmoFromDeliverySystem": true
+          }
         },
         "_bpData": {}
       },
@@ -14450,7 +15472,19 @@
         "_daData": {
           "isCraftingBuilding": false,
           "availableRecipes": [],
-          "logisticsType": "ECrMassLogisticsType::Storage"
+          "logisticsType": "ECrMassLogisticsType::Storage",
+          "coolingCapacityUsing": 60,
+          "stabilityCost": 70,
+          "powerType": "ECrMassElectricityAgentType::Consumer",
+          "aggroMax": 95,
+          "maxAggroDistance": 350,
+          "logisticsSocketCount": 4,
+          "logisticsSocketTypes": [
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet",
+            "ECrLogisticsSocketType::NotSet"
+          ]
         },
         "_bpData": {}
       },
@@ -14490,7 +15524,14 @@
         "powerConsumptionExponent": 1.6,
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "coolingCapacityUsing": 20,
+          "stabilityCost": 80,
+          "powerType": "ECrMassElectricityAgentType::Producer",
+          "aggroMax": 95,
+          "maxAggroDistance": 400,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },
@@ -14531,7 +15572,13 @@
         "powerConsumptionExponent": 1.6,
         "_daData": {
           "isCraftingBuilding": false,
-          "availableRecipes": []
+          "availableRecipes": [],
+          "stabilityCost": 80,
+          "powerType": "ECrMassElectricityAgentType::Producer",
+          "aggroMax": 95,
+          "maxAggroDistance": 400,
+          "logisticsSocketCount": 0,
+          "logisticsSocketTypes": []
         },
         "_bpData": {}
       },

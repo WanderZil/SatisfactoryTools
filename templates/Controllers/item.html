@@ -20,128 +20,183 @@
 </div>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-12">
 		<div class="card mb-3">
 			<h2 class="card-header">{{ctrl.item.name}} details</h2>
 			<div class="card-body">
-				<table class="table two-columns">
-					<tbody>
-						<tr ng-if="ctrl.hasSinkPoints()">
-							<td>Sink points</td>
-							<td>{{ctrl.item.sinkPoints}}</td>
-						</tr>
-						<tr ng-if="ctrl.hasForm()">
-							<td>Form</td>
-							<td>{{ctrl.item.liquid ? 'Liquid' : 'Solid'}}</td>
-						</tr>
-						<tr ng-if="!ctrl.item.liquid">
-							<td>Stack size</td>
-							<td>{{ctrl.item.stackSize}}</td>
-						</tr>
-						<tr ng-if="ctrl.item.energyValue && ctrl.item.liquid">
-							<td>Energy value</td>
-							<td>{{ctrl.item.energyValue * 1000}} MJ/m<sup>3</sup></td>
-						</tr>
-						<tr ng-if="ctrl.item.energyValue && !ctrl.item.liquid">
-							<td>Energy value</td>
-							<td>{{ctrl.item.energyValue}} MJ</td>
-						</tr>
-						<tr ng-if="ctrl.hasRadioactive()">
-							<td>Radioactive</td>
-							<td>{{ctrl.item.radioactiveDecay > 0 ? 'Yes' : 'No'}}</td>
-						</tr>
-						<tr>
-							<td>Can be exported</td>
-							<td>{{ctrl.canBeExported() ? 'Yes' : 'No'}}</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.level">
-							<td>Level</td>
-							<td>{{ctrl.relatedRecipe.level}}</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && !ctrl.relatedRecipe.level">
-							<td>Tier</td>
-							<td>{{ctrl.relatedRecipe.tier}}</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.corporation">
-							<td>Corporation</td>
-							<td>{{ctrl.relatedRecipe.corporation}}</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.cost && ctrl.relatedRecipe.cost.length > 0">
-							<td>Cost</td>
-							<td>
-								<span class="item-amount" ng-repeat="ingredient in ctrl.relatedRecipe.cost">
-									{{ingredient.amount}}x
-									<a ui-sref="item({item: ctrl.getItem(ingredient.item).slug})">
-										<item-icon item="ingredient.item"></item-icon>
-									</a>
-								</span>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlockRequirements && ctrl.relatedRecipe.unlockRequirements.length > 0">
-							<td>
-								Unlock Requirements:
-							</td>
-							<td>
-								<span class="item-amount" ng-repeat="req in ctrl.relatedRecipe.unlockRequirements">
-									{{req.amount}}x
-									<a ng-if="ctrl.isRecipeItem(req.item)" ui-sref="schematic({item: ctrl.getRecipeForItemByClassName(req.item).slug})">
-										<item-icon item="req.item"></item-icon>
-									</a>
-									<a ng-if="!ctrl.isRecipeItem(req.item)" ui-sref="item({item: ctrl.getItem(req.item).slug})">
-										<item-icon item="req.item"></item-icon>
-									</a>
-								</span>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.requiredSchematics.length">
-							<td>
-								Requires schematics:
-							</td>
-							<td>
-								<div ng-repeat="schematic in ctrl.relatedRecipe.requiredSchematics">
-									<a ui-sref="schematic({item: ctrl.getSchematic(schematic).slug})">
-										{{ctrl.getSchematic(schematic).name}}
-									</a>
-								</div>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.scannerResources.length">
-							<td>
-								Unlocks scanner resources:
-							</td>
-							<td>
-								<div ng-repeat="item in ctrl.relatedRecipe.unlock.scannerResources">
-									{{ctrl.getItem(item).name}}
-								</div>
-							</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.inventorySlots > 0">
-							<td>
-								Adds inventory slots:
-							</td>
-							<td>
-								+{{ctrl.relatedRecipe.unlock.inventorySlots}}
-							</td>
-						</tr>
-						<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.giveItems.length">
-							<td>
-								Gives items to player:
-							</td>
-							<td>
-								<div ng-repeat="item in ctrl.relatedRecipe.unlock.giveItems">
-									{{item.amount}}x
-									<a ui-sref="item({item: ctrl.getItem(item.item).slug})">
-										<item-icon item="item.item"></item-icon>
-									</a>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table two-columns">
+							<tbody>
+								<tr ng-if="ctrl.hasSinkPoints()">
+									<td>Sink points</td>
+									<td>{{ctrl.item.sinkPoints}}</td>
+								</tr>
+								<tr ng-if="ctrl.hasForm()">
+									<td>Form</td>
+									<td>{{ctrl.item.liquid ? 'Liquid' : 'Solid'}}</td>
+								</tr>
+								<tr ng-if="!ctrl.item.liquid">
+									<td>Stack size</td>
+									<td>{{ctrl.item.stackSize}}</td>
+								</tr>
+								<tr ng-if="ctrl.item.energyValue && ctrl.item.liquid">
+									<td>Energy value</td>
+									<td>{{ctrl.item.energyValue * 1000}} MJ/m<sup>3</sup></td>
+								</tr>
+								<tr ng-if="ctrl.item.energyValue && !ctrl.item.liquid">
+									<td>Energy value</td>
+									<td>{{ctrl.item.energyValue}} MJ</td>
+								</tr>
+								<tr ng-if="ctrl.hasRadioactive()">
+									<td>Radioactive</td>
+									<td>{{ctrl.item.radioactiveDecay > 0 ? 'Yes' : 'No'}}</td>
+								</tr>
+								<tr>
+									<td>Can be exported</td>
+									<td>{{ctrl.canBeExported() ? 'Yes' : 'No'}}</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.level">
+									<td>Level</td>
+									<td>{{ctrl.relatedRecipe.level}}</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && !ctrl.relatedRecipe.level">
+									<td>Tier</td>
+									<td>{{ctrl.relatedRecipe.tier}}</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.corporation">
+									<td>Corporation</td>
+									<td>{{ctrl.relatedRecipe.corporation}}</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.cost && ctrl.relatedRecipe.cost.length > 0">
+									<td>Cost</td>
+									<td>
+										<span class="item-amount" ng-repeat="ingredient in ctrl.relatedRecipe.cost">
+											{{ingredient.amount}}x
+											<a ui-sref="item({item: ctrl.getItem(ingredient.item).slug})">
+												<item-icon item="ingredient.item"></item-icon>
+											</a>
+										</span>
+									</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlockRequirements && ctrl.relatedRecipe.unlockRequirements.length > 0">
+									<td>
+										Unlock Requirements:
+									</td>
+									<td>
+										<span class="item-amount" ng-repeat="req in ctrl.relatedRecipe.unlockRequirements">
+											{{req.amount}}x
+											<a ng-if="ctrl.isRecipeItem(req.item)" ui-sref="schematic({item: ctrl.getRecipeForItemByClassName(req.item).slug})">
+												<item-icon item="req.item"></item-icon>
+											</a>
+											<a ng-if="!ctrl.isRecipeItem(req.item)" ui-sref="item({item: ctrl.getItem(req.item).slug})">
+												<item-icon item="req.item"></item-icon>
+											</a>
+										</span>
+									</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.requiredSchematics.length">
+									<td>
+										Requires schematics:
+									</td>
+									<td>
+										<div ng-repeat="schematic in ctrl.relatedRecipe.requiredSchematics">
+											<a ui-sref="schematic({item: ctrl.getSchematic(schematic).slug})">
+												{{ctrl.getSchematic(schematic).name}}
+											</a>
+										</div>
+									</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.scannerResources.length">
+									<td>
+										Unlocks scanner resources:
+									</td>
+									<td>
+										<div ng-repeat="item in ctrl.relatedRecipe.unlock.scannerResources">
+											{{ctrl.getItem(item).name}}
+										</div>
+									</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.inventorySlots > 0">
+									<td>
+										Adds inventory slots:
+									</td>
+									<td>
+										+{{ctrl.relatedRecipe.unlock.inventorySlots}}
+									</td>
+								</tr>
+								<tr ng-if="ctrl.relatedRecipe && ctrl.relatedRecipe.unlock.giveItems.length">
+									<td>
+										Gives items to player:
+									</td>
+									<td>
+										<div ng-repeat="item in ctrl.relatedRecipe.unlock.giveItems">
+											{{item.amount}}x
+											<a ui-sref="item({item: ctrl.getItem(item.item).slug})">
+												<item-icon item="item.item"></item-icon>
+											</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-6">
+						<table class="table two-columns">
+							<tbody>
+								<!-- Consumable 类型物品的额外属性 -->
+								<tr ng-if="ctrl.item.consumableData">
+									<td colspan="2"><strong>Consumable Properties</strong></td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.healthChange !== undefined">
+									<td>Health Change</td>
+									<td>{{ctrl.item.consumableData.healthChange > 0 ? '+' : ''}}{{ctrl.item.consumableData.healthChange}} HP</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.toxicityChange !== undefined">
+									<td>Toxicity Change</td>
+									<td>{{ctrl.item.consumableData.toxicityChange > 0 ? '+' : ''}}{{ctrl.item.consumableData.toxicityChange}}</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.experience !== undefined">
+									<td>Experience</td>
+									<td>{{ctrl.item.consumableData.experience}} XP</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.stackingType">
+									<td>Stacking Type</td>
+									<td>{{ctrl.item.consumableData.stackingType}}</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.maxStack !== undefined">
+									<td>Max Stack</td>
+									<td>{{ctrl.item.consumableData.maxStack}}</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.abilityEffects && ctrl.item.consumableData.abilityEffects.length > 0">
+									<td>Ability Effects</td>
+									<td>
+										<div ng-repeat="effect in ctrl.item.consumableData.abilityEffects">
+											<span ng-if="effect.tagName" class="badge badge-secondary">{{effect.tagName}}</span>
+											<span ng-if="effect.effectName">{{effect.effectName}}</span>
+										</div>
+									</td>
+								</tr>
+								<tr ng-if="ctrl.item.consumableData && ctrl.item.consumableData.systemAbilities && ctrl.item.consumableData.systemAbilities.length > 0">
+									<td>System Abilities</td>
+									<td>
+										<div ng-repeat="ability in ctrl.item.consumableData.systemAbilities">
+											<span ng-if="ability.tagName" class="badge badge-info">{{ability.tagName}}</span>
+											<span ng-if="ability.abilityName">{{ability.abilityName}}</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6" ng-if="ctrl.canBeExported()">
+</div>
+
+<div class="row" ng-if="ctrl.canBeExported()">
+	<div class="col-12">
 		<div class="card mb-3">
 			<h2 class="card-header">Export</h2>
 			<div class="card-body">

@@ -41,7 +41,7 @@ export class ProductionController
 		'maximize': Constants.PRODUCTION_TYPE.MAXIMIZE,
 	};
 
-	public static $inject = ['$scope', '$timeout', 'DataStorageService', '$location', '$rootScope'];
+	public static $inject = ['$scope', '$timeout', 'DataStorageService', '$location', '$rootScope', '$state'];
 	private readonly storageKey: string;
 
 	public constructor(
@@ -50,6 +50,7 @@ export class ProductionController
 		private readonly dataStorageService: DataStorageService,
 		private readonly $location: ILocationService,
 		private readonly $rootScope: IRootScope,
+		private readonly $state: any,
 	)
 	{
 		if ($rootScope.version === '1.0') {
@@ -275,6 +276,103 @@ export class ProductionController
 	{
 		return data.getRawData().recipes[className];
 	}
+
+	// 判断 className 是 item 还是 building，返回对应的路由状态名
+	public getRouteStateForClassName(className: string): string|null
+	{
+		if (!className) {
+			return null;
+		}
+		// 直接使用 data 的方法，不依赖 getItem/getBuilding
+		const item = data.getItemByClassName(className);
+		if (item && item.slug) {
+			// 如果能在 items 中找到且有 slug，就是 item
+			return 'item';
+		}
+		const building = data.getBuildingByClassName(className);
+		if (building && building.slug) {
+			// 如果能在 buildings 中找到且有 slug，就是 building
+			return 'building';
+		}
+		return null;
+	}
+
+	// 获取 slug 用于路由
+	public getSlugForClassName(className: string): string|null
+	{
+		if (!className) {
+			return null;
+		}
+		// 直接使用 data 的方法，不依赖 getItem/getBuilding
+		const item = data.getItemByClassName(className);
+		if (item && item.slug) {
+			return item.slug;
+		}
+		const building = data.getBuildingByClassName(className);
+		if (building && building.slug) {
+			return building.slug;
+		}
+		return null;
+	}
+
+	// 获取完整的 ui-sref 字符串
+	public getUiSrefForClassName(className: string): string|null
+	{
+		const state = this.getRouteStateForClassName(className);
+		const slug = this.getSlugForClassName(className);
+		if (state && slug) {
+			return state + '({item: \'' + slug + '\'})';
+		}
+		return null;
+	}
+
+	// 获取链接的 href
+	public getHrefForClassName(className: string): string|null
+	{
+		if (!className) {
+			return null;
+		}
+		const state = this.getRouteStateForClassName(className);
+		const slug = this.getSlugForClassName(className);
+		
+		if (state && slug && this.$state) {
+			try {
+				// 使用 $state.href 生成正确的 URL（会自动处理 hashPrefix）
+				const href = this.$state.href(state, {item: slug});
+				if (href) {
+					return href;
+				}
+			} catch (e) {
+				// 如果 $state.href 失败，使用备用方案
+			}
+		}
+		// 备用方案：手动构建 URL（注意 hashPrefix 是 '!'）
+		if (state && slug) {
+			if (state === 'item') {
+				return '#!/items/' + slug;
+			} else if (state === 'building') {
+				return '#!/buildings/' + slug;
+			}
+		}
+		return null;
+	}
+
+	// 获取所有发电建筑（Power Producer）
+	public getPowerGenerators(): IBuildingSchema[]
+	{
+		const allBuildings = data.getRawData().buildings;
+		const generators: IBuildingSchema[] = [];
+		for (const key in allBuildings) {
+			const building = allBuildings[key];
+			if (building.metadata && building.metadata._daData && building.metadata._daData.powerType && 
+				building.metadata._daData.powerType.includes('Producer') && building.metadata.powerConsumption) {
+				generators.push(building);
+			}
+		}
+		// 按发电量从高到低排序
+		return generators.sort((a, b) => (b.metadata.powerConsumption || 0) - (a.metadata.powerConsumption || 0));
+	}
+
 
 	private saveState(): void
 	{
