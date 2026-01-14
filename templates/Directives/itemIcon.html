@@ -10,6 +10,7 @@
 	     alt="{{$root.aprilMode ? 'Snutt' : (itemEntity.name || itemEntity.className || 'Item')}}"
 	     tooltip
 	     title="{{$root.aprilMode ? 'Snutt' : itemEntity.name? itemEntity.name : null }}"
+	     onerror="this.style.display='none'"
 	     lazy-load>
 	<span ng-if="!itemEntity" class="fas fa-question" title="Item not found ({{item.className ? item.className : item}})" tooltip></span>
 </script>
@@ -21,6 +22,7 @@
 	     width="{{size}}"
 	     height="{{size}}"
 	     alt="{{$root.aprilMode ? 'Snutt' : (itemEntity.name || itemEntity.className || 'Item')}}"
+	     onerror="this.style.display='none'"
 	     lazy-load>
 	<span ng-if="!itemEntity" class="fas fa-question" data-not-found="{{item.className ? item.className : item}}"></span>
 </script>

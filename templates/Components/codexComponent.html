@@ -1,11 +1,11 @@
 <div class="recipe-list" ng-if="ctrl.$state.current.name !== 'corporation' && ctrl.$state.current.name.indexOf('corporation.') !== 0">
 	<div class="card text-center item-card" ng-repeat="item in ctrl.filterService.filterEntities() | orderBy:'name'">
 		<a ng-if="!item.requiredSchematics" class="recipe-name stretched-link" ui-sref="{{ctrl.entityPreviewState}}({item: item.slug})">
-			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}">
+			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}" onerror="this.style.display='none'">
 			{{item.name}}
 		</a>
 		<a ng-if="item.requiredSchematics" class="recipe-name stretched-link pt-2" ui-sref="{{ctrl.entityPreviewState}}({item: item.slug})">
-			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}">
+			<img class="recipe-image" ng-src="/assets/images/items/{{$root.aprilMode ? 'snutt' : (item.icon || item.slug)}}_64.webp" alt="{{item.name || item.className || 'Item'}}" onerror="this.style.display='none'">
 			{{item.name}}
 			<small class="text-muted d-block">
 				{{ctrl.getSchematicType(item.type)}}

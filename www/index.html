@@ -98,6 +98,28 @@
 	<link rel="preload" href="/assets/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="/assets/css/fontawesome.min.css"></noscript>
 	<base href="/">
+	<!-- Immediately hide initial-seo on detail pages (before DOM renders) -->
+	<script type="text/javascript">
+		(function() {
+			var path = window.location.pathname;
+			var isHomePage = path === '/' || path === '/index.html' || path === '';
+			if (!isHomePage) {
+				// For detail pages, hide #initial-seo immediately using CSS
+				// Use insertBefore to ensure it's added even if head isn't fully ready
+				var style = document.createElement('style');
+				style.textContent = '#initial-seo { display: none !important; }';
+				(function insertStyle() {
+					if (document.head) {
+						document.head.appendChild(style);
+					} else if (document.documentElement) {
+						document.documentElement.insertBefore(style, document.documentElement.firstChild);
+					} else {
+						setTimeout(insertStyle, 0);
+					}
+				})();
+			}
+		})();
+	</script>
 </head>
 <body>
 
@@ -214,7 +236,8 @@
 <!-- Defer the main bundle so it doesn't block HTML parsing / first paint -->
 <script src="/assets/app.js" defer></script>
 <script type="text/javascript">
-	// Hide initial static SEO block only AFTER game data is loaded (so it stays visible during Loading).
+	// Hide initial static SEO block only on homepage, and only AFTER game data is loaded.
+	// For other pages (detail pages), hide it immediately to avoid duplicate content.
 	(function () {
 		function hideInitialSeo() {
 			var el = document.getElementById('initial-seo');
@@ -227,10 +250,20 @@
 		}
 
 		document.addEventListener('DOMContentLoaded', function () {
-			// AppModule dispatches this event after DataProvider.whenReady() resolves.
-			document.addEventListener('st:data-ready', function () {
+			// Check if we're on a detail page (not homepage)
+			var path = window.location.pathname;
+			var isHomePage = path === '/' || path === '/index.html' || path === '';
+
+			if (!isHomePage) {
+				// For detail pages, hide immediately to avoid showing homepage content
 				hideInitialSeo();
-			});
+			} else {
+				// For homepage, hide only after data is loaded (so it stays visible during Loading)
+				// AppModule dispatches this event after DataProvider.whenReady() resolves.
+				document.addEventListener('st:data-ready', function () {
+					hideInitialSeo();
+				});
+			}
 		});
 	})();
 </script>

@@ -450,16 +450,22 @@ export class Data
 
 	public isItem(entity: BuildingTypes): entity is IItemSchema
 	{
-		return entity.hasOwnProperty('fluid');
+		return entity !== null && entity !== undefined && entity.hasOwnProperty('fluid');
 	}
 
 	public isResource(entity: BuildingTypes): boolean
 	{
+		if (entity === null || entity === undefined) {
+			return false;
+		}
 		return this.getRawData().resources.hasOwnProperty(entity.className);
 	}
 
 	public isBuilding(entity: BuildingTypes): entity is IBuildingSchema
 	{
+		if (entity === null || entity === undefined) {
+			return false;
+		}
 		if (this.isItem(entity)) {
 			return false;
 		}

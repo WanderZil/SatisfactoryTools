@@ -43,6 +43,55 @@
 					<td>Power Consumption</td>
 					<td>{{ctrl.building.metadata.powerConsumption}} MW</td>
 				</tr>
+				
+				<!-- 防御参数 -->
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData">
+					<td colspan="2"><strong>Defense Parameters</strong></td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.enemyDetectionRadius">
+					<td>Enemy Detection Radius</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.enemyDetectionRadius / 100 | number:1}} m</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.baseDamage">
+					<td>Base Damage</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.baseDamage}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.rateOfFire">
+					<td>Rate of Fire</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.rateOfFire}}s per shot</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.accidentalPlayerDamage">
+					<td>Accidental Player Damage</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.accidentalPlayerDamage}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.patrollingSpeed">
+					<td>Patrolling Speed</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.patrollingSpeed}}°/s</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.rotationTowardsTargetSpeed">
+					<td>Rotation Speed</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.rotationTowardsTargetSpeed}}°/s</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.allowAttackEnemyToTurretAngleInDeg">
+					<td>Attack Angle</td>
+					<td>±{{ctrl.building.metadata._daData.defenseData.allowAttackEnemyToTurretAngleInDeg}}°</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.maxUpAndDownTiltAngleInDeg">
+					<td>Max Tilt Angle</td>
+					<td>±{{ctrl.building.metadata._daData.defenseData.maxUpAndDownTiltAngleInDeg}}°</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.spreadInDeg !== undefined">
+					<td>Spread</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.spreadInDeg}}°</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.ammoItem">
+					<td>Ammo Type</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.ammoItem}}</td>
+				</tr>
+				<tr ng-if="ctrl.building.metadata._daData && ctrl.building.metadata._daData.defenseData && ctrl.building.metadata._daData.defenseData.canRequestAmmoFromDeliverySystem !== undefined">
+					<td>Can Request Ammo</td>
+					<td>{{ctrl.building.metadata._daData.defenseData.canRequestAmmoFromDeliverySystem ? 'Yes' : 'No'}}</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

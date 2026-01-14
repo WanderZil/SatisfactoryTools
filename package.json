@@ -15,7 +15,8 @@
 		"generateImages": "ts-node -r tsconfig-paths/register bin/generateImages.ts",
 		"parseStarRupture": "ts-node -r tsconfig-paths/register bin/parseStarRupture.ts",
 		"parseStarRuptureData": "ts-node -r tsconfig-paths/register bin/parseStarRuptureData.ts",
-		"createStarRuptureOnlyData": "ts-node -r tsconfig-paths/register bin/createStarRuptureOnlyData.ts"
+		"createStarRuptureOnlyData": "ts-node -r tsconfig-paths/register bin/createStarRuptureOnlyData.ts",
+		"convertAllImagesToWebp": "ts-node -r tsconfig-paths/register bin/convertAllImagesToWebp.ts"
 	},
 	"devDependencies": {
 		"@sparticuz/chromium": "^131.0.0",

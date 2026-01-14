@@ -250,7 +250,10 @@ export class AppModule
 							template: require('@templates/Controllers/building.html'),
 						},
 						'building_details@building': {
-							componentProvider: ['building', (building: IBuildingSchema) => {
+							componentProvider: ['building', (building: IBuildingSchema | null) => {
+								if (!building) {
+									return 'otherBuildingDetails';
+								}
 								if (data.isGeneratorBuilding(building)) {
 									return 'generatorDetails';
 								}

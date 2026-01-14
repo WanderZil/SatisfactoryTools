@@ -512,8 +512,18 @@ console.log(`找到 ${buildingFiles.length} 个建筑文件`);
 // 从 DA 文件中提取元数据
 function parseBuildingDA(buildingName: string): any {
 	const dirName = buildingName.replace('BD_', '');
+	// 尝试两种目录命名格式：TurretTier1 和 Turret_Tier1
+	// 将驼峰转换为下划线格式，例如 TurretTier1 -> Turret_Tier1
+	const dirNameWithUnderscore = dirName.replace(/([a-z])([A-Z])/g, '$1_$2');
 	const daPath = path.join(buildingsDir, dirName, 'DA_' + dirName + '.json');
-	if (!fs.existsSync(daPath)) {
+	const designParamsPath = path.join(buildingsDir, dirName, 'DA_' + dirName + 'DesignParams.json');
+	const designParamsPathAlt = path.join(buildingsDir, dirNameWithUnderscore, 'DA_' + dirNameWithUnderscore + 'DesignParams.json');
+	
+	// 先尝试标准 DA 文件
+	let daData: any = null;
+	if (fs.existsSync(daPath)) {
+		daData = parseDAFile(daPath);
+	} else {
 		// 尝试在子目录中查找（如 Interiors/, ForgottenEngine/ 等）
 		const possiblePaths = [
 			path.join(buildingsDir, dirName.replace('Tier2', ''), 'DA_' + dirName.replace('Tier2', '') + '.json'),
@@ -525,12 +535,40 @@ function parseBuildingDA(buildingName: string): any {
 		];
 		for (const possiblePath of possiblePaths) {
 			if (fs.existsSync(possiblePath)) {
-				return parseDAFile(possiblePath);
+				daData = parseDAFile(possiblePath);
+				break;
 			}
 		}
-		return null;
 	}
-	return parseDAFile(daPath);
+	
+	// 尝试解析 DesignParams 文件（用于防御建筑）
+	let defenseData: any = null;
+	const possibleDesignParamsPaths = [
+		designParamsPath,
+		designParamsPathAlt,
+		path.join(buildingsDir, dirNameWithUnderscore, 'DA_' + dirNameWithUnderscore + 'DesignParams.json'),
+		path.join(buildingsDir, dirName.replace('Tier2', ''), 'DA_' + dirName.replace('Tier2', '') + 'DesignParams.json'),
+		path.join(buildingsDir, dirName.replace('Tier2', 'Tier_2'), 'DA_' + dirName.replace('Tier2', 'Tier_2') + 'DesignParams.json'),
+		path.join(buildingsDir, 'Interiors', dirName, 'DA_' + dirName + 'DesignParams.json'),
+	];
+	for (const possiblePath of possibleDesignParamsPaths) {
+		if (fs.existsSync(possiblePath)) {
+			defenseData = parseDefenseDesignParams(possiblePath);
+			if (defenseData) {
+				break;
+			}
+		}
+	}
+	
+	// 合并防御数据到 DA 数据
+	if (defenseData) {
+		if (!daData) {
+			daData = {};
+		}
+		daData.defenseData = defenseData;
+	}
+	
+	return daData;
 }
 
 // 从 RecipeCollection 的 ObjectName 中提取 CRC_ 文件名
@@ -594,6 +632,49 @@ function parseCRCFile(crcName: string): string[] {
 	} catch (error) {
 		console.error(`Error parsing CRC file ${crcPath}:`, error);
 		return [];
+	}
+}
+
+// 解析防御建筑的设计参数文件
+function parseDefenseDesignParams(designParamsPath: string): any {
+	try {
+		const content = fs.readFileSync(designParamsPath, 'utf-8');
+		const data = JSON.parse(content);
+		
+		// 查找 CrDefenseTurretData 类型的对象
+		const defenseData = data.find((obj: any) => obj.Type === 'CrDefenseTurretData');
+		if (!defenseData || !defenseData.Properties) {
+			return null;
+		}
+		
+		const props = defenseData.Properties;
+		
+		// 提取弹药类型
+		let ammoItem: string | undefined = undefined;
+		if (props.AmmoItem?.ObjectName) {
+			const ammoMatch = props.AmmoItem.ObjectName.match(/I_([^_]+)/);
+			if (ammoMatch) {
+				ammoItem = ammoMatch[1];
+			}
+		}
+		
+		return {
+			ammoItem: ammoItem,
+			meshWithMuzzleComponentTag: props.MeshWithMuzzleComponentTag,
+			enemyDetectionRadius: props.EnemyDetectionRadius, // 检测半径（厘米）
+			baseDamage: props.BaseDamage, // 基础伤害
+			accidentalPlayerDamage: props.AccidentalPlayerDamage, // 对玩家意外伤害
+			rateOfFire: props.RateOfFire, // 射速（秒/发）
+			patrollingSpeed: props.PatrollingSpeed, // 巡逻速度
+			rotationTowardsTargetSpeed: props.RotationTowardsTargetSpeed, // 转向目标速度
+			allowAttackEnemyToTurretAngleInDeg: props.AllowAttackEnemyToTurretAngleInDeg, // 允许攻击角度
+			spreadInDeg: props.SpreadInDeg, // 散布角度
+			maxUpAndDownTiltAngleInDeg: props.MaxUpAndDownTiltAngleInDeg, // 最大上下倾斜角度
+			canRequestAmmoFromDeliverySystem: props.bCanRequestAmmoFromDeliverySystem, // 是否可以从配送系统请求弹药
+		};
+	} catch (error) {
+		console.error(`Error parsing defense design params file ${designParamsPath}:`, error);
+		return null;
 	}
 }
 
@@ -831,6 +912,7 @@ function convertBuilding(bdData: any, daData: any, bpData: any): IBuildingSchema
 		availableRecipes: daData?.availableRecipes || [], // 从 CRC 文件提取的 recipe 列表
 		logisticsType: daData?.logisticsType,
 		hasInputStorage: daData?.hasInputStorage,
+		defenseData: daData?.defenseData, // 防御建筑的设计参数
 	};
 	metadata._bpData = {
 		craftingSpeed: bpData?.craftingSpeed,
@@ -1269,22 +1351,24 @@ let missingBuildingIcons: string[] = [];
 			const isPng = foundPath.toLowerCase().endsWith('.png');
 			
 			if (isPng) {
-				// PNG 文件：转换为 WebP（SEO 友好）
+				// PNG 文件：转换为 WebP 并添加水印（SEO 友好）
 				try {
 					const destPath64 = path.join(wwwBuildingIconsDir, iconName + '_64.webp');
 					const destPath256 = path.join(wwwBuildingIconsDir, iconName + '_256.webp');
 					
-					// 使用 sharp 转换为 WebP（64 尺寸）
-					await sharp(foundPath)
+					// 使用 sharp 转换为 WebP（64 尺寸）并添加水印
+					const resized64 = await sharp(foundPath)
 						.resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-						.webp({ quality: 85 })
-						.toFile(destPath64);
+						.toBuffer();
+					const watermarked64 = await addWatermarkToImage(resized64, 'SRCC');
+					fs.writeFileSync(destPath64, watermarked64);
 					
-					// 使用 sharp 转换为 WebP（256 尺寸）
-					await sharp(foundPath)
+					// 使用 sharp 转换为 WebP（256 尺寸）并添加水印
+					const resized256 = await sharp(foundPath)
 						.resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-						.webp({ quality: 85 })
-						.toFile(destPath256);
+						.toBuffer();
+					const watermarked256 = await addWatermarkToImage(resized256, 'SRCC');
+					fs.writeFileSync(destPath256, watermarked256);
 					
 					copiedBuildingIcons++;
 				} catch (error) {

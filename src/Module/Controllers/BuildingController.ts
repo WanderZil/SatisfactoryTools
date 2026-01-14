@@ -17,6 +17,7 @@ export class BuildingController
 	public usagesForBuilding: IRecipeSchema[];
 	public usagesForSchematics: ISchematicSchema[];
 	public corporationUnlocks: Array<{corporation: ICorporationSchema, level: number}> | null = null;
+	public corporation: ICorporationSchema | null = null;
 	public static $inject = ['$state', '$transition$', 'BuildingFiltersService', '$scope'];
 
 	public constructor(
@@ -32,6 +33,59 @@ export class BuildingController
 		this.buildingRecipe = this.getRecipeForCurrentBuilding();
 		this.itemFilterService.filter.query = this.building.name;
 		this.corporationUnlocks = data.getCorporationUnlocksForBuilding(this.building.className);
+		
+		// 设置 corporation 对象（从 building._bdData.corporation 解析）
+		if (building._bdData && building._bdData.corporation) {
+			const corpStr = building._bdData.corporation;
+			// 解析格式如 "ECrCorporation::SelenianCORP" 或直接是 className
+			let corpClassName: string | null = null;
+			if (corpStr.includes('::')) {
+				// 提取 "SelenianCORP" 部分
+				const parts = corpStr.split('::');
+				if (parts.length > 1) {
+					const corpEnum = parts[1]; // 如 "SelenianCORP", "CleverRobotics"
+					
+					// 创建映射：ECrCorporation enum -> CD_ className
+					const corpMapping: {[key: string]: string} = {
+						'SelenianCORP': 'CD_SelenianCorp',
+						'SelenianCorporation': 'CD_SelenianCorp',
+						'CleverRobotics': 'CD_CleverCorp',
+						'FutureHealthSolution': 'CD_FutureCorp',
+						'FutureHealthSolutions': 'CD_FutureCorp',
+						'GriffithsBlueCorporation': 'CD_GriffithsCorp',
+						'GriffithsCorp': 'CD_GriffithsCorp',
+						'MoonEnergyCorporation': 'CD_MoonCorp',
+						'MoonEnergy': 'CD_MoonCorp',
+						'FE_FinalCorporation': 'CD_FE_FinalCorp',
+						'StartingCorp': 'CD_StartingCorp',
+					};
+					
+					corpClassName = corpMapping[corpEnum] || null;
+					
+					// 如果映射中没有，尝试通过名称匹配
+					if (!corpClassName) {
+						const allCorps = data.getAllCorporations();
+						for (const key in allCorps) {
+							const corp = allCorps[key];
+							// 检查名称是否匹配（忽略大小写和特殊字符）
+							const normalizedEnum = corpEnum.toLowerCase().replace(/corp|corporation/gi, '').trim();
+							const normalizedName = (corp.name || '').toLowerCase().replace(/corp|corporation/gi, '').trim();
+							if (normalizedName.includes(normalizedEnum) || normalizedEnum.includes(normalizedName)) {
+								corpClassName = key;
+								break;
+							}
+						}
+					}
+				}
+			} else {
+				// 直接使用作为 className
+				corpClassName = corpStr;
+			}
+			
+			if (corpClassName) {
+				this.corporation = data.getCorporationByClassName(corpClassName);
+			}
+		}
 		this.$scope.$watch(() => {
 			return this.itemFilterService.filter.query;
 		}, (newValue) => {
