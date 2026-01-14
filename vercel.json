@@ -1,6 +1,6 @@
 {
   "outputDirectory": "www",
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "redirects": [
     {
