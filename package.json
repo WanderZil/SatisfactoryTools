@@ -5,8 +5,8 @@
 	"author": "greeny",
 	"private": true,
 	"scripts": {
-		"build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
-		"buildCI": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
+		"build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production && node scripts/injectGoogleAnalytics.js",
+		"buildCI": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production && node scripts/injectGoogleAnalytics.js",
 		"start": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --progress --color --watch",
 		"prerender": "node scripts/prerender.js",
 		"prerender:ssg": "SSG=1 node scripts/prerender.js",

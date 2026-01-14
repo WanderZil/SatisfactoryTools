@@ -98,6 +98,14 @@
 	<link rel="preload" href="/assets/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="/assets/css/fontawesome.min.css"></noscript>
 	<base href="/">
+	<!-- Google Analytics (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=__GOOGLE_ANALYTICS_ID__"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '__GOOGLE_ANALYTICS_ID__');
+	</script>
 	<!-- Immediately hide initial-seo on detail pages (before DOM renders) -->
 	<script type="text/javascript">
 		(function() {
