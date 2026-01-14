@@ -20,3 +20,4 @@ import 'script-loader!../node_modules/angular-breadcrumb/dist/angular-breadcrumb
 import {AppModule} from '@src/Module/AppModule';
 
 new AppModule(angular.module('app', ['ui.sortable', 'ui.select', 'ui.router', 'ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ncy-angular-breadcrumb'])).register();
+// Force rebuild Wed Jan 14 23:59:49 CST 2026
