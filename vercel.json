@@ -38,10 +38,6 @@
   ],
   "rewrites": [
     {
-      "source": "/assets/(.*\\.js)",
-      "destination": "/assets/$1"
-    },
-    {
       "source": "/:path*",
       "destination": "/index.html"
     }
